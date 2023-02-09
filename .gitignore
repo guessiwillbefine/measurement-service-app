@@ -1,0 +1,10 @@
+#logs dir
+/ms-api/logs/**/**
+*.log
+#compiled sources
+/ms-api/target/
+/e2e-tests/target/
+
+#IDEA
+*.iml
+/.idea/
