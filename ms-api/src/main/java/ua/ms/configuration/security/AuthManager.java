@@ -1,40 +1,41 @@
 package ua.ms.configuration.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import ua.ms.configuration.security.repository.AuthenticationService;
-import ua.ms.service.UserService;
+import ua.ms.configuration.security.repository.RegistrationService;
+import ua.ms.entity.User;
 
 import java.util.Collections;
+import java.util.Optional;
 
+@Log4j2
 @Component
+@RequiredArgsConstructor
 public class AuthManager implements AuthenticationManager {
 
-    private final AuthenticationService personDetailsService;
-
-    @Autowired
-    public AuthManager(UserService personDetailsService) {
-        this.personDetailsService = personDetailsService;
-    }
+    private final RegistrationService registrationService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         final String username = authentication.getName();
-        final UserDetails personDetails = personDetailsService.loadByUsername(username);
+        final Optional<User> personDetails = registrationService.loadByUsername(username);
         final String password = authentication.getCredentials().toString();
 
-        if (password.equals(personDetails.getPassword())) {
-            return new UsernamePasswordAuthenticationToken(personDetails, password,
-                    Collections.emptyList());
+        if (personDetails.isPresent()) {
+            User userCredentials = personDetails.get();
+            if (password.equals(userCredentials.getPassword())) {
+                log.debug("Authentication successful");
+                return new UsernamePasswordAuthenticationToken(username, password,
+                        Collections.emptyList());
+            }
         }
-
-        throw new BadCredentialsException("Incorrect password");
+        log.debug("Authentication refused, BadCredentialsException was thrown");
+        throw new BadCredentialsException("Incorrect credentials");
     }
-
 }

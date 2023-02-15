@@ -14,7 +14,9 @@ import ua.ms.configuration.security.util.JWTFilter;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JWTFilter jwtFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable() // in case we make REST without frontend like in MVC pattern, csrf doesn't have any danger for us

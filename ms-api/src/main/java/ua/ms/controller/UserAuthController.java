@@ -1,18 +1,24 @@
 package ua.ms.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.configuration.security.AuthManager;
-import ua.ms.configuration.security.repository.AuthenticationService;
+import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.User;
-import ua.ms.entity.dto.UserCredentialsDto;
+import ua.ms.entity.dto.AuthenticationCredentialsDto;
+import ua.ms.util.exception.ApplicationException;
+import ua.ms.util.exception.UserValidationException;
 
 import java.util.Map;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -22,18 +28,28 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class UserAuthController {
     private final JWTUtils jwtUtils;
-    private final AuthenticationService authenticationService;
+    private final RegistrationService registrationService;
     private final AuthManager authenticationManager;
 
     @GetMapping("/login")
-    public User authenticate(final @NotNull @RequestBody UserCredentialsDto credentialsDto) {
+    public User authenticate(@NotNull @RequestBody AuthenticationCredentialsDto credentialsDto) {
         final String username = credentialsDto.getUsername();
+        final String password = credentialsDto.getPassword();
         final UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(username, credentialsDto.getPassword());
+                = new UsernamePasswordAuthenticationToken(username, password);
+
         log.debug(format("Attempt to authenticate user [%s]", username));
+
         try {
-            authenticationManager.authenticate(authenticationToken);
-            return authenticationService.loadByUsername(username);
+            Optional<User> user = registrationService.loadByUsername(username);
+            Authentication authenticatedUser = authenticationManager.authenticate(authenticationToken);
+            if (authenticatedUser.isAuthenticated() && user.isPresent()) {
+                return user.get();
+            }
+            else {
+                log.error("User wasn't authenticated despite of correct credentials");
+                throw new ApplicationException("Something went wrong, try again later");
+            }
         } catch (BadCredentialsException exception) {
             log.debug(format("Error while authenticating user [%s] - bad credentials", username));
             throw exception;
@@ -41,12 +57,11 @@ public class UserAuthController {
     }
 
     @PostMapping("/register")
-    public Map<String,String> register(final @RequestBody @NotNull UserCredentialsDto credentialsDto) {
+    public Map<String, String> register(@RequestBody @NotNull @Valid AuthenticationCredentialsDto credentialsDto,
+                                        BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new UserValidationException("invalid credentials");
         log.debug("Attempt to register user [%s]");
-        authenticationService.register(credentialsDto);
-        String token = jwtUtils.generateToken(credentialsDto.getUsername());
-        return Map.of("token", token);
-        //idk the correct way to response after successful registration yet, so we will return token in response for now *shrug*
-        //todo
+        registrationService.register(credentialsDto);
+        return Map.of("jwt-token", jwtUtils.generateToken(credentialsDto.getUsername()));
     }
 }

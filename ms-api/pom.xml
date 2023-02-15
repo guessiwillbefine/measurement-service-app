@@ -14,10 +14,11 @@
     <version>0.0.1</version>
     <name>ms-api</name>
     <description>ms-api</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>17</java.version>
-        <start-class>ua.ms.MsApiApplication</start-class>
+ <!--       <start-class>ua.ms.MsApiApplication</start-class> -->
     </properties>
 
     <dependencies>

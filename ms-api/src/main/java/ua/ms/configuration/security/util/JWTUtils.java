@@ -18,22 +18,22 @@ public class JWTUtils {
     @Value("${security.jwt.secret}")
     private String secret;
     public String generateToken(String username) {
-        Date date = Date.from(ZonedDateTime.now().plusDays(daysToExpire).toInstant());
+        final Date expirationDate = Date.from(ZonedDateTime.now().plusDays(daysToExpire).toInstant());
         return JWT.create()
                 .withSubject("user details")
                 .withClaim("username", username)
                 .withIssuedAt(new Date())
-                .withExpiresAt(date)
+                .withExpiresAt(expirationDate)
                 .withIssuer("ms-api")
                 .sign(Algorithm.HMAC256(secret));
     }
 
     public String getClaimFromToken(String token) throws JWTVerificationException {
-        JWTVerifier tokenVerifier = JWT.require(Algorithm.HMAC256(secret))
+        final JWTVerifier tokenVerifier = JWT.require(Algorithm.HMAC256(secret))
                 .withSubject("user details")
                 .withIssuer("ms-api")
                 .build();
-        DecodedJWT verifiedToken = tokenVerifier.verify(token);
+        final DecodedJWT verifiedToken = tokenVerifier.verify(token);
         return verifiedToken.getClaim("username").asString();
     }
 }

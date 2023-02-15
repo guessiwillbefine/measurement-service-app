@@ -6,46 +6,58 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ua.ms.configuration.security.repository.AuthenticationService;
+import ua.ms.configuration.security.repository.RegistrationService;
+import ua.ms.entity.User;
 
 import java.io.IOException;
+import java.util.Optional;
 
+@Log4j2
 @Component
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
-    private final AuthenticationService authenticationService;
+    private final RegistrationService registrationService;
     private final JWTUtils jwtUtils;
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
+        log.debug("JWT filter was called, attempt to get token");
         String authHeader = httpServletRequest.getHeader("Authorization");
 
         if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
             String jwt = authHeader.substring(7);
 
             if (jwt.isBlank()) {
+                log.debug("Invalid JWT Token, sending error");
                 httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
                         "Invalid JWT Token in Bearer Header");
             } else {
                 try {
                     String username = jwtUtils.getClaimFromToken(jwt);
-                    UserDetails userDetails = authenticationService.loadByUsername(username);
+                    Optional<User> user = registrationService.loadByUsername(username);
+                    if (user.isPresent()) {
 
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(userDetails,
-                                    userDetails.getPassword(),
-                                    userDetails.getAuthorities());
+                        UserDetails userDetails = user.get();
+                        UsernamePasswordAuthenticationToken authToken =
+                                new UsernamePasswordAuthenticationToken(userDetails,
+                                        userDetails.getPassword(),
+                                        userDetails.getAuthorities());
 
-                    if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                        SecurityContextHolder.getContext().setAuthentication(authToken);
+                        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                            log.debug("ok, filter skips the request");
+                            SecurityContextHolder.getContext().setAuthentication(authToken);
+                        }
                     }
                 } catch (JWTVerificationException exc) {
+                    log.debug("Invalid JWT Token, sending error");
                     httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
                             "Invalid JWT Token");
                 }
