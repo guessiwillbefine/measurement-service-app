@@ -30,7 +30,6 @@ security:
     days-to-expire: 7
     secret: vsitsokroovzahtuokv
 
-
 #test environment
 ---
 spring:
