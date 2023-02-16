@@ -14,9 +14,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.entity.User;
+import ua.ms.util.ApplicationConstants;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import static ua.ms.util.ApplicationConstants.Security.TOKEN_HEADER_NAME;
+import static ua.ms.util.ApplicationConstants.Security.TOKEN_PREFIX;
 
 @Log4j2
 @Component
@@ -30,9 +34,9 @@ public class JWTFilter extends OncePerRequestFilter {
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
         log.debug("JWT filter was called, attempt to get token");
-        String authHeader = httpServletRequest.getHeader("Authorization");
+        String authHeader = httpServletRequest.getHeader(TOKEN_HEADER_NAME);
 
-        if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
+        if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith(TOKEN_PREFIX)) {
             String jwt = authHeader.substring(7);
 
             if (jwt.isBlank()) {
