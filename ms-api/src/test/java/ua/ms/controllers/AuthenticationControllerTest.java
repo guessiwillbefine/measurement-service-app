@@ -46,7 +46,7 @@ class AuthenticationControllerTest {
     void validCredentialsShouldBeSaved() throws Exception {
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

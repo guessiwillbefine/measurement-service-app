@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,8 +16,10 @@ import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.User;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.dto.UserDto;
 import ua.ms.util.exception.ApplicationException;
 import ua.ms.util.exception.UserValidationException;
+import ua.ms.util.mapper.UserMapper;
 
 import java.util.Map;
 import java.util.Optional;
@@ -30,9 +34,9 @@ public class UserAuthController {
     private final JWTUtils jwtUtils;
     private final RegistrationService registrationService;
     private final AuthManager authenticationManager;
-
+    private final UserMapper userMapper;
     @GetMapping("/login")
-    public User authenticate(@NotNull @RequestBody AuthenticationCredentialsDto credentialsDto) {
+    public UserDto authenticate(@NotNull @RequestBody AuthenticationCredentialsDto credentialsDto) {
         final String username = credentialsDto.getUsername();
         final String password = credentialsDto.getPassword();
         final UsernamePasswordAuthenticationToken authenticationToken
@@ -44,7 +48,7 @@ public class UserAuthController {
             Optional<User> user = registrationService.loadByUsername(username);
             Authentication authenticatedUser = authenticationManager.authenticate(authenticationToken);
             if (authenticatedUser.isAuthenticated() && user.isPresent()) {
-                return user.get();
+                return userMapper.toDto(user.get());
             }
             else {
                 log.error("User wasn't authenticated despite of correct credentials");
@@ -57,11 +61,13 @@ public class UserAuthController {
     }
 
     @PostMapping("/register")
-    public Map<String, String> register(@RequestBody @NotNull @Valid AuthenticationCredentialsDto credentialsDto,
-                                        BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody @NotNull @Valid
+                                                            AuthenticationCredentialsDto credentialsDto,
+                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new UserValidationException("invalid credentials");
         log.debug("Attempt to register user [%s]");
         registrationService.register(credentialsDto);
-        return Map.of("jwt-token", jwtUtils.generateToken(credentialsDto.getUsername()));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of("jwt-token", jwtUtils.generateToken(credentialsDto.getUsername())));
     }
 }
