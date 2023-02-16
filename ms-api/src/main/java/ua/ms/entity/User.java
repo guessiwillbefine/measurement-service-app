@@ -6,7 +6,7 @@ import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ua.ms.util.ApplicationConstants.Validation;
+import ua.ms.util.ApplicationConstants.*;
 import java.util.Collection;
 
 @Table(name = "user_account")
@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @Length(min = Validation.MIN_USERNAME_LENGTH,
             max = Validation.MAX_USERNAME_LENGTH,
-            message =  Validation.USERNAME_MSG)
+            message = Validation.USERNAME_MSG)
     private String username;
     @Column(nullable = false)
     @Length(min = Validation.MIN_PASSWORD_LENGTH,
