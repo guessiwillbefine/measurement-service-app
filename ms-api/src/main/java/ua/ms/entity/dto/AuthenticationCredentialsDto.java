@@ -1,17 +1,21 @@
 package ua.ms.entity.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
+import org.hibernate.validator.constraints.Length;
+import ua.ms.util.ApplicationConstants;
 
 @Getter
 @Builder
 @Jacksonized
 public class AuthenticationCredentialsDto {
-    @NotEmpty
+    @Length(min = ApplicationConstants.Validation.MIN_USERNAME_LENGTH,
+            max = ApplicationConstants.Validation.MAX_USERNAME_LENGTH,
+            message = ApplicationConstants.Validation.USERNAME_MSG)
     private String username;
-    @NotEmpty
+    @Length(min = ApplicationConstants.Validation.MIN_USERNAME_LENGTH,
+            max = ApplicationConstants.Validation.MAX_USERNAME_LENGTH,
+            message = ApplicationConstants.Validation.USERNAME_MSG)
     private String password;
 }

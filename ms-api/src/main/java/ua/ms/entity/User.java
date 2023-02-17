@@ -3,10 +3,8 @@ package ua.ms.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ua.ms.util.ApplicationConstants.*;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -25,14 +23,8 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    @Length(min = Validation.MIN_USERNAME_LENGTH,
-            max = Validation.MAX_USERNAME_LENGTH,
-            message = Validation.USERNAME_MSG)
     private String username;
     @Column(nullable = false)
-    @Length(min = Validation.MIN_PASSWORD_LENGTH,
-            max = Validation.MAX_PASSWORD_LENGTH,
-            message = Validation.PASSWORD_MSG)
     private String password;
 
     //todo

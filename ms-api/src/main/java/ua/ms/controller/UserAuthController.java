@@ -51,9 +51,8 @@ public class UserAuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, String> register(@RequestBody @NotNull @Valid
-                                        AuthenticationCredentialsDto credentialsDto,
-                                        BindingResult bindingResult) {
+    public Map<String, String> register(@NotNull @RequestBody @Valid
+                                        AuthenticationCredentialsDto credentialsDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new UserValidationException("invalid credentials");
         log.debug("Attempt to register user [%s]");
         userService.register(credentialsDto);
