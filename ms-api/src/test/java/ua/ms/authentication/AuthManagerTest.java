@@ -2,6 +2,7 @@ package ua.ms.authentication;
 
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +37,21 @@ class AuthManagerTest {
     }
 
     @Test
+    @DisplayName("valid credentials should be authenticated")
     void testAuthenticationForValidCredentials() {
         userRepository.save(USER_ENTITY);
         assertTrue(authManager.authenticate(authentication).isAuthenticated());
     }
 
     @Test
+    @DisplayName("non existing credentials should throw exception")
     void testAuthenticationForNonPresentCredentials() {
         assertThrows(BadCredentialsException.class, () ->
                 authManager.authenticate(authentication));
     }
 
     @Test
+    @DisplayName("invalid credentials should throw exception")
     void testAuthenticationForInvalidCredentials() {
         userRepository.save(USER_ENTITY);
         when(authentication.getCredentials()).thenReturn("incorrect_password");

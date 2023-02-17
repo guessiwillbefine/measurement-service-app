@@ -1,5 +1,6 @@
 package ua.ms.authentication;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,7 @@ class JWTUtilsTest {
     private JWTUtils jwtUtils;
 
     @Test
+    @DisplayName("test token generation")
     void assertValidTokenGeneratesCorrectly(){
         final String USERNAME = "testUsername";
         final String token = jwtUtils.generateToken(USERNAME);

@@ -8,7 +8,7 @@ import ua.ms.entity.dto.UserDto;
 
 public final class TestConstants {
     public static final AuthenticationCredentialsDto USER_CREDENTIALS = AuthenticationCredentialsDto.builder()
-            .username("new_username")
+            .username("username")
             .password("password").build();
     public static final AuthenticationCredentialsDto INVALID_USER_CREDENTIALS = AuthenticationCredentialsDto.builder()
             .username("")
