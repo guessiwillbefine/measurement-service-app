@@ -24,6 +24,10 @@ public class UserService implements RegistrationService {
     public Optional<User> loadByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    @Transactional
+    public <T> Optional<T> loadByUsername(String username, Class<T> type) {
+        return userRepository.findByUsername(username, type);
+    }
 
     @Override
     @Transactional

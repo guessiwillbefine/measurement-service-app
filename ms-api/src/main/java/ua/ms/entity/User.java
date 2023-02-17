@@ -8,11 +8,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.ms.util.ApplicationConstants.*;
 import java.util.Collection;
+import java.util.Collections;
 
 @Table(name = "user_account")
 @Entity
-@Getter
 @Setter
+@Getter
 @Builder
 @Jacksonized
 @AllArgsConstructor
@@ -37,7 +38,7 @@ public class User implements UserDetails {
     //todo
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

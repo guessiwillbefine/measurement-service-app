@@ -12,14 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.configuration.security.AuthManager;
-import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.configuration.security.util.JWTUtils;
-import ua.ms.entity.User;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.dto.UserDto;
+import ua.ms.service.UserService;
 import ua.ms.util.exception.ApplicationException;
 import ua.ms.util.exception.UserValidationException;
-import ua.ms.util.mapper.UserMapper;
 
 import java.util.Map;
 import java.util.Optional;
@@ -32,9 +30,9 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class UserAuthController {
     private final JWTUtils jwtUtils;
-    private final RegistrationService registrationService;
+    private final UserService registrationService;
     private final AuthManager authenticationManager;
-    private final UserMapper userMapper;
+
     @GetMapping("/login")
     public UserDto authenticate(@NotNull @RequestBody AuthenticationCredentialsDto credentialsDto) {
         final String username = credentialsDto.getUsername();
@@ -45,10 +43,10 @@ public class UserAuthController {
         log.debug(format("Attempt to authenticate user [%s]", username));
 
         try {
-            Optional<User> user = registrationService.loadByUsername(username);
+            Optional<UserDto> user = registrationService.loadByUsername(username, UserDto.class);
             Authentication authenticatedUser = authenticationManager.authenticate(authenticationToken);
             if (authenticatedUser.isAuthenticated() && user.isPresent()) {
-                return userMapper.toDto(user.get());
+                return user.get();
             }
             else {
                 log.error("User wasn't authenticated despite of correct credentials");

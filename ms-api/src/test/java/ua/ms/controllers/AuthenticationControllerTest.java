@@ -84,10 +84,10 @@ class AuthenticationControllerTest {
 
     @Test
     @WithMockUser
-    @Disabled("we don't have eny endpoints to test make authentication test correctly")
+    @Disabled("we don't have eny another locked endpoints to test authentication correctly")
     void testNonBlockForAuthenticatedUser() throws Exception {
         registrationService.register(USER_CREDENTIALS);
-        mockMvc.perform(post("/api").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(get("/api").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
                 .andExpect(status().isOk());
     }
