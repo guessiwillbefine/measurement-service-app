@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 @Table(name = "user_account")
 @Entity
@@ -28,9 +29,9 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "first_name")
-    private String firsName;
+    private String firstName;
     @Column(name = "second_name")
-    private String secondName;
+    private String surname;
     @Column(unique = true)
     private String email;
     @Column(name = "status_id")
@@ -65,5 +66,24 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(email, user.email) &&
+                status == user.status && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

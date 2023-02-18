@@ -15,6 +15,7 @@ import ua.ms.util.exception.UserDuplicateException;
 import java.util.Optional;
 
 import static java.lang.String.format;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class UserService implements RegistrationService {
     public Optional<User> loadByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
     @Transactional(readOnly = true)
     public <T> Optional<T> loadByUsername(String username, Class<T> type) {
         return userRepository.findByUsername(username, type);
@@ -45,6 +47,7 @@ public class UserService implements RegistrationService {
             userToSave.setStatus(Status.ACTIVE);
             return userRepository.save(userToSave);
         }
+
         log.debug("UserDuplicationException was thrown");
         throw new UserDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
     }
