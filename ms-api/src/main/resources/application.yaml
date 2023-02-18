@@ -1,8 +1,8 @@
 debug: false
+
 server:
-  servlet:
-    context-path: /api
   port: 8080
+
 #development environment
 ---
 spring:
@@ -25,6 +25,11 @@ spring:
     password: root
     url: jdbc:mysql://localhost:3306/ms_db?createDatabaseIfNotExist=true
 
+security:
+  jwt:
+    days-to-expire: 7
+    secret: vsitsokroovzahtuokv
+
 #test environment
 ---
 spring:
@@ -46,4 +51,4 @@ spring:
   datasource:
     username: h2db
     password: h2db
-    url: jdbc:h2:mem:ms_db_test;MODE=MySQL
+    url: jdbc:h2:mem:ms_db_test;MODE=MySQL;NON_KEYWORDS=USER;
