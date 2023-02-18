@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add status entity
+      author: vadim
+
+      changes:
+        - createTable:
+            tableName: user_status
+            columns:
+              - column:
+                  name: id
+                  type: varchar(10)
+                  constraints:
+                    primaryKey: true

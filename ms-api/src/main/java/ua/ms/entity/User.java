@@ -27,6 +27,20 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "first_name")
+    private String firsName;
+    @Column(name = "second_name")
+    private String secondName;
+    @Column(unique = true)
+    private String email;
+    @Column(name = "status_id")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    @Column(name = "role_id")
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
     //todo
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -40,7 +54,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return status.equals(Status.ACTIVE);
     }
 
     @Override

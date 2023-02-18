@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.csrf().disable() // in case we make REST without frontend like in MVC pattern, csrf doesn't have any danger for us
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/login", "/auth/register").permitAll()
-                .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/users/**").authenticated()
                 .and()
                 .logout()
                 .logoutUrl("/logout")

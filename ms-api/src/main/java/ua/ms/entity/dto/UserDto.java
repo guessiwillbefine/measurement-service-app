@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
+import ua.ms.entity.Role;
+import ua.ms.entity.Status;
 import ua.ms.util.ApplicationConstants;
 
 @Getter
@@ -18,4 +20,8 @@ public class UserDto {
             max = ApplicationConstants.Validation.MAX_PASSWORD_LENGTH,
             message = ApplicationConstants.Validation.PASSWORD_MSG)
     private String username;
+
+    private Status status;
+
+    private Role role;
 }
