@@ -6,7 +6,7 @@
 
     <changeSet id="roles dataset" author="vadim">
         <insert tableName="user_role">
-            <column name="id" value="MASTER" />
+            <column name="id" value="ADMIN" />
         </insert>
         <insert tableName="user_role">
             <column name="id" value="WORKER" />

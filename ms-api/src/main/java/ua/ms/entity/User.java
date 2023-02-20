@@ -5,15 +5,17 @@ import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
-@Table(name = "user_account")
 @Entity
+@Table(name = "user_account")
 @Setter
 @Getter
 @Builder
+@ToString
 @Jacksonized
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,13 +27,14 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String username;
+    @ToString.Exclude
     @Column(nullable = false)
     private String password;
 
     @Column(name = "first_name")
     private String firstName;
-    @Column(name = "second_name")
-    private String surname;
+    @Column(name = "last_name")
+    private String lastName;
     @Column(unique = true)
     private String email;
     @Column(name = "status_id")
@@ -40,7 +43,6 @@ public class User implements UserDetails {
     @Column(name = "role_id")
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     //todo
     @Override
@@ -77,7 +79,7 @@ public class User implements UserDetails {
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(firstName, user.firstName) &&
-                Objects.equals(surname, user.surname) &&
+                Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
                 status == user.status && role == user.role;
     }
@@ -86,4 +88,5 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

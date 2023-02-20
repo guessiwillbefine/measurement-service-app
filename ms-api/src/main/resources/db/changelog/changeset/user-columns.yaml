@@ -13,16 +13,10 @@ databaseChangeLog:
                   constraints:
                     nullable: true
               - column:
-                  name: second_name
+                  name: last_name
                   type: varchar(25)
                   constraints:
                     nullable: true
-              - column:
-                  name: accountNonLocked
-                  type: boolean
-                  defaultValue: 'true'
-                  constraints:
-                    nullable: false
               - column:
                   name: email
                   type: varchar(30)
@@ -33,6 +27,7 @@ databaseChangeLog:
               - column:
                   name: role_id
                   type: varchar(10)
+                  defaultValue: WORKER
                   constraints:
                     foreignKeyName: user_role_fk
                     referencedTableName: user_role
@@ -42,6 +37,7 @@ databaseChangeLog:
               - column:
                   name: status_id
                   type: varchar(10)
+                  defaultValue: ACTIVE
                   constraints:
                     foreignKeyName: user_status_fk
                     referencedTableName: user_status

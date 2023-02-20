@@ -36,7 +36,7 @@ public class JWTFilter extends OncePerRequestFilter {
         log.debug("JWT filter was called, attempt to get token");
         String authHeader = httpServletRequest.getHeader(TOKEN_HEADER_NAME);
 
-        if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith(TOKEN_PREFIX)) {
+        if (authHeader != null && authHeader.startsWith(TOKEN_PREFIX)) {
             String jwt = authHeader.substring(7);
 
             if (jwt.isBlank()) {
@@ -47,7 +47,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 try {
                     String username = jwtUtils.getClaimFromToken(jwt);
                     Optional<User> user = registrationService.loadByUsername(username);
-                    if (user.isPresent()) {
+                    if (user.isPresent() && user.get().isAccountNonLocked()) {
 
                         UserDetails userDetails = user.get();
                         UsernamePasswordAuthenticationToken authToken =
@@ -56,7 +56,7 @@ public class JWTFilter extends OncePerRequestFilter {
                                         userDetails.getAuthorities());
 
                         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                            log.debug("ok, filter skips the request");
+                            log.debug("ok, filter passes the request");
                             SecurityContextHolder.getContext().setAuthentication(authToken);
                         }
                     }

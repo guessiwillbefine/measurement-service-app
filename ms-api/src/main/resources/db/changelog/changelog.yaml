@@ -1,4 +1,5 @@
 databaseChangeLog:
+### changes
   - include:
       file:  db/changelog/changeset/role-entity.yaml
   - include:
@@ -8,6 +9,10 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/user-columns.yaml
 
-      ## datasets
+### datasets
   - include:
       file: db/changelog/dataset/roles-and-status-dataset.xml
+  - include:
+      file: db/changelog/dataset/default-admin-dataset.xml
+  - include:
+      file: db/changelog/dataset/user-dataset.xml

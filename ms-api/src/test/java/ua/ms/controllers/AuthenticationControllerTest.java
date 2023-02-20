@@ -12,10 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.dto.UserDto;
 import ua.ms.service.UserService;
-import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.UserDuplicateException;
 
 import java.util.Optional;
@@ -89,15 +87,6 @@ class AuthenticationControllerTest {
         when(userService.loadByUsername(USER_ENTITY.getUsername(), UserDto.class)).thenReturn(Optional.of(USER_DTO));
         mockMvc.perform(get("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @Disabled("we don't have eny another locked endpoints to test authentication correctly")
-    void testNonBlockForAuthenticatedUser() throws Exception {
-        //registrationService.register(USER_CREDENTIALS);
-        mockMvc.perform(get("/api").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
                 .andExpect(status().isOk());
     }

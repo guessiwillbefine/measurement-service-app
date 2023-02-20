@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.User;
@@ -12,12 +14,14 @@ import ua.ms.entity.dto.UserDto;
 import ua.ms.service.UserService;
 import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.UserDuplicateException;
-import java.util.Optional;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import ua.ms.util.exception.UserNotFoundException;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static ua.ms.TestConstants.*;
 
@@ -41,13 +45,14 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("test throwing exception for duplicates")
+    @DisplayName("test throwing exception for duplicates while registering")
     void shouldThrowDuplicate() {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(USER_ENTITY));
         assertThatThrownBy(() -> userService.register(USER_CREDENTIALS))
                 .isInstanceOf(RuntimeException.class)
                 .isInstanceOf(UserDuplicateException.class);
     }
+
     @Test
     @DisplayName("existing user should be loaded")
     void shouldLoadUserIfExists() {
@@ -80,5 +85,80 @@ class UserServiceTest {
         assertTrue(optionalUserDto.isPresent());
         assertThat(optionalUserDto.get())
                 .isInstanceOf(UserDto.class);
+    }
+
+    @Test
+    void shouldReturnUserAfterDelete() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(USER_ENTITY));
+        doNothing().when(userRepository).deleteById(anyLong());
+        assertThat(userService.delete(anyLong())).isEqualTo(USER_ENTITY);
+    }
+
+    @Test
+    void shouldThrowExceptionWhileUpdateIfUserIsNotPresent() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+        long id = USER_DTO.getId();
+        assertThatThrownBy(() -> userService.update(id, USER_DTO))
+                .isInstanceOf(UserNotFoundException.class);
+    }
+
+    @Test
+    void shouldThrowExceptionWhileDeleteIfUserIsNotPresent() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+        long id = USER_DTO.getId();
+        assertThatThrownBy(() -> userService.delete(id))
+                .isInstanceOf(UserNotFoundException.class);
+    }
+
+    @Test
+    void shouldReturnNewUserAfterUpdate() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(USER_ENTITY));
+        User updatedUser = USER_ENTITY;
+        updatedUser.setFirstName("someName");
+        updatedUser.setEmail("newEmail@gmail.com");
+        when(userRepository.save(any())).thenReturn(updatedUser);
+        assertThat(userService.update(USER_DTO.getId(), USER_DTO)).isEqualTo(updatedUser);
+    }
+
+    @Test
+    void shouldReturnEntityByIdIfPresent() {
+        when(userRepository.findById(anyLong(), any()))
+                .thenReturn(Optional.of(USER_ENTITY));
+
+        assertThat(userService.findById(USER_ENTITY.getId(), User.class))
+                .isEqualTo(Optional.of(USER_ENTITY));
+    }
+    @Test
+    void shouldReturnEmtpyOptionalIfEntityIsNotPresent() {
+        when(userRepository.findById(anyLong(), any()))
+                .thenReturn(Optional.empty());
+
+        assertThat(userService.findById(USER_ENTITY.getId(), User.class)).isEmpty();
+    }
+    @Test
+    void shouldReturnListWithValidPageable() {
+        when(userRepository.findBy(any(Pageable.class), any()))
+                .thenReturn(Collections.emptyList());
+
+        assertThat(userService.findAll(PageRequest.of(1,1), User.class))
+                .isInstanceOf(List.class);
+    }
+    @Test
+    void shouldReturnValidSizeWithValidPageable() {
+        int size = new Random().nextInt(2,10);
+        List<User> users = prepareList(size);
+        when(userRepository.findBy(PageRequest.of(0, size), User.class))
+                .thenReturn(users);
+
+        assertThat(userService.findAll(PageRequest.of(0, size), User.class))
+                .isInstanceOf(List.class);
+    }
+
+    private List<User> prepareList(int size) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            users.add(USER_ENTITY);
+        }
+        return users;
     }
 }

@@ -1,6 +1,8 @@
 package ua.ms;
 
 
+import ua.ms.entity.Role;
+import ua.ms.entity.Status;
 import ua.ms.entity.User;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.dto.UserDto;
@@ -14,8 +16,21 @@ public final class TestConstants {
             .username("")
             .password("").build();
     public static final User USER_ENTITY = User.builder()
-            .id(1L).username("username")
+            .id(1L)
+            .username("username")
+            .email("test@gmail.com")
+            .firstName("name")
+            .lastName("sname")
+            .status(Status.ACTIVE)
+            .role(Role.ADMIN)
             .password("password").build();
     public static final UserDto USER_DTO = UserDto.builder()
-            .id(1L).username("username").build();
+            .id(1L)
+            .username("username")
+            .email("test@gmail.com")
+            .firstName("name")
+            .lastName("sname")
+            .status(Status.ACTIVE)
+            .role(Role.ADMIN)
+            .build();
 }
