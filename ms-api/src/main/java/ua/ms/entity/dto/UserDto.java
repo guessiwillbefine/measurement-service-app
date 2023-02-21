@@ -11,8 +11,6 @@ import ua.ms.entity.Role;
 import ua.ms.entity.Status;
 import ua.ms.util.ApplicationConstants.Validation;
 
-import java.util.Objects;
-
 @Getter
 @Builder
 @Jacksonized
@@ -40,22 +38,4 @@ public class UserDto {
     private Status status;
     @NotNull
     private Role role;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDto userDto = (UserDto) o;
-        return Objects.equals(id, userDto.id) &&
-                Objects.equals(username, userDto.username) &&
-                Objects.equals(firstName, userDto.firstName) &&
-                Objects.equals(lastName, userDto.lastName) &&
-                Objects.equals(email, userDto.email) &&
-                status == userDto.status && role == userDto.role;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

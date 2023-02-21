@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.entity.User;
-import ua.ms.util.ApplicationConstants;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -56,7 +55,7 @@ public class JWTFilter extends OncePerRequestFilter {
                                         userDetails.getAuthorities());
 
                         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                            log.info("ok, filter passes the request");
+                            log.debug("ok, filter passes the request");
                             SecurityContextHolder.getContext().setAuthentication(authToken);
                         }
                     }

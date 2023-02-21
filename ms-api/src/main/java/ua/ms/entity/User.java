@@ -5,19 +5,17 @@ import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_account")
 @Setter
 @Getter
 @Builder
 @ToString
 @Jacksonized
+@Table(name = "user_account")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -45,7 +43,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    //todo
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of((GrantedAuthority) () -> role.name());
@@ -70,7 +68,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,5 +86,4 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }

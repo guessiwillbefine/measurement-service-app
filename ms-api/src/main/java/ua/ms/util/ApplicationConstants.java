@@ -1,7 +1,6 @@
 package ua.ms.util;
 
 import lombok.experimental.UtilityClass;
-
 /*
     I don't know why, but if you use wrapper classes for numbers everything will fail
     so, if u need number constants pls use int, double etc.
