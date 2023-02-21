@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add role entity
+      author: vadim
+
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: id
+                  type: varchar(10)
+                  constraints:
+                    primaryKey: true
