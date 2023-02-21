@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: add user entity columns
+      author: vadim
+
+      changes:
+        - addColumn:
+            tableName: user_account
+            columns:
+              - column:
+                  name: first_name
+                  type: varchar(25)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: last_name
+                  type: varchar(25)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: email
+                  type: varchar(30)
+                  constraints:
+                    unique: true
+                    nullable: true
+
+              - column:
+                  name: role_id
+                  type: varchar(10)
+                  defaultValue: WORKER
+                  constraints:
+                    foreignKeyName: user_role_fk
+                    referencedTableName: user_role
+                    referencedColumnNames: id
+                    nullable: false
+
+              - column:
+                  name: status_id
+                  type: varchar(10)
+                  defaultValue: ACTIVE
+                  constraints:
+                    foreignKeyName: user_status_fk
+                    referencedTableName: user_status
+                    referencedColumnNames: id
+                    deleteCascade: true
+                    nullable: false
+

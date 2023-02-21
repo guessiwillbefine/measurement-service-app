@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="roles dataset" author="vadim">
+        <insert tableName="user_account">
+            <column name="username" value="admin"/>
+            <column name="password" value="admin"/>
+            <column name="status_id" value="ACTIVE" />
+            <column name="role_id" value="ADMIN" />
+            <column name="email" value="adminadmin@gmail.com"/>
+            <column name="first_name" value="admin"/>
+            <column name="last_name" value="admin"/>
+        </insert>
+        <rollback>
+            DELETE FROM user_role;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
