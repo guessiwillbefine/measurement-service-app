@@ -58,7 +58,7 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("login without token should return 403 forbidden")
     void testLoginWithoutToken() throws Exception {
-        mockMvc.perform(post("/api").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
                 .andExpect(status().isForbidden());
     }

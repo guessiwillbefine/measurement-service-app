@@ -1,5 +1,9 @@
 package ua.ms.controller;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.models.info.Info;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ import static java.lang.String.format;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication")
 public class UserAuthController {
     private final JWTUtils jwtUtils;
     private final UserService userService;
@@ -48,7 +53,6 @@ public class UserAuthController {
             throw exception;
         }
     }
-
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public Map<String, String> register(@NotNull @RequestBody @Valid

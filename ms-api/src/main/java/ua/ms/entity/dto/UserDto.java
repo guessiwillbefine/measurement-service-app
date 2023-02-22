@@ -1,8 +1,8 @@
 package ua.ms.entity.dto;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
@@ -35,7 +35,8 @@ public class UserDto {
     private String lastName;
 
     //email pattern : some.mail@gmail.com
-    @Pattern(regexp = "^([\\w-\\.]+)@([\\w-]+\\.)+[\\w-]{2,4}$")
+    @Email(regexp = Validation.EMAIL_REGEXP,
+            message = Validation.EMAIL_MSG)
     private String email;
     @Nullable
     private Status status;

@@ -22,6 +22,8 @@ public class ApplicationConstants {
         public static final int MIN_PASSWORD_LENGTH = 8;
         public static final String PASSWORD_MSG =
                 "Password must be between " + MIN_PASSWORD_LENGTH + " and " + MAX_PASSWORD_LENGTH + " symbols";
+        public static final String EMAIL_REGEXP = "^([\\w-\\.]+)@([\\w-]+\\.)+[\\w-]{2,4}$";
+        public static final String EMAIL_MSG = "Invalid email";
     }
 
     @UtilityClass
