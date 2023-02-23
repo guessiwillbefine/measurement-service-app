@@ -1,9 +1,12 @@
 package ua.ms.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.Role;
 import ua.ms.entity.User;
@@ -12,6 +15,7 @@ import ua.ms.entity.dto.view.UserView;
 import ua.ms.service.UserService;
 import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.UserNotFoundException;
+import ua.ms.util.exception.UserValidationException;
 import ua.ms.util.mapper.UserMapper;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +30,7 @@ import static java.lang.String.format;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Tag(name = "User entity controller")
 public class UserController {
     private final UserMapper userMapper;
     private final UserService userService;
@@ -54,7 +59,9 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public UserDto update(@PathVariable long id, @RequestBody UserDto userDto) {
+    public UserDto update(@PathVariable long id,
+                          @RequestBody  @Valid UserDto userDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new UserValidationException(bindingResult.getAllErrors().toString());
         return userMapper.toDto(userService.update(id, userDto));
     }
 }

@@ -50,6 +50,15 @@ class UserControllerTest {
                 .andExpect(jsonPath("role").exists())
                 .andReturn();
     }
+    @Test
+    @DisplayName("test receiving users by id that doesn't exist")
+    void testGettingUserThatDoesntExist() throws Exception {
+        final String token = jwtUtils.generateToken(ADMIN_USER);
+        mockMvc.perform(get("/users/-1")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
 
     @Test
     @DisplayName("test deleting users by id")
@@ -78,14 +87,14 @@ class UserControllerTest {
     @Test
     @DisplayName("test updating users")
     void testUpdating() throws Exception {
-        final User workerUser = userRepository.findFirstByRole(Role.ADMIN);
-        final String updatedUser = objectMapper.writeValueAsString(workerUser);
-        final String token = jwtUtils.generateToken(workerUser.getUsername());
+        final User adminUser = userRepository.findFirstByRole(Role.ADMIN);
+        final String token = jwtUtils.generateToken(adminUser.getUsername());
 
-        workerUser.setLastName("newName");
-        workerUser.setFirstName("newName");
+        adminUser.setLastName("newName");
+        adminUser.setFirstName("newName");
+        String updatedUser = objectMapper.writeValueAsString(adminUser);
 
-        mockMvc.perform(patch("/users/" + workerUser.getId())
+        mockMvc.perform(patch("/users/" + adminUser.getId())
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatedUser))
@@ -97,10 +106,27 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("test pagination users")
-    void testPagination() throws Exception {
+    @DisplayName("test updating users")
+    void testUpdatingWithInvalidParams() throws Exception {
         final User workerUser = userRepository.findFirstByRole(Role.ADMIN);
         final String token = jwtUtils.generateToken(workerUser.getUsername());
+
+        workerUser.setLastName("");
+        workerUser.setFirstName("");
+        String updatedUser = objectMapper.writeValueAsString(workerUser);
+
+        mockMvc.perform(patch("/users/" + workerUser.getId())
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedUser))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("test pagination users")
+    void testPagination() throws Exception {
+        final User adminUser = userRepository.findFirstByRole(Role.ADMIN);
+        final String token = jwtUtils.generateToken(adminUser.getUsername());
         final int userAmount = userRepository.findAll().size();
         final int size = new Random().nextInt(1, userAmount);
 
@@ -110,4 +136,24 @@ class UserControllerTest {
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
+    
+    @Test
+    @DisplayName("test pagination users with invalid params")
+    void testInvalidParamsPagination() throws Exception {
+        final User adminUser = userRepository.findFirstByRole(Role.ADMIN);
+        final String token = jwtUtils.generateToken(adminUser.getUsername());
+
+        mockMvc.perform(get("/users/search")
+                        .param("page", "0")
+                        .param("size", "-1")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(get("/users/search")
+                        .param("page", "-1")
+                        .param("size", "10")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isBadRequest());
+    }
+
 }

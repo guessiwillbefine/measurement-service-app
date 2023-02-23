@@ -1,5 +1,7 @@
 package ua.ms.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +26,14 @@ import static java.lang.String.format;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication")
 public class UserAuthController {
     private final JWTUtils jwtUtils;
     private final UserService userService;
     private final AuthManager authenticationManager;
 
-    @GetMapping("/login")
+    @SecurityRequirements
+    @PostMapping("/_login")
     public Map<String, String> authenticate(@NotNull @RequestBody AuthenticationCredentialsDto credentialsDto) {
         final String username = credentialsDto.getUsername();
         final String password = credentialsDto.getPassword();
@@ -48,7 +52,7 @@ public class UserAuthController {
             throw exception;
         }
     }
-
+    @SecurityRequirements
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public Map<String, String> register(@NotNull @RequestBody @Valid

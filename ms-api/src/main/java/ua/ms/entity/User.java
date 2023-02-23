@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +17,7 @@ import java.util.Objects;
 @Builder
 @ToString
 @Jacksonized
+@Table(name = "user_account")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -44,10 +45,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    //todo
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return List.of((GrantedAuthority) () -> role.name());
     }
 
     @Override
@@ -88,5 +88,4 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }

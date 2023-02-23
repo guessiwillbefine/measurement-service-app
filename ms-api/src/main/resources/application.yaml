@@ -6,6 +6,7 @@ server:
 #development environment
 ---
 spring:
+
   liquibase:
     clear-checksums: true #disable cashing
     change-log: db/changelog/changelog.yaml
@@ -29,6 +30,18 @@ security:
   jwt:
     days-to-expire: 7
     secret: vsitsokroovzahtuokv
+
+#swagger page header data
+api:
+  version: 0.0.1
+  contacts: vadym.storozhuk@nure.ua | maxim.viskovatov@nure.ua
+  title: Measurement service app
+
+#swagger configuration
+springdoc:
+  swagger-ui:
+    path: /api-docs
+
 
 #test environment
 ---

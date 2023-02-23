@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.entity.User;
-import ua.ms.util.ApplicationConstants;
 
 import java.io.IOException;
 import java.util.Optional;
