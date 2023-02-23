@@ -31,13 +31,17 @@ security:
     days-to-expire: 7
     secret: vsitsokroovzahtuokv
 
-#app version for swagger
+#swagger page header data
 api:
   version: 0.0.1
+  contacts: vadym.storozhuk@nure.ua | maxim.viskovatov@nure.ua
+  title: Measurement service app
+
 #swagger configuration
 springdoc:
   swagger-ui:
     path: /api-docs
+
 
 #test environment
 ---

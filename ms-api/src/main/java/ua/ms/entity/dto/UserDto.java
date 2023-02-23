@@ -17,13 +17,11 @@ import java.util.Objects;
 @Builder
 @Jacksonized
 public class UserDto {
+    @Nullable
+    private Long id;
     @Length(min = Validation.MIN_USERNAME_LENGTH,
             max = Validation.MAX_USERNAME_LENGTH,
             message = Validation.USERNAME_MSG)
-    private Long id;
-    @Length(min = Validation.MIN_PASSWORD_LENGTH,
-            max = Validation.MAX_PASSWORD_LENGTH,
-            message = Validation.PASSWORD_MSG)
     private String username;
     @Length(min = Validation.MIN_NAME_LENGTH,
             max = Validation.MAX_NAME_LENGTH,

@@ -1,7 +1,6 @@
 package ua.ms.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.ms.TestConstants.*;
@@ -75,7 +73,7 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("invalid credentials shouldn't be authorized")
     void authForInvalidCredShouldNotHappen() throws Exception {
-        mockMvc.perform(get("/auth/login").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/auth/_login").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
                 .andExpect(status().isForbidden());
     }
@@ -85,7 +83,7 @@ class AuthenticationControllerTest {
     void validLoginShouldReturn200() throws Exception {
         when(userService.loadByUsername(anyString())).thenReturn(Optional.of(USER_ENTITY));
         when(userService.loadByUsername(USER_ENTITY.getUsername(), UserDto.class)).thenReturn(Optional.of(USER_DTO));
-        mockMvc.perform(get("/auth/login")
+        mockMvc.perform(post("/auth/_login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
                 .andExpect(status().isOk());

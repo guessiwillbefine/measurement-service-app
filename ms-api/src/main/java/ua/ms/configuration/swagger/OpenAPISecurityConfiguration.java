@@ -1,6 +1,7 @@
 package ua.ms.configuration.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -12,8 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info =@Info(
-                title = "measurement service API",
-                version = "${api.version}"
+                title = "${api.title}",
+                version = "${api.version}",
+                contact = @Contact(email = "${api.contacts}")
 ))
 public class OpenAPISecurityConfiguration {
     @Bean

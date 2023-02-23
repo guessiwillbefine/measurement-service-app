@@ -1,9 +1,7 @@
 package ua.ms.controller;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.models.info.Info;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +32,8 @@ public class UserAuthController {
     private final UserService userService;
     private final AuthManager authenticationManager;
 
-    @GetMapping("/login")
+    @SecurityRequirements
+    @PostMapping("/_login")
     public Map<String, String> authenticate(@NotNull @RequestBody AuthenticationCredentialsDto credentialsDto) {
         final String username = credentialsDto.getUsername();
         final String password = credentialsDto.getPassword();
@@ -53,6 +52,7 @@ public class UserAuthController {
             throw exception;
         }
     }
+    @SecurityRequirements
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public Map<String, String> register(@NotNull @RequestBody @Valid
