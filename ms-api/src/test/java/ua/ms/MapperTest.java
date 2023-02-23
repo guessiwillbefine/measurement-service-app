@@ -41,5 +41,6 @@ class MapperTest {
         assertThat(mappedDto.getFirstName()).isEqualTo(USER_DTO.getFirstName());
         assertThat(mappedDto.getLastName()).isEqualTo(USER_DTO.getLastName());
         assertThat(mappedDto.getEmail()).isEqualTo(USER_DTO.getEmail());
+
     }
 }

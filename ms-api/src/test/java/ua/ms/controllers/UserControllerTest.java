@@ -104,6 +104,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("status").exists())
                 .andExpect(jsonPath("role").exists());
     }
+
     @Test
     @DisplayName("test updating users")
     void testUpdatingWithInvalidParams() throws Exception {
@@ -135,6 +136,7 @@ class UserControllerTest {
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
+    
     @Test
     @DisplayName("test pagination users with invalid params")
     void testInvalidParamsPagination() throws Exception {
@@ -153,4 +155,5 @@ class UserControllerTest {
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isBadRequest());
     }
+
 }

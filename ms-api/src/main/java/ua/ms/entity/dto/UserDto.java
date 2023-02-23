@@ -31,8 +31,10 @@ public class UserDto {
     private String lastName;
 
     //email pattern : some.mail@gmail.com
+
     @Email(regexp = Validation.EMAIL_REGEXP,
             message = Validation.EMAIL_MSG)
+
     private String email;
     @Nullable
     private Status status;
