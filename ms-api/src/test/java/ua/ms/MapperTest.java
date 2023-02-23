@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import ua.ms.entity.dto.UserDto;
 import ua.ms.service.UserService;
 import ua.ms.util.mapper.UserMapper;
 import java.util.NoSuchElementException;
@@ -34,6 +35,11 @@ class MapperTest {
     }
     @Test
     void testMapToDto() {
-        assertThat(userMapper.toDto(USER_ENTITY)).isEqualTo(USER_DTO);
+        UserDto mappedDto = userMapper.toDto(USER_ENTITY);
+        assertThat(mappedDto.getUsername()).isEqualTo(USER_DTO.getUsername());
+        assertThat(mappedDto.getId()).isEqualTo(USER_DTO.getId());
+        assertThat(mappedDto.getFirstName()).isEqualTo(USER_DTO.getFirstName());
+        assertThat(mappedDto.getLastName()).isEqualTo(USER_DTO.getLastName());
+        assertThat(mappedDto.getEmail()).isEqualTo(USER_DTO.getEmail());
     }
 }
