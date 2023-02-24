@@ -53,7 +53,7 @@ class AuthenticationTest {
         Object tokenValue = token.get("jwt-token");
         assertThat(tokenValue).isNotNull();
 
-        mockMvc.perform(get("/auth/login")
+        mockMvc.perform(post("/auth/_login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(credentialsJson)
                         .header("Authorization", "Bearer " + tokenValue))
