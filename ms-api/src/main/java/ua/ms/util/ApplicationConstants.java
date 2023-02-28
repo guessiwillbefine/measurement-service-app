@@ -24,6 +24,8 @@ public class ApplicationConstants {
                 "Password must be between " + MIN_PASSWORD_LENGTH + " and " + MAX_PASSWORD_LENGTH + " symbols";
         public static final String EMAIL_REGEXP = "^([\\w-\\.]+)@([\\w-]+\\.)+[\\w-]{2,4}$";
         public static final String EMAIL_MSG = "Invalid email";
+        public static final String SENSOR_NAME_MSG =
+                "Sensor name must be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " symbols";
     }
 
     @UtilityClass

@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add measure-system entity
+      author: moksem
+
+      changes:
+        - createTable:
+            tableName: measure_system
+            columns:
+              - column:
+                  name: id
+                  type: varchar(10)
+                  constraints:
+                    primaryKey: true
