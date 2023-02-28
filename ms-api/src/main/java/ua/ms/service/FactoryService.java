@@ -8,6 +8,8 @@ import ua.ms.entity.dto.FactoryDto;
 import ua.ms.service.repository.FactoryRepository;
 import ua.ms.util.exception.FactoryDuplicateException;
 import ua.ms.util.exception.FactoryNotFoundException;
+
+import java.util.List;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -63,5 +65,10 @@ public class FactoryService {
         return Factory.builder()
                 .name(factoryDto.getName() == null ? factory.getName() : factoryDto.getName())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public <T> List<T> findAll(Class<T> type) {
+        return factoryRepository.findBy(type);
     }
 }

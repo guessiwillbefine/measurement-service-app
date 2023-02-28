@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.Role;
-import ua.ms.entity.User;
 import ua.ms.entity.dto.UserDto;
 import ua.ms.entity.dto.view.UserView;
 import ua.ms.service.UserService;
@@ -17,6 +16,7 @@ import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.UserNotFoundException;
 import ua.ms.util.exception.UserValidationException;
 import ua.ms.util.mapper.UserMapper;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -51,11 +51,10 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public UserDto delete(@PathVariable long id, Authentication authentication) {
-        Role userRole = ((User) authentication.getPrincipal()).getRole();
-        if (userRole.equals(Role.ADMIN)) {
-            return userMapper.toDto(userService.delete(id));
-        }
-        throw new AccessException("Access denied");
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(x-> x.getAuthority().equals(Role.ADMIN.name()));
+        if (!isAdmin) throw new AccessException("Access Denied");
+        return userMapper.toDto(userService.delete(id));
     }
 
     @PatchMapping("/{id}")

@@ -15,10 +15,8 @@ import ua.ms.service.UserService;
 import ua.ms.service.repository.FactoryRepository;
 import ua.ms.util.exception.FactoryDuplicateException;
 import ua.ms.util.exception.FactoryNotFoundException;
-import ua.ms.util.exception.UserNotFoundException;
-
+import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
@@ -75,6 +73,14 @@ class FactoryServiceTest {
     }
 
     @Test
+    void searchByNameShouldReturnEntity() {
+        when(factoryRepository.findByName(anyString(), any())).thenReturn(Optional.of(FACTORY_ENTITY));
+        assertThat(factoryService.findByName(FACTORY_ENTITY.getName(), Factory.class))
+                .isPresent().get()
+                .isEqualTo(FACTORY_ENTITY);
+    }
+
+    @Test
     void shouldSaveEntityIfItNotPresentYet() {
         when(userService.findById(USER_ENTITY.getId(), User.class))
                 .thenReturn(Optional.of(USER_ENTITY));
@@ -91,7 +97,7 @@ class FactoryServiceTest {
         final Long userId = USER_ENTITY.getId();
         when(factoryRepository.findByName(anyString(), any()))
                 .thenReturn(Optional.of(FACTORY_ENTITY));
-        when(userService.findById(USER_ENTITY.getId(), User.class))
+        when(userService.findById(userId, User.class))
                 .thenReturn(Optional.of(USER_ENTITY));
         when(factoryRepository.save(any())).thenReturn(FACTORY_ENTITY);
 
@@ -128,5 +134,18 @@ class FactoryServiceTest {
 
         Factory testUpdated = factoryService.update(id, toUpdate);
         assertThat(testUpdated.getName()).isEqualTo(toUpdate.getName());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenEntityWasNotFound() {
+        when(factoryRepository.findById(anyLong(), any())).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> factoryService.update(1L, FACTORY_DTO))
+                .isInstanceOf(FactoryNotFoundException.class);
+    }
+
+    @Test
+    void findAllShouldReturnList() {
+        when(factoryRepository.findBy(any())).thenReturn(List.of(FACTORY_ENTITY));
+        assertThat(factoryService.findAll(Factory.class)).isNotEmpty();
     }
 }

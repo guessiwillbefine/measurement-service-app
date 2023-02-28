@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ class AuthenticationControllerTest {
 
     @Test
     @DisplayName("invalid credentials should have not to be registered")
+    @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
     void assertThatInvalidCredentialsWouldNotBeSaved() throws Exception {
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(INVALID_USER_CREDENTIALS)))
@@ -46,7 +48,8 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("valid credentials should hbe saved")
+    @DisplayName("valid credentials should be saved")
+    @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
     void validCredentialsShouldBeSaved() throws Exception {
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
@@ -63,6 +66,7 @@ class AuthenticationControllerTest {
 
     @Test
     @DisplayName("duplicate username should return bad request")
+    @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
     void duplicateRegistrationTest() throws Exception {
         when(userService.register(any())).thenThrow(UserDuplicateException.class);
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)

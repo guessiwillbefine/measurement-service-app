@@ -16,10 +16,9 @@ import ua.ms.configuration.security.AuthManager;
 import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
 import ua.ms.service.UserService;
+import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.UserValidationException;
-
 import java.util.Map;
-
 import static java.lang.String.format;
 
 @Log4j2
@@ -56,8 +55,13 @@ public class UserAuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public Map<String, String> register(@NotNull @RequestBody @Valid
-                                        AuthenticationCredentialsDto credentialsDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new UserValidationException("invalid credentials");
+                                        AuthenticationCredentialsDto credentialsDto,
+                                        BindingResult bindingResult,
+                                        Authentication authentication) {
+
+        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("ADMIN"));
+        if (!isAdmin) throw new AccessException("Only admin can register new user");
+        if (bindingResult.hasErrors()) throw new UserValidationException("Invalid credentials");
         log.debug("Attempt to register user [%s]");
         userService.register(credentialsDto);
         return Map.of("jwt-token", jwtUtils.generateToken(credentialsDto.getUsername()));

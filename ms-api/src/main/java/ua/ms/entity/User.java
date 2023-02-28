@@ -29,6 +29,7 @@ public class User implements UserDetails {
 
     @Column
     private String username;
+
     @ToString.Exclude
     @Column
     private String password;
