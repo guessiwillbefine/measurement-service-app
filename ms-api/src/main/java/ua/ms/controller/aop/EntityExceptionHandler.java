@@ -3,7 +3,7 @@ package ua.ms.controller.aop;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ua.ms.util.exception.ExceptionResponse;
+import ua.ms.util.exception.response.ExceptionResponse;
 import ua.ms.util.exception.UserDuplicateException;
 import ua.ms.util.exception.UserNotFoundException;
 import ua.ms.util.exception.UserValidationException;

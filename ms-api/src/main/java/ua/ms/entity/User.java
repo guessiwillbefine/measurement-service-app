@@ -1,5 +1,7 @@
 package ua.ms.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
@@ -25,10 +27,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String username;
     @ToString.Exclude
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @Column(name = "first_name")
@@ -43,6 +45,10 @@ public class User implements UserDetails {
     @Column(name = "role_id")
     @Enumerated(EnumType.STRING)
     private Role role;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "factory_id", referencedColumnName = "id")
+    private Factory factory;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

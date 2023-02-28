@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.repository.RegistrationService;
+import ua.ms.entity.Factory;
 import ua.ms.entity.Role;
 import ua.ms.entity.Status;
 import ua.ms.entity.User;
@@ -41,7 +42,6 @@ public class UserService implements RegistrationService {
     public User register(AuthenticationCredentialsDto userCredentials) {
         final Optional<User> byUsername = userRepository.findByUsername(userCredentials.getUsername());
         log.debug(format("Attempt to register user [%s]", userCredentials.getUsername()));
-
         if (byUsername.isEmpty()) {
             //todo here will be method that sends mail notification some day...
             return userRepository.save(User.builder()

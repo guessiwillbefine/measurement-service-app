@@ -19,11 +19,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable() // in case we make REST without frontend like in MVC pattern, csrf doesn't have any danger for us
+        http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/_login", "/auth/register").permitAll()
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/users/**").authenticated()
+                .requestMatchers("/users/**", "/factories/**").authenticated()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
