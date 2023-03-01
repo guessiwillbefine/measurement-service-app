@@ -8,7 +8,7 @@ import ua.ms.service.FactoryService;
 
 import java.util.Optional;
 
-@Component
+@Component("FactoryMapper")
 @RequiredArgsConstructor
 public class FactoryMapper implements Mapper<Factory, FactoryDto> {
     private final FactoryService factoryService;

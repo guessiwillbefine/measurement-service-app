@@ -2,11 +2,9 @@ package ua.ms.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;

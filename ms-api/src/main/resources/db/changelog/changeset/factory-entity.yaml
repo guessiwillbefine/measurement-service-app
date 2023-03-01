@@ -27,8 +27,12 @@ databaseChangeLog:
                   name: factory_id
                   type: int
                   constraints:
-                    foreignKeyName: factory_owner_fk
-                    referencedTableName: factory
-                    referencedColumnNames: id
-                    deleteCascade: true
                     nullable: true
+
+        - addForeignKeyConstraint:
+            constraintName: factory_owner_fk
+            baseTableName: user_account
+            baseColumnNames: factory_id
+            referencedTableName: factory
+            referencedColumnNames: id
+            onDelete: SET NULL

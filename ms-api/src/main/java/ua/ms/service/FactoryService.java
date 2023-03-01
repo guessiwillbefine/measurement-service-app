@@ -56,15 +56,15 @@ public class FactoryService {
         throw new FactoryNotFoundException(format("Factory with id[%d] wasn't found", id));
     }
 
-    @Transactional(readOnly = true)
-    public <T> Optional<T> findByName(String name, Class<T> type) {
-        return factoryRepository.findByName(name, type);
-    }
-
     private Factory updateEntity(Factory factory, FactoryDto factoryDto) {
         return Factory.builder()
                 .name(factoryDto.getName() == null ? factory.getName() : factoryDto.getName())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public <T> Optional<T> findByName(String name, Class<T> type) {
+        return factoryRepository.findByName(name, type);
     }
 
     @Transactional(readOnly = true)
