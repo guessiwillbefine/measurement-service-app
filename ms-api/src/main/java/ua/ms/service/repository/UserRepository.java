@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <T> List<T> findBy(Pageable pageable, Class<T> type);
 
     User findFirstByRole(Role role);
+
+    <T> List<T> findBy(Class<T> type);
 }

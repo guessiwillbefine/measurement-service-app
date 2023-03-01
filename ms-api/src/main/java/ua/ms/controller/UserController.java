@@ -42,6 +42,11 @@ public class UserController {
         return byId.get();
     }
 
+    @GetMapping("/all")
+    public List<UserView> getAll() {
+        return userService.findAll(UserView.class);
+    }
+
     @GetMapping("/search")
     public List<UserView> getAll(@RequestParam("page") int page,
                                  @RequestParam("size") int size) {

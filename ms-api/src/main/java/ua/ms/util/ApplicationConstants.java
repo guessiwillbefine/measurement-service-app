@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ApplicationConstants {
     @UtilityClass
-    public class Validation {
+    public static final class Validation {
         public static final int MIN_USERNAME_LENGTH = 5;
         public static final int MAX_USERNAME_LENGTH = 25;
         public static final String USERNAME_MSG =
@@ -29,8 +29,9 @@ public class ApplicationConstants {
     }
 
     @UtilityClass
-    public class Security {
+    public static final class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";
+        public static final String JWT_TOKEN_RESPONSE_KEY = "jwt-token";
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.repository.RegistrationService;
-import ua.ms.entity.Factory;
 import ua.ms.entity.Role;
 import ua.ms.entity.Status;
 import ua.ms.entity.User;
@@ -15,6 +14,7 @@ import ua.ms.entity.dto.UserDto;
 import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.UserDuplicateException;
 import ua.ms.util.exception.UserNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +68,10 @@ public class UserService implements RegistrationService {
         return userRepository.findBy(pageable, type);
     }
 
+    @Transactional(readOnly = true)
+    public <T> List<T> findAll(Class<T> type) {
+        return userRepository.findBy(type);
+    }
     @Transactional
     public User delete(long id) {
         final Optional<User> byId = userRepository.findById(id);
@@ -78,6 +82,7 @@ public class UserService implements RegistrationService {
         log.debug("User wasn't found, throwing UserNotFoundException");
         throw new UserNotFoundException(format("User with id[%d] wasn't found", id));
     }
+
     @Transactional
     public User update(long id, UserDto userDto) {
         final Optional<User> byUsername = userRepository.findById(id);

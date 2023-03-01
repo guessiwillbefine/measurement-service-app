@@ -57,8 +57,13 @@ public final class TestConstants {
         }
 
         @Override
-        public String getFullName() {
-            return USER_ENTITY.getFirstName() + " " + USER_ENTITY.getLastName();
+        public String getFirstName() {
+            return USER_ENTITY.getFirstName();
+        }
+
+        @Override
+        public String getLastName() {
+            return USER_ENTITY.getLastName();
         }
 
         @Override
