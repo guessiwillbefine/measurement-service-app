@@ -12,9 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.MsApiApplication;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
+
 import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,34 +30,43 @@ class AuthenticationTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Test
-    @DisplayName("registration process test")
+    @DisplayName("authentication process test")
     void registrationScenarioTest() throws Exception {
         final AuthenticationCredentialsDto credentialsDto = AuthenticationCredentialsDto.builder()
-                .username("username").password("password").build();
+                .username("admin").password("admin").build();
         final String credentialsJson = objectMapper.writeValueAsString(credentialsDto);
 
-        mockMvc.perform(get("/auth/login")
+        var response = mockMvc.perform(post("/auth/_login")
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(credentialsJson))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isOk()).andReturn();
 
-        var response = mockMvc.perform(post("/auth/register")
+        String loginResponse = response.getResponse().getContentAsString();
+        var responseBody = objectMapper.readValue(loginResponse, Map.class);
+        Object tokenValue = responseBody.get("jwt-token");
+
+        final AuthenticationCredentialsDto newCredentialsDto = AuthenticationCredentialsDto.builder()
+                .username("newUser").password("newUserPass").build();
+        final String newCredentialsJson = objectMapper.writeValueAsString(newCredentialsDto);
+
+        var response2 = mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(credentialsJson))
+                        .content(newCredentialsJson)
+                .header("Authorization", "Bearer " + tokenValue))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("jwt-token").exists())
                 .andReturn();
 
-        String responseBody = response.getResponse().getContentAsString();
-        var token = objectMapper.readValue(responseBody, Map.class);
+        String responseBody2 = response2.getResponse().getContentAsString();
+        var token = objectMapper.readValue(responseBody2, Map.class);
 
-        Object tokenValue = token.get("jwt-token");
+        Object tokenValue2 = token.get("jwt-token");
         assertThat(tokenValue).isNotNull();
 
         mockMvc.perform(post("/auth/_login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(credentialsJson)
-                        .header("Authorization", "Bearer " + tokenValue))
+                        .content(newCredentialsJson)
+                        .header("Authorization", "Bearer " + tokenValue2))
                 .andExpect(status().isOk());
     }
 }

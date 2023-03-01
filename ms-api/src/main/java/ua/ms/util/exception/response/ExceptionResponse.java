@@ -1,4 +1,4 @@
-package ua.ms.util.exception;
+package ua.ms.util.exception.response;
 
 import lombok.Getter;
 

@@ -12,6 +12,7 @@
             <column name="email" value="test1email@gmail.com"/>
             <column name="first_name" value="Joe"/>
             <column name="last_name" value="Biden"/>
+            <column name="factory_id" value="1"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="SmokePlumes"/>
@@ -20,6 +21,7 @@
             <column name="email" value="test2email@gmail.com"/>
             <column name="first_name" value="Corey"/>
             <column name="last_name" value="Taylor"/>
+            <column name="factory_id" value="1"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="Altometer666"/>
@@ -28,6 +30,7 @@
             <column name="email" value="test3email@gmail.com"/>
             <column name="first_name" value="David"/>
             <column name="last_name" value="Beckham"/>
+            <column name="factory_id" value="3"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="1AstroBoy"/>
@@ -36,6 +39,7 @@
             <column name="email" value="test4email@gmail.com"/>
             <column name="first_name" value="Mike"/>
             <column name="last_name" value="Tyson"/>
+            <column name="factory_id" value="1"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="PrivateWolf"/>
@@ -44,6 +48,7 @@
             <column name="email" value="test5email@gmail.com"/>
             <column name="first_name" value="Miley"/>
             <column name="last_name" value="Cyrus"/>
+            <column name="factory_id" value="1"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="TestRobotxcz"/>
@@ -52,6 +57,7 @@
             <column name="email" value="test6email@gmail.com"/>
             <column name="first_name" value="Keanu"/>
             <column name="last_name" value="Reeves"/>
+            <column name="factory_id" value="4"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="Gerbilator777"/>
@@ -60,6 +66,7 @@
             <column name="email" value="test7email@gmail.com"/>
             <column name="first_name" value="Tyler"/>
             <column name="last_name" value="Joseph"/>
+            <column name="factory_id" value="5"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="Dinotrex23"/>
@@ -68,6 +75,7 @@
             <column name="email" value="test8email@gmail.com"/>
             <column name="first_name" value="Josh"/>
             <column name="last_name" value="Dun"/>
+            <column name="factory_id" value="3"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="Pralltillerxz"/>
@@ -76,6 +84,7 @@
             <column name="email" value="test9email@gmail.com"/>
             <column name="first_name" value="Mike"/>
             <column name="last_name" value="Shinoda"/>
+            <column name="factory_id" value="3"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="Moonlighter212"/>
@@ -85,6 +94,7 @@
             <column name="email" value="test10email@gmail.com"/>
             <column name="first_name" value="Thom"/>
             <column name="last_name" value="York"/>
+            <column name="factory_id" value="2"/>
         </insert>
         <insert tableName="user_account">
             <column name="username" value="ThunderHawk"/>
@@ -94,6 +104,7 @@
             <column name="email" value="test11email@gmail.com"/>
             <column name="first_name" value="Johnny"/>
             <column name="last_name" value="GreenWood"/>
+            <column name="factory_id" value="3"/>
         </insert>
         <rollback>
             DELETE FROM user_account;

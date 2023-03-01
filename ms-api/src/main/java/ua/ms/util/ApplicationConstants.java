@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ApplicationConstants {
     @UtilityClass
-    public class Validation {
+    public static final class Validation {
         public static final int MIN_USERNAME_LENGTH = 5;
         public static final int MAX_USERNAME_LENGTH = 25;
         public static final String USERNAME_MSG =
@@ -26,11 +26,14 @@ public class ApplicationConstants {
         public static final String EMAIL_MSG = "Invalid email";
         public static final String SENSOR_NAME_MSG =
                 "Sensor name must be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " symbols";
+        public static final int MAX_FACTORY_NAME_LENGTH = 40;
+        public static final String FACTORY_NAME_MSG = "Factory name must be between 0 and " + MAX_FACTORY_NAME_LENGTH;
     }
 
     @UtilityClass
-    public class Security {
+    public static final class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";
+        public static final String JWT_TOKEN_RESPONSE_KEY = "jwt-token";
     }
 }

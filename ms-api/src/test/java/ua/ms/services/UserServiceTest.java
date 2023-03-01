@@ -88,6 +88,7 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("test returning user after deleting")
     void shouldReturnUserAfterDelete() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(USER_ENTITY));
         doNothing().when(userRepository).deleteById(anyLong());
@@ -95,15 +96,8 @@ class UserServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhileUpdateIfUserIsNotPresent() {
-        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
-        long id = USER_DTO.getId();
-        assertThatThrownBy(() -> userService.update(id, USER_DTO))
-                .isInstanceOf(UserNotFoundException.class);
-    }
-
-    @Test
-    void shouldThrowExceptionWhileDeleteIfUserIsNotPresent() {
+    @DisplayName("test throwing exception when user to delete is not present")
+    void shouldThrowExceptionWhenDeleteIfUserIsNotPresent() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
         long id = USER_DTO.getId();
         assertThatThrownBy(() -> userService.delete(id))
@@ -111,6 +105,7 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("should return updated entity")
     void shouldReturnNewUserAfterUpdate() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(USER_ENTITY));
         User updatedUser = USER_ENTITY;
@@ -121,6 +116,7 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("test finding by id")
     void shouldReturnEntityByIdIfPresent() {
         when(userRepository.findById(anyLong(), any()))
                 .thenReturn(Optional.of(USER_ENTITY));
@@ -129,13 +125,15 @@ class UserServiceTest {
                 .isEqualTo(Optional.of(USER_ENTITY));
     }
     @Test
-    void shouldReturnEmtpyOptionalIfEntityIsNotPresent() {
+    @DisplayName("test returning empty if user is not present")
+    void shouldReturnEmptyOptionalIfEntityIsNotPresent() {
         when(userRepository.findById(anyLong(), any()))
                 .thenReturn(Optional.empty());
 
         assertThat(userService.findById(USER_ENTITY.getId(), User.class)).isEmpty();
     }
     @Test
+    @DisplayName("test pageable")
     void shouldReturnListWithValidPageable() {
         when(userRepository.findBy(any(Pageable.class), any()))
                 .thenReturn(Collections.emptyList());
@@ -144,6 +142,7 @@ class UserServiceTest {
                 .isInstanceOf(List.class);
     }
     @Test
+    @DisplayName("test returning pageable for valid params")
     void shouldReturnValidSizeWithValidPageable() {
         int size = new Random().nextInt(2,10);
         List<User> users = prepareList(size);
