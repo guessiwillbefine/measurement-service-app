@@ -1,5 +1,6 @@
 package ua.ms.services;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +36,7 @@ class FactoryServiceTest {
     private UserService userService;
 
     @Test
+    @DisplayName("search by id test")
     void searchByIdShouldReturnEntityIfPresent() {
         when(factoryRepository.findById(anyLong(), any()))
                 .thenReturn(Optional.of(FACTORY_ENTITY));
@@ -43,6 +45,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test returning optional empty if entity isn't present")
     void searchByIdShouldReturnEmptyOptionalIfNotPresent() {
         when(factoryRepository.findById(anyLong(), any()))
                 .thenReturn(Optional.empty());
@@ -51,6 +54,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test returning valid type")
     void searchByIdShouldReturnValidType() {
         when(factoryRepository.findById(1L, Factory.class))
                 .thenReturn(Optional.of(FACTORY_ENTITY));
@@ -73,6 +77,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test searching by id")
     void searchByNameShouldReturnEntity() {
         when(factoryRepository.findByName(anyString(), any())).thenReturn(Optional.of(FACTORY_ENTITY));
         assertThat(factoryService.findByName(FACTORY_ENTITY.getName(), Factory.class))
@@ -81,6 +86,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test saving entity")
     void shouldSaveEntityIfItNotPresentYet() {
         when(userService.findById(USER_ENTITY.getId(), User.class))
                 .thenReturn(Optional.of(USER_ENTITY));
@@ -93,6 +99,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test throwing exception if duplicating entity")
     void shouldThrowExceptionIfEntityIsPresent() {
         final Long userId = USER_ENTITY.getId();
         when(factoryRepository.findByName(anyString(), any()))
@@ -106,6 +113,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test returning deleted entity")
     void shouldReturnDeletedEntity() {
         final long id = FACTORY_ENTITY.getId();
         when(factoryRepository.findById(anyLong(), any())).thenReturn(Optional.of(FACTORY_ENTITY));
@@ -113,6 +121,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test throwing exception if entity was not found in delete method")
     void shouldThrowExceptionIfEntityWasNotFound() {
         final long id = FACTORY_ENTITY.getId();
         when(factoryRepository.findById(anyLong(), any())).thenReturn(Optional.empty());
@@ -121,6 +130,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test updating entities")
     void shouldReturnUpdatedEntity() {
         final long id = FACTORY_DTO.getId();
         final FactoryDto toUpdate = FACTORY_DTO;
@@ -137,6 +147,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("test throwing exception if factory wasn't found")
     void shouldThrowExceptionWhenEntityWasNotFound() {
         when(factoryRepository.findById(anyLong(), any())).thenReturn(Optional.empty());
         assertThatThrownBy(() -> factoryService.update(1L, FACTORY_DTO))
@@ -144,6 +155,7 @@ class FactoryServiceTest {
     }
 
     @Test
+    @DisplayName("find all factories test")
     void findAllShouldReturnList() {
         when(factoryRepository.findBy(any())).thenReturn(List.of(FACTORY_ENTITY));
         assertThat(factoryService.findAll(Factory.class)).isNotEmpty();

@@ -1,6 +1,7 @@
 package ua.ms.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,12 +31,14 @@ class FactoryControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
+    @DisplayName("test searching by id")
     void shouldReturnEntityWhenSearchingById() throws Exception {
         mockMvc.perform(get("/factories/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
+    @DisplayName("test that endpoint are forbidden for unauthorized")
     void shouldReturn403WhenSearchingByIdWithoutAuthorities() throws Exception {
         mockMvc.perform(get("/factories/1"))
                 .andExpect(status().isForbidden());
@@ -43,6 +46,7 @@ class FactoryControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
+    @DisplayName("test searching for invalid id")
     void shouldReturn404WhenSearchingByInvalidId() throws Exception {
         mockMvc.perform(get("/factories/-1"))
                 .andExpect(status().isNotFound());
@@ -50,12 +54,14 @@ class FactoryControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
+    @DisplayName("test getting all factories")
     void shouldReturn200whenSearchingForList() throws Exception {
         mockMvc.perform(get("/factories/search"))
                 .andExpect(status().isOk());
     }
 
     @Test
+    @DisplayName("test deleting with")
     void deletingUserShouldBeForbiddenWithoutAuthorities() throws Exception {
         mockMvc.perform(delete("/factories/1"))
                 .andExpect(status().isForbidden());

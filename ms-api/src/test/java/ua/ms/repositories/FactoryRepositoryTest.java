@@ -9,7 +9,6 @@ import ua.ms.entity.Factory;
 import ua.ms.entity.dto.FactoryDto;
 import ua.ms.entity.dto.view.FactoryView;
 import ua.ms.service.repository.FactoryRepository;
-import ua.ms.service.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,5 +35,14 @@ class FactoryRepositoryTest {
                 .isInstanceOf(FactoryView.class);
         assertThat(factoryRepository.findById(1L, FactoryDto.class)).isPresent().get()
                 .isInstanceOf(FactoryDto.class);
+    }
+    @Test
+    void findByShouldReturnList() {
+        assertThat(factoryRepository.findBy(Factory.class)).isNotEmpty().isInstanceOf(List.class);
+    }
+    @Test
+    void findByNameShouldReturnEntity() {
+        assertThat(factoryRepository.findByName("Anime factory", Factory.class))
+                .isPresent().get().isInstanceOf(Factory.class);
     }
 }
