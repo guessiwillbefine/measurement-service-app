@@ -5,21 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Role;
-import ua.ms.entity.Status;
 import ua.ms.entity.User;
 import ua.ms.entity.dto.UserDto;
 import ua.ms.entity.dto.view.UserView;
 import ua.ms.service.repository.UserRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ua.ms.TestConstants.USER_ENTITY;
@@ -76,8 +71,7 @@ class UserRepositoryTest {
     @Test
     @DisplayName("test pagination")
     void paginationShouldReturnValidSize() {
-        prepareData();
-        int size = new Random().nextInt(1,15);
+        int size = new Random().nextInt(1,5);
         List<User> userList = userRepository.findBy(PageRequest.of(0, size), User.class);
         assertThat(userList).hasSize(size);
     }
@@ -85,24 +79,17 @@ class UserRepositoryTest {
     @Test
     @DisplayName("test pagination return valid type")
     void paginationShouldReturnValidType() {
-        prepareData();
         int size = new Random().nextInt(1,15);
         var userList = userRepository.findBy(PageRequest.of(0, size), UserView.class);
         userList.forEach(user -> assertThat(user).isInstanceOf(UserView.class));
 
     }
-
-
-    private void prepareData() {
-        for (int i = 0; i < 15; i++) {
-            userRepository.save(User.builder()
-                    .role(Role.ADMIN)
-                    .status(Status.ACTIVE)
-                    .username("user" + i)
-                    .firstName("name" + i)
-                    .lastName("surname" + i)
-                    .email(format("testmail%d@gmail.com", i))
-                    .password("password").build());
-        }
+    @Test
+    void shouldReturnListWithEmployees() {
+        final long factoryId = 1L;
+        List<User> allByOwnerId = userRepository.findAllEmployees(factoryId, User.class);
+        assertThat(allByOwnerId).isNotEmpty()
+                .allMatch(x -> x.getFactory().getId() == factoryId);
     }
+
 }

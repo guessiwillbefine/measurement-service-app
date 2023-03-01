@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ua.ms.util.exception.AccessException;
-import ua.ms.util.exception.ExceptionResponse;
+import ua.ms.util.exception.response.ExceptionResponse;
 
 @RestControllerAdvice
 public class AccessExceptionHandler {

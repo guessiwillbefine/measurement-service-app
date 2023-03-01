@@ -8,11 +8,15 @@ databaseChangeLog:
       file: db/changelog/changeset/user-table.yaml
   - include:
       file: db/changelog/changeset/user-columns.yaml
+  - include:
+      file: db/changelog/changeset/factory-entity.yaml
 
 ### datasets
   - include:
       file: db/changelog/dataset/roles-and-status-dataset.xml
   - include:
-      file: db/changelog/dataset/default-admin-dataset.xml
+      file: db/changelog/dataset/factory-dataset.xml
   - include:
       file: db/changelog/dataset/user-dataset.xml
+  - include:
+      file: db/changelog/dataset/default-admin-dataset.xml
