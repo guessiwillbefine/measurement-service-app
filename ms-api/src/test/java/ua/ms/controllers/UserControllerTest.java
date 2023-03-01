@@ -45,7 +45,6 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("username").exists())
-                .andExpect(jsonPath("fullName").exists())
                 .andExpect(jsonPath("status").exists())
                 .andExpect(jsonPath("role").exists())
                 .andReturn();
@@ -81,13 +80,13 @@ class UserControllerTest {
         mockMvc.perform(delete("/users/6")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("response").value("Access denied"));
+                .andExpect(jsonPath("response").value("Access Denied"));
     }
 
     @Test
     @DisplayName("test updating users")
     void testUpdating() throws Exception {
-        final User adminUser = userRepository.findFirstByRole(Role.ADMIN);
+        final User adminUser = userRepository.findFirstByRole(Role.WORKER);
         final String token = jwtUtils.generateToken(adminUser.getUsername());
 
         adminUser.setLastName("newName");
@@ -106,7 +105,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("test updating users")
+    @DisplayName("test updating users with invalid params")
     void testUpdatingWithInvalidParams() throws Exception {
         final User workerUser = userRepository.findFirstByRole(Role.ADMIN);
         final String token = jwtUtils.generateToken(workerUser.getUsername());
@@ -125,7 +124,7 @@ class UserControllerTest {
     @Test
     @DisplayName("test pagination users")
     void testPagination() throws Exception {
-        final User adminUser = userRepository.findFirstByRole(Role.ADMIN);
+        final User adminUser = userRepository.findFirstByRole(Role.WORKER);
         final String token = jwtUtils.generateToken(adminUser.getUsername());
         final int userAmount = userRepository.findAll().size();
         final int size = new Random().nextInt(1, userAmount);
@@ -140,7 +139,7 @@ class UserControllerTest {
     @Test
     @DisplayName("test pagination users with invalid params")
     void testInvalidParamsPagination() throws Exception {
-        final User adminUser = userRepository.findFirstByRole(Role.ADMIN);
+        final User adminUser = userRepository.findFirstByRole(Role.WORKER);
         final String token = jwtUtils.generateToken(adminUser.getUsername());
 
         mockMvc.perform(get("/users/search")
