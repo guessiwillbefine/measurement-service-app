@@ -13,75 +13,64 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.MsApiApplication;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
-import ua.ms.entity.dto.UserDto;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.ms.util.ApplicationConstants.Security.*;
 
-/** user scenario tests - modifying, deleting entities. **/
+/** factory scenario tests - modifying, deleting entities. **/
 @ActiveProfiles("test-env")
 @Transactional
 @SpringBootTest(classes = MsApiApplication.class)
 @AutoConfigureMockMvc
-class UserTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+class FactoryTest {
     private final AuthenticationCredentialsDto adminCredentials = AuthenticationCredentialsDto.builder()
             .username("admin").password("admin").build();
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
-    @DisplayName("test deleting users")
-    void testDeletingUser() throws Exception {
+    @DisplayName("test deleting factories ")
+    void testDeletingEntities() throws Exception {
         final String credentialsJson = objectMapper.writeValueAsString(adminCredentials);
-
-        var response = mockMvc.perform(post("/auth/_login")
+        var loginResponse = mockMvc.perform(post("/auth/_login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(credentialsJson))
                 .andExpect(status().isOk()).andReturn();
+        final String token = getToken(loginResponse.getResponse().getContentAsString());
 
-        final String token = getToken(response.getResponse().getContentAsString());
-
-        var allUsersResponse = mockMvc.perform(get("/users/all")
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk()).andReturn();
-
-        String responseString = allUsersResponse.getResponse().getContentAsString();
-        Object[] allUsersList = objectMapper.readValue(responseString, Object[].class);
-        assertThat(allUsersList).isNotNull();
-
-        var userResponse = mockMvc.perform(get("/users/2")
+        var factoryResponse = mockMvc.perform(get("/factories/search")
                         .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
                 .andExpect(status().isOk()).andReturn();
 
-        var user = objectMapper.readValue(userResponse.getResponse().getContentAsString(), UserDto.class);
+        String response = factoryResponse.getResponse().getContentAsString();
+        Object[] factoriesBeforeDelete = objectMapper.readValue(response, Object[].class);
+        assertThat(factoriesBeforeDelete).isNotNull();
 
-        var deletedUserResponse = mockMvc.perform(delete("/users/2")
+
+        mockMvc.perform(delete("/factories/1")
+                        .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
+                .andExpect(status().isOk());
+
+        var factoryResponse2 = mockMvc.perform(get("/factories/search")
                         .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
                 .andExpect(status().isOk()).andReturn();
 
-        String deletedUserJson = deletedUserResponse.getResponse().getContentAsString();
-        var deletedUser = objectMapper.readValue(deletedUserJson, UserDto.class);
+        String response2 = factoryResponse2.getResponse().getContentAsString();
+        Object[] factoriesAfterDelete = objectMapper.readValue(response2, Object[].class);
 
-        assertThat(user.getId()).isEqualTo(deletedUser.getId());
-
-        var allUsersResponseAfterDelete = mockMvc.perform(get("/users/all")
-                        .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
-                .andExpect(status().isOk()).andReturn();
-
-        String responseStringAfterDelete = allUsersResponseAfterDelete.getResponse().getContentAsString();
-        Object[] allUsersListAfterDelete = objectMapper.readValue(responseStringAfterDelete, Object[].class);
-
-        assertThat(allUsersList.length - allUsersListAfterDelete.length).isSameAs(1);
+        assertThat(factoriesAfterDelete).isNotNull();
+        assertThat(factoriesBeforeDelete.length - factoriesAfterDelete.length).isEqualTo(1);
     }
-
     @Test
-    @DisplayName("test updating users")
-    void testUpdatingUser() throws Exception {
+    @DisplayName("test updating factories ")
+    void testUpdatingEntities() throws Exception {
         final String credentialsJson = objectMapper.writeValueAsString(adminCredentials);
         final String newName = "newName";
         var response = mockMvc.perform(post("/auth/_login")
@@ -90,32 +79,31 @@ class UserTest {
                 .andExpect(status().isOk()).andReturn();
         final String token = getToken(response.getResponse().getContentAsString());
 
-        var userResponse = mockMvc.perform(get("/users/1")
+        var factoryResponse = mockMvc.perform(get("/factories/1")
                         .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
                 .andExpect(status().isOk()).andReturn();
-        String userBody = userResponse.getResponse().getContentAsString();
-        var userData = objectMapper.readValue(userBody, Map.class);
+        String factoryBody = factoryResponse.getResponse().getContentAsString();
+        var factoryData = objectMapper.readValue(factoryBody, Map.class);
 
-        var updatedUser = new HashMap<>();
-        updatedUser.putAll(userData);
-        updatedUser.put("firstName", newName);
+        var factoryToUpdate = new HashMap<>();
+        factoryToUpdate.putAll(factoryData);
+        factoryToUpdate.put("name", newName);
 
-        String updatedUserJson = objectMapper.writeValueAsString(updatedUser);
-        var responseAfterUpdate = mockMvc.perform(patch("/users/1")
+        String updatedFactoryJson = objectMapper.writeValueAsString(factoryToUpdate);
+        var responseAfterUpdate = mockMvc.perform(patch("/factories/1")
                         .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(updatedUserJson))
+                        .content(updatedFactoryJson))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String updatedUserBody = responseAfterUpdate.getResponse().getContentAsString();
-        var updatedUserData = objectMapper.readValue(updatedUserBody, Map.class);
+        String updatedFactoryBody = responseAfterUpdate.getResponse().getContentAsString();
+        var updatedFactory = objectMapper.readValue(updatedFactoryBody, Map.class);
 
-        assertThat(updatedUserData.get("firstName"))
+        assertThat(updatedFactory.get("name"))
                 .isNotNull()
-                .isNotEqualTo(userData.get("firstName"))
+                .isNotEqualTo(factoryData.get("name"))
                 .isEqualTo(newName);
-
     }
 
     private String getToken(String contentAsString) throws JsonProcessingException {

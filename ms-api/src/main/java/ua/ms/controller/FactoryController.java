@@ -32,7 +32,7 @@ public class FactoryController {
         return byId.get();
     }
 
-    @GetMapping("/all")
+    @GetMapping("/search")
     public List<FactoryView> findAll() {
         return factoryService.findAll(FactoryView.class);
     }

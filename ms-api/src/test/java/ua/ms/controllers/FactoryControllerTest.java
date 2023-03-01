@@ -51,7 +51,7 @@ class FactoryControllerTest {
     @Test
     @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
     void shouldReturn200whenSearchingForList() throws Exception {
-        mockMvc.perform(get("/factories/all"))
+        mockMvc.perform(get("/factories/search"))
                 .andExpect(status().isOk());
     }
 
