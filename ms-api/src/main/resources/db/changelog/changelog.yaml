@@ -8,6 +8,8 @@ databaseChangeLog:
       file: db/changelog/changeset/user-table.yaml
   - include:
       file: db/changelog/changeset/user-columns.yaml
+  - include:
+      - file: db/changelog/changeset/sensor-table.yaml
 
 ### datasets
   - include:

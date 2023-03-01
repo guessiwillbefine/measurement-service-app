@@ -21,7 +21,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable() // in case we make REST without frontend like in MVC pattern, csrf doesn't have any danger for us
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/_login", "/auth/register").permitAll()
+                .requestMatchers("/auth/_login", "/auth/register", "/sensors/**").permitAll()
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/users/**").authenticated()
                 .and()
