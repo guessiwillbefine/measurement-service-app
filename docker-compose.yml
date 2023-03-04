@@ -1,36 +1,13 @@
-version: "1.0"
+version: "3.8"
 
 services:
 
   mysqldb:
-    image: mysql:5.7
-    restart: always
-    container_name: mysqldb
+    image: mysql:5
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=ms_db
-    networks:
-      - mynet
-    #ports:
-    #  - "3306:3306"
-
-  app:
-    build: .
-    restart: on-failure
-    container_name: ms-api
     ports:
-      - "8080:8080"
-    depends_on:
-      - mysqldb
-    networks:
-      - mynet
-    #environment:
-    # SPRING_APPLICATION_JSON: '{ spring.datasource.url: jdbc:mysql://mysqldb:3306/ms_db?createDatabaseIfNotExist=true }' 
+      - "3306:3306"
 
-    volumes:
-      - .m2:/root/.m2
-
-
-networks:
-  mynet:
-    
+    #TODO add RabbitMQ
