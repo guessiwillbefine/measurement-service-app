@@ -34,7 +34,7 @@ security:
 #swagger page header data
 api:
   version: 0.0.1
-  contacts: vadym.storozhuk@nure.ua | maxim.viskovatov@nure.ua
+  contacts: vadym.storozhuk@nure.ua | maksym.viskovatov@nure.ua
   title: Measurement service app
 
 #swagger configuration
