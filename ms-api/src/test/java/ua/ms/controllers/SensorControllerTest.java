@@ -14,7 +14,6 @@ import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.Sensor;
 import ua.ms.service.repository.SensorRepository;
 
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
