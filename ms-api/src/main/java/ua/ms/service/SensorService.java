@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.Sensor;
 import ua.ms.entity.dto.SensorDto;
 import ua.ms.service.repository.SensorRepository;
-import ua.ms.util.exception.SensorAlreadyExistException;
+import ua.ms.util.exception.SensorDuplicateException;
 import ua.ms.util.exception.SensorNotFoundException;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public class SensorService {
     public Sensor create(Sensor sensorToCreate){
         Optional<Sensor> sensor = sensorRepository.findByName(sensorToCreate.getName(), Sensor.class);
         if(sensor.isPresent())
-            throw new SensorAlreadyExistException("Sensor wit this name is already added");
+            throw new SensorDuplicateException("Sensor wit this name is already added");
 
         return sensorRepository.save(sensorToCreate);
     }

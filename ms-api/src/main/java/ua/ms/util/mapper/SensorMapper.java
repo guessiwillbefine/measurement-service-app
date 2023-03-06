@@ -18,7 +18,6 @@ public class SensorMapper implements Mapper<Sensor, SensorDto>{
 
     @Override
     public SensorDto toDto(Sensor entity) {
-        System.out.println("XUI " + entity);
         return SensorDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())

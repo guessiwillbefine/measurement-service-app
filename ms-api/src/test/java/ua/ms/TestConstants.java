@@ -1,11 +1,9 @@
 package ua.ms;
 
-import ua.ms.entity.Factory;
-import ua.ms.entity.Role;
-import ua.ms.entity.Status;
-import ua.ms.entity.User;
+import ua.ms.entity.*;
 import ua.ms.entity.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.dto.FactoryDto;
+import ua.ms.entity.dto.SensorDto;
 import ua.ms.entity.dto.UserDto;
 import ua.ms.entity.dto.view.FactoryView;
 import ua.ms.entity.dto.view.UserView;
@@ -48,6 +46,16 @@ public final class TestConstants {
             .lastName("sname")
             .status(Status.ACTIVE)
             .role(Role.ADMIN)
+            .build();
+
+    public static final Sensor SENSOR_ENTITY = Sensor.builder()
+            .id(1)
+            .name("someSensorName")
+            .build();
+
+    public static final SensorDto SENSOR_DTO = SensorDto.builder()
+            .id(1)
+            .name("someSensorName")
             .build();
 
     public static final UserView USER_VIEW = new UserView() {

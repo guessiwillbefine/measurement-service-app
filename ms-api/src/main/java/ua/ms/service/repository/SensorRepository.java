@@ -12,5 +12,6 @@ public interface SensorRepository extends JpaRepository<Sensor, Long> {
     <T> List<T> findBy(Pageable pagination, Class<T> type);
     <T> Optional<T> findById(long id, Class<T> type);
     <T> Optional<T> findByName(String name, Class<T> type);
+    Sensor findFirstById(long id);
 
 }

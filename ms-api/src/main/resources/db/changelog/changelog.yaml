@@ -22,3 +22,5 @@ databaseChangeLog:
       file: db/changelog/dataset/user-dataset.xml
   - include:
       file: db/changelog/dataset/default-admin-dataset.xml
+  - include:
+      file: db/changelog/dataset/sensor-dataset.xml
