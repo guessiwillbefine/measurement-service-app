@@ -1,13 +1,19 @@
 version: "3.8"
 
 services:
-
   mysqldb:
     image: mysql:5
+    container_name: mysqldb
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
     ports:
       - "3306:3306"
 
-    #TODO add RabbitMQ
+  rabbit:
+    image: rabbitmq:3.10.7-management
+    container_name: rabbitMQ
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
