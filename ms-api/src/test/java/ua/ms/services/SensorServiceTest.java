@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.Sensor;
 import ua.ms.entity.dto.SensorDto;
+import ua.ms.entity.dto.view.SensorView;
 import ua.ms.service.SensorService;
 import ua.ms.service.repository.SensorRepository;
 import ua.ms.util.exception.SensorDuplicateException;
@@ -21,8 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static ua.ms.TestConstants.SENSOR_DTO;
-import static ua.ms.TestConstants.SENSOR_ENTITY;
+import static ua.ms.TestConstants.*;
 
 
 @SpringBootTest
@@ -66,11 +66,15 @@ class SensorServiceTest {
                 .thenReturn(Optional.of(SENSOR_ENTITY));
         when(sensorRepository.findById(1L, SensorDto.class))
                 .thenReturn(Optional.of(SENSOR_DTO));
+        when(sensorRepository.findById(1L, SensorView.class))
+                .thenReturn(Optional.of(SENSOR_VIEW));
 
         assertThat(sensorService.findOne(1L, Sensor.class))
                 .isEqualTo(Optional.of(SENSOR_ENTITY));
         assertThat(sensorService.findOne(1L, SensorDto.class))
                 .isEqualTo(Optional.of(SENSOR_DTO));
+        assertThat(sensorService.findOne(1L, SensorView.class))
+                .isEqualTo(Optional.of(SENSOR_VIEW));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package ua.ms.util.exception;
 
-public class SensorException extends RuntimeException {
-    public SensorException(String message) {
+public abstract class SensorException extends RuntimeException {
+    protected SensorException(String message) {
         super(message);
     }
 }

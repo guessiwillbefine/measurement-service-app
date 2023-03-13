@@ -1,8 +1,12 @@
 package ua.ms.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+
+import java.util.List;
+
 
 @Entity
 @Setter
@@ -22,6 +26,7 @@ public class Sensor {
     @Column(name = "name")
     private String name;
 
-//    @OneToMany(mappedBy = "sensor")
-//    private List<Measure> measures;
+    @JsonBackReference
+    @OneToMany(mappedBy = "sensor")
+    private List<Measure> measures;
 }
