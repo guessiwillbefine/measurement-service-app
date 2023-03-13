@@ -48,9 +48,14 @@ public final class TestConstants {
             .role(Role.ADMIN)
             .build();
 
+    public static final MachineDto MACHINE_DTO = MachineDto.builder()
+            .id(1L).name("name").model("ZXC993-EZ").type(MachineType.MANIPULATOR).build();
+    public static final Machine MACHINE_ENTITY = Machine.builder().id(1L)
+            .model("ZXC993-EZ").type(MachineType.MANIPULATOR).build();
     public static final Sensor SENSOR_ENTITY = Sensor.builder()
             .id(1)
             .name("someSensorName")
+            .machine(MACHINE_ENTITY)
             .build();
 
     public static final SensorDto SENSOR_DTO = SensorDto.builder()

@@ -7,21 +7,26 @@
     <changeSet id="sensor dataset" author="moksem">
         <insert tableName="sensor">
             <column name="name" value="TestSensor1"/>
+            <column name="machine_id" value="1"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor2"/>
+            <column name="machine_id" value="1"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor3"/>
+            <column name="machine_id" value="1"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor4"/>
+            <column name="machine_id" value="1"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor5"/>
+            <column name="machine_id" value="1"/>
         </insert>
         <rollback>
-            DELETE FROM user_status;
+            DELETE FROM sensor;
         </rollback>
     </changeSet>
 </databaseChangeLog>

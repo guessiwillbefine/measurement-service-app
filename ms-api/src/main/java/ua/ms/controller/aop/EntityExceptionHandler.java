@@ -11,7 +11,8 @@ public class EntityExceptionHandler {
     @ExceptionHandler({UserValidationException.class,
             FactoryValidationException.class,
             SensorValidationException.class,
-            MeasureValidationException.class})
+            MeasureValidationException.class,
+            MachineValidationException.class})
     public ResponseEntity<ExceptionResponse> validationExceptionResponse(RuntimeException e) {
         return ResponseEntity.badRequest().body(ExceptionResponse.of(e));
     }
@@ -26,7 +27,8 @@ public class EntityExceptionHandler {
     @ExceptionHandler({UserNotFoundException.class,
             FactoryNotFoundException.class,
             SensorNotFoundException.class,
-            MeasureNotFoundException.class})
+            MeasureNotFoundException.class,
+            MachineNotFoundException.class})
     public ResponseEntity<ExceptionResponse> notFoundResponse(RuntimeException e) {
         return ResponseEntity.status(404).body(ExceptionResponse.of(e));
     }
