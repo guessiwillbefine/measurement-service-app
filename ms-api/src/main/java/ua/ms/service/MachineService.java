@@ -27,7 +27,7 @@ public class MachineService {
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Pageable pageable, Class<T> type) {
+    public <T> List<T> findAll(final Pageable pageable, final Class<T> type) {
         return machineRepository.findBy(pageable, type);
     }
 
