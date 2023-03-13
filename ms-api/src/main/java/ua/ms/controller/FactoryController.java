@@ -12,7 +12,7 @@ import ua.ms.entity.dto.view.FactoryView;
 import ua.ms.service.FactoryService;
 import ua.ms.util.exception.FactoryNotFoundException;
 import ua.ms.util.exception.FactoryValidationException;
-import ua.ms.util.mapper.FactoryMapper;
+import ua.ms.util.mapper.impl.FactoryMapper;
 
 import java.util.List;
 import java.util.Optional;
