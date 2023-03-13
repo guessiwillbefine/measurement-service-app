@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Sensor {
     @Column(name = "name")
     private String name;
 
+    @ToStringExclude
     @JsonBackReference
     @OneToMany(mappedBy = "sensor")
     private List<Measure> measures;

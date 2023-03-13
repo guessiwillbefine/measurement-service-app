@@ -6,11 +6,13 @@ import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Setter
 @Getter
 @Builder
+@ToString
 @Jacksonized
 @Table(name = "Measure")
 @AllArgsConstructor
@@ -34,11 +36,20 @@ public class Measure {
     private LocalDateTime createdAt;
 
     @Override
-    public String toString() {
-        return "Measure{" +
-                "id=" + id +
-                ", value=" + value +
-                ", createdAt=" + createdAt +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Measure measure = (Measure) o;
+
+        if (id != measure.id) return false;
+        if (Double.compare(measure.value, value) != 0) return false;
+        if (!Objects.equals(sensor, measure.sensor)) return false;
+        return Objects.equals(createdAt, measure.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
