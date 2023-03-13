@@ -19,7 +19,6 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class MachineService {
     private final MachineRepository machineRepository;
-    private final MachineMapper machineMapper;
 
     @Transactional(readOnly = true)
     public <T> Optional<T> findById(final Long id, final Class<T> type) {
@@ -33,7 +32,12 @@ public class MachineService {
 
     @Transactional
     public Machine save(final MachineDto machineDto) {
-        return machineRepository.save(machineMapper.toEntity(machineDto));
+        Machine machineToSave = Machine.builder()
+                .name(machineDto.getName())
+                .model(machineDto.getModel())
+                .type(machineDto.getType())
+                .build();
+        return machineRepository.save(machineToSave);
     }
 
     @Transactional

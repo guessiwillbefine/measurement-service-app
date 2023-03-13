@@ -27,7 +27,9 @@
         <insert tableName="machine_type">
             <column name="id" value="OTHER"/>
         </insert>
-
+        <insert tableName="machine_type">
+            <column name="id" value="MELTING"/>
+        </insert>
         <rollback>
             DELETE FROM machine_type;
         </rollback>
