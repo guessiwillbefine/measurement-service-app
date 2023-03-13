@@ -12,7 +12,7 @@ import ua.ms.entity.dto.SensorDto;
 import ua.ms.service.SensorService;
 import ua.ms.util.exception.SensorNotFoundException;
 import ua.ms.util.exception.SensorValidationException;
-import ua.ms.util.mapper.SensorMapper;
+import ua.ms.util.mapper.impl.SensorMapper;
 
 import java.util.List;
 import java.util.Optional;
