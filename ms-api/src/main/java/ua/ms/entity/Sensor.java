@@ -34,7 +34,7 @@ public class Sensor {
     @JoinColumn(name = "machine_id", referencedColumnName = "id")
     private Machine machine;
 
-    @ToStringExclude
+    @ToString.Exclude
     @JsonBackReference
     @OneToMany(mappedBy = "sensor")
     private List<Measure> measures;
