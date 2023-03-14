@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import org.apache.commons.lang3.builder.ToStringExclude;
+
+import java.util.List;
+
 
 import java.util.Objects;
 
@@ -30,8 +34,10 @@ public class Sensor {
     @JoinColumn(name = "machine_id", referencedColumnName = "id")
     private Machine machine;
 
-//    @OneToMany(mappedBy = "sensor")
-//    private List<Measure> measures;
+    @ToString.Exclude
+    @JsonBackReference
+    @OneToMany(mappedBy = "sensor")
+    private List<Measure> measures;
 
     @Override
     public boolean equals(Object o) {
@@ -47,4 +53,6 @@ public class Sensor {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

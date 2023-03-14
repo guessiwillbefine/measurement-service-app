@@ -16,6 +16,8 @@ databaseChangeLog:
       file: db/changelog/changeset/machine-type.yaml
   - include:
       file: db/changelog/changeset/machine-entity.yaml
+  - include:
+      file: db/changelog/changeset/measure-table.yaml
 
 
   ### datasets
@@ -33,3 +35,5 @@ databaseChangeLog:
       file: db/changelog/dataset/machine-dataset.xml
   - include:
       file: db/changelog/dataset/sensor-dataset.xml
+  - include:
+      file: db/changelog/dataset/measure-dataset.xml

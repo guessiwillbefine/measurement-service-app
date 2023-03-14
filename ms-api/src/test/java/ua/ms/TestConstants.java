@@ -3,8 +3,11 @@ package ua.ms;
 import ua.ms.entity.*;
 import ua.ms.entity.dto.*;
 import ua.ms.entity.dto.view.FactoryView;
+import ua.ms.entity.dto.view.MeasureView;
+import ua.ms.entity.dto.view.SensorView;
 import ua.ms.entity.dto.view.UserView;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,6 +63,20 @@ public final class TestConstants {
             .name("someSensorName")
             .build();
 
+    public static final Measure MEASURE_ENTITY = Measure.builder()
+            .id(1)
+            .value(37.1)
+            .sensor(SENSOR_ENTITY)
+            .createdAt(LocalDateTime.now())
+            .build();
+
+    public static final MeasureDto MEASURE_DTO = MeasureDto.builder()
+            .id(1)
+            .value(37.1)
+            .sensorId(SENSOR_ENTITY.getId())
+            .createdAt(LocalDateTime.now())
+            .build();
+
     public static final UserView USER_VIEW = new UserView() {
         @Override
         public long getId() {
@@ -113,5 +130,40 @@ public final class TestConstants {
             return List.of(USER_VIEW, USER_VIEW, USER_VIEW, USER_VIEW, USER_VIEW, USER_VIEW);
         }
     };
+
+    public static final MeasureView MEASURE_VIEW = new MeasureView() {
+        @Override
+        public long getId() {
+            return MEASURE_ENTITY.getId();
+        }
+
+        @Override
+        public double getValue() {
+            return MEASURE_ENTITY.getValue();
+        }
+
+        @Override
+        public LocalDateTime getCreatedAt() {
+            return MEASURE_ENTITY.getCreatedAt();
+        }
+    };
+
+    public static final SensorView SENSOR_VIEW = new SensorView() {
+        @Override
+        public long getId() {
+            return SENSOR_ENTITY.getId();
+        }
+
+        @Override
+        public String getName() {
+            return SENSOR_ENTITY.getName();
+        }
+
+        @Override
+        public List<MeasureView> getMeasures() {
+            return List.of(MEASURE_VIEW, MEASURE_VIEW, MEASURE_VIEW, MEASURE_VIEW);
+        }
+    };
+
 
 }

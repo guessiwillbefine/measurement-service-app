@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/machines/**").authenticated()
                 .requestMatchers("/users/**").authenticated()
                 .requestMatchers( "/sensors/**").authenticated()
+                .requestMatchers("/measures/**").authenticated()
                 .requestMatchers("/auth/_login").permitAll()
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .and()

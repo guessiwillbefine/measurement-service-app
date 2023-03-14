@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.Sensor;
 import ua.ms.entity.dto.SensorDto;
+import ua.ms.entity.dto.view.SensorView;
 import ua.ms.service.SensorService;
 import ua.ms.util.exception.SensorNotFoundException;
 import ua.ms.util.exception.SensorValidationException;
@@ -26,11 +27,11 @@ public class SensorController {
     private final SensorMapper sensorMapper;
 
     @GetMapping()
-    public List<SensorDto> getAll(@RequestParam(value = "page") int page,
-                                  @RequestParam(value = "size") int size) {
+    public List<SensorView> getAll(@RequestParam(value = "page") int page,
+                                   @RequestParam(value = "size") int size) {
 
         Pageable paginationParams = PageRequest.of(page, size);
-        return sensorService.findAll(paginationParams, SensorDto.class);
+        return sensorService.findAll(paginationParams, SensorView.class);
     }
 
     @GetMapping("/{id}")
