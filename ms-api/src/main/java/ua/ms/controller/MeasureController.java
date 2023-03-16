@@ -10,7 +10,7 @@ import ua.ms.entity.dto.MeasureDto;
 import ua.ms.entity.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.util.exception.MeasureValidationException;
-import ua.ms.util.mapper.MeasureMapper;
+import ua.ms.util.mapper.impl.MeasureMapper;
 
 import java.util.List;
 

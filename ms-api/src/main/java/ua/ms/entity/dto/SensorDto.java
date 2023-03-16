@@ -21,4 +21,6 @@ public class SensorDto {
             max = ApplicationConstants.Validation.MAX_NAME_LENGTH,
             message = ApplicationConstants.Validation.SENSOR_NAME_MSG)
     private String name;
+
+    private Long machineId;
 }

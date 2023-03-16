@@ -6,4 +6,5 @@ public interface FactoryView {
     long getId();
     String getName();
     List<UserView> getEmployees();
+    List<MachineView> getMachines();
 }

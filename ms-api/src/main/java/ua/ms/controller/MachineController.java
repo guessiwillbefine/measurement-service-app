@@ -27,7 +27,7 @@ import static java.lang.String.format;
 @Tag(name = "Machine entity controller")
 public class MachineController {
     private final MachineService machineService;
-    private final Mapper<Machine, MachineDto> machineMapper;
+    private final Mapper<Machine, MachineDto> mapper;
 
     @GetMapping("/{id}")
     public MachineView findById(@PathVariable Long id) {
@@ -50,8 +50,10 @@ public class MachineController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MachineDto save(@RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new MachineValidationException(bindingResult.getAllErrors().toString());
-        return machineMapper.toDto(machineService.save(machineDto));
+        if (bindingResult.hasErrors()) {
+            throw new MachineValidationException(bindingResult.getAllErrors().toString());
+        }
+        return mapper.toDto(machineService.save(machineDto));
     }
 
     @PatchMapping("/{id}")

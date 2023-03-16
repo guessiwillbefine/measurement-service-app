@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +33,10 @@ public class Machine {
     @OneToMany(mappedBy = "machine")
     private List<Sensor> sensors;
 
+    @ManyToOne
+    @JoinColumn(name = "factory_id", referencedColumnName = "id")
+    private Factory factory;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +46,8 @@ public class Machine {
                 type == machine.type &&
                 Objects.equals(name, machine.name) &&
                 Objects.equals(model, machine.model) &&
-                Objects.equals(sensors, machine.sensors);
+                Objects.equals(sensors, machine.sensors) &&
+                Objects.equals(factory, machine.factory);
     }
 
     @Override

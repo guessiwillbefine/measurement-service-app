@@ -69,6 +69,7 @@ class MachineControllerTest {
     @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
     void saveShouldReturnDto() throws Exception {
         final String dtoJson = objectMapper.writeValueAsString(MACHINE_DTO);
+        System.out.println(dtoJson);
         final var response = mockMvc.perform(post("/machines").contentType(MediaType.APPLICATION_JSON).content(dtoJson))
                 .andExpect(status().isCreated()).andReturn();
         final String responseContent = response.getResponse().getContentAsString();
