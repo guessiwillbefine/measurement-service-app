@@ -41,7 +41,7 @@ public class FactoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public FactoryDto create(@Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new FactoryValidationException(bindingResult.getAllErrors().toString());
-        Factory saved = factoryService.save(factoryDto);
+        Factory saved = factoryService.save(mapper.toEntity(factoryDto));
         return mapper.toDto(saved);
     }
 

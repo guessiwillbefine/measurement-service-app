@@ -1,5 +1,6 @@
 package ua.ms.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/measures")
 @RequiredArgsConstructor
+@Tag(name = "Measure entity controller")
 public class MeasureController {
     private final MeasureService measureService;
     private final MeasureMapper measureMapper;

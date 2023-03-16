@@ -32,14 +32,8 @@ public class MachineService {
     }
 
     @Transactional
-    public Machine save(final MachineDto machineDto) {
-        Machine machineToSave = Machine.builder()
-                .name(machineDto.getName())
-                .model(machineDto.getModel())
-                .type(machineDto.getType())
-                .factory(Factory.builder().id(machineDto.getFactoryId()).build())
-                .build();
-        return machineRepository.save(machineToSave);
+    public Machine save(final Machine machine) {
+        return machineRepository.save(machine);
     }
 
     @Transactional

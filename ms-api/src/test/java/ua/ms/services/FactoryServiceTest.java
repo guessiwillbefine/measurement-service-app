@@ -95,7 +95,7 @@ class FactoryServiceTest {
         when(factoryRepository.save(any()))
                 .thenReturn(FACTORY_ENTITY);
 
-        assertThat(factoryService.save(FACTORY_DTO)).isEqualTo(FACTORY_ENTITY);
+        assertThat(factoryService.save(FACTORY_ENTITY)).isEqualTo(FACTORY_ENTITY);
     }
 
     @Test
@@ -108,7 +108,7 @@ class FactoryServiceTest {
                 .thenReturn(Optional.of(USER_ENTITY));
         when(factoryRepository.save(any())).thenReturn(FACTORY_ENTITY);
 
-        assertThatThrownBy(() -> factoryService.save(FACTORY_DTO))
+        assertThatThrownBy(() -> factoryService.save(FACTORY_ENTITY))
                 .isInstanceOf(FactoryDuplicateException.class);
     }
 

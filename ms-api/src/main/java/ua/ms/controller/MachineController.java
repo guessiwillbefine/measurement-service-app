@@ -53,7 +53,7 @@ public class MachineController {
         if (bindingResult.hasErrors()) {
             throw new MachineValidationException(bindingResult.getAllErrors().toString());
         }
-        return mapper.toDto(machineService.save(machineDto));
+        return mapper.toDto(machineService.save(mapper.toEntity(machineDto)));
     }
 
     @PatchMapping("/{id}")
