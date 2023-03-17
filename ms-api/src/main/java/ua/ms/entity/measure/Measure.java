@@ -1,9 +1,10 @@
-package ua.ms.entity;
+package ua.ms.entity.measure;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import ua.ms.entity.sensor.Sensor;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import java.util.Objects;
 @Table(name = "Measure")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Measure {
+public class Measure implements AbstractMeasureIdentifiable{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

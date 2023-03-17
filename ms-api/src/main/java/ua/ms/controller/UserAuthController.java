@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.configuration.security.AuthManager;
 import ua.ms.configuration.security.util.JWTUtils;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.service.UserService;
 import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.UserValidationException;

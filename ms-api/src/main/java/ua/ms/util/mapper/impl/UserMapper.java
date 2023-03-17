@@ -2,13 +2,10 @@ package ua.ms.util.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ua.ms.entity.Factory;
-import ua.ms.entity.User;
-import ua.ms.entity.dto.UserDto;
-import ua.ms.service.UserService;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.user.User;
+import ua.ms.entity.user.dto.UserDto;
 import ua.ms.util.mapper.Mapper;
-
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor

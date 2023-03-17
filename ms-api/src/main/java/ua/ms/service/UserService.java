@@ -6,11 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.repository.RegistrationService;
-import ua.ms.entity.Role;
-import ua.ms.entity.Status;
-import ua.ms.entity.User;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
-import ua.ms.entity.dto.UserDto;
+import ua.ms.entity.user.AbstractUserIdentifiable;
+import ua.ms.entity.user.Role;
+import ua.ms.entity.user.Status;
+import ua.ms.entity.user.User;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.UserDuplicateException;
 import ua.ms.util.exception.UserNotFoundException;
@@ -33,7 +34,7 @@ public class UserService implements RegistrationService {
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> loadByUsername(String username, Class<T> type) {
+    public <T extends AbstractUserIdentifiable> Optional<T> loadByUsername(String username, Class<T> type) {
         return userRepository.findByUsername(username, type);
     }
 
@@ -56,20 +57,20 @@ public class UserService implements RegistrationService {
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findById(long id, Class<T> userClass) {
+    public <T extends AbstractUserIdentifiable> Optional<T> findById(long id, Class<T> userClass) {
         log.debug(format("Attempt to find user by his id[%d]", id));
         return userRepository.findById(id, userClass);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Pageable pageable, Class<T> type) {
+    public <T extends AbstractUserIdentifiable> List<T> findAll(Pageable pageable, Class<T> type) {
         log.debug(format("Attempt to pageable[size=%d page=%d] list",
                 pageable.getPageNumber(), pageable.getPageSize()));
         return userRepository.findBy(pageable, type);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Class<T> type) {
+    public <T extends AbstractUserIdentifiable> List<T> findAll(Class<T> type) {
         return userRepository.findBy(type);
     }
     @Transactional

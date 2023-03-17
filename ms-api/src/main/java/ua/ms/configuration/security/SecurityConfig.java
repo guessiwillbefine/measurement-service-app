@@ -10,7 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ua.ms.configuration.security.util.JWTFilter;
-import ua.ms.entity.Role;
+import ua.ms.entity.user.Role;
 
 @Configuration
 @EnableWebSecurity

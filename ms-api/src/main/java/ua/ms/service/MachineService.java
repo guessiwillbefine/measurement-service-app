@@ -4,12 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Factory;
-import ua.ms.entity.Machine;
-import ua.ms.entity.dto.MachineDto;
+import ua.ms.entity.machine.AbstractMachineIdentifiable;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.service.repository.MachineRepository;
 import ua.ms.util.exception.MachineNotFoundException;
-import ua.ms.util.mapper.impl.MachineMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +21,12 @@ public class MachineService {
     private final MachineRepository machineRepository;
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findById(final Long id, final Class<T> type) {
+    public <T extends AbstractMachineIdentifiable> Optional<T> findById(final Long id, final Class<T> type) {
        return machineRepository.findById(id, type);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(final Pageable pageable, final Class<T> type) {
+    public <T extends AbstractMachineIdentifiable> List<T> findAll(final Pageable pageable, final Class<T> type) {
         return machineRepository.findBy(pageable, type);
     }
 

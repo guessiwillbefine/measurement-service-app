@@ -1,4 +1,4 @@
-package ua.ms.entity.dto;
+package ua.ms.entity.user.dto;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
@@ -7,14 +7,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
-import ua.ms.entity.Role;
-import ua.ms.entity.Status;
+import ua.ms.entity.user.AbstractUserIdentifiable;
+import ua.ms.entity.user.Role;
+import ua.ms.entity.user.Status;
 import ua.ms.util.ApplicationConstants.Validation;
 
 @Getter
 @Builder
 @Jacksonized
-public class UserDto {
+public class UserDto implements AbstractUserIdentifiable {
     @Nullable
     private Long id;
     @Length(min = Validation.MIN_USERNAME_LENGTH,

@@ -1,11 +1,13 @@
-package ua.ms.entity;
+package ua.ms.entity.factory;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-import java.io.Serializable;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.user.User;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
 @Table(name = "factory")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Factory {
+public class Factory implements AbstractFactoryIdentifiable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

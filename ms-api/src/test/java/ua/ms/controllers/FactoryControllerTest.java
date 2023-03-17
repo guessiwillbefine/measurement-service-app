@@ -11,8 +11,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Factory;
-import ua.ms.entity.dto.FactoryDto;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.factory.dto.FactoryDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

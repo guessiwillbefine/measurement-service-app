@@ -1,8 +1,25 @@
 package ua.ms;
 
-import ua.ms.entity.*;
-import ua.ms.entity.dto.*;
-import ua.ms.entity.dto.view.*;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.factory.dto.FactoryDto;
+import ua.ms.entity.factory.dto.view.FactoryView;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.machine.MachineType;
+import ua.ms.entity.machine.dto.MachineDto;
+import ua.ms.entity.machine.dto.view.MachineView;
+import ua.ms.entity.measure.Measure;
+import ua.ms.entity.measure.MeasureSystem;
+import ua.ms.entity.measure.dto.MeasureDto;
+import ua.ms.entity.measure.dto.view.MeasureView;
+import ua.ms.entity.sensor.Sensor;
+import ua.ms.entity.sensor.dto.SensorDto;
+import ua.ms.entity.sensor.dto.view.SensorView;
+import ua.ms.entity.user.Role;
+import ua.ms.entity.user.Status;
+import ua.ms.entity.user.User;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.UserDto;
+import ua.ms.entity.user.dto.view.UserView;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -148,6 +165,11 @@ public final class TestConstants {
         @Override
         public String getName() {
             return SENSOR_ENTITY.getName();
+        }
+
+        @Override
+        public List<MeasureView> getMeasures() {
+            return Collections.emptyList();
         }
 
         @Override

@@ -1,9 +1,9 @@
 package ua.ms.util.mapper.impl;
 
 import org.springframework.stereotype.Component;
-import ua.ms.entity.Measure;
-import ua.ms.entity.Sensor;
-import ua.ms.entity.dto.MeasureDto;
+import ua.ms.entity.measure.Measure;
+import ua.ms.entity.sensor.Sensor;
+import ua.ms.entity.measure.dto.MeasureDto;
 import ua.ms.util.mapper.Mapper;
 
 @Component

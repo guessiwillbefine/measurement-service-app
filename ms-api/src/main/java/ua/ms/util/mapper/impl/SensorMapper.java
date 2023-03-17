@@ -2,9 +2,9 @@ package ua.ms.util.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ua.ms.entity.Machine;
-import ua.ms.entity.Sensor;
-import ua.ms.entity.dto.SensorDto;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.sensor.Sensor;
+import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.util.mapper.Mapper;
 
 @Component
