@@ -12,7 +12,7 @@ import ua.ms.entity.dto.view.FactoryView;
 import ua.ms.service.FactoryService;
 import ua.ms.util.exception.FactoryNotFoundException;
 import ua.ms.util.exception.FactoryValidationException;
-import ua.ms.util.mapper.impl.FactoryMapper;
+import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Tag(name = "Factory entity controller")
 public class FactoryController {
     private final FactoryService factoryService;
-    private final FactoryMapper factoryMapper;
+    private final Mapper<Factory,FactoryDto> mapper;
 
     @GetMapping("/{id}")
     public FactoryView findById(@PathVariable long id) {
@@ -41,20 +41,20 @@ public class FactoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public FactoryDto create(@Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new FactoryValidationException(bindingResult.getAllErrors().toString());
-        Factory saved = factoryService.save(factoryDto);
-        return factoryMapper.toDto(saved);
+        Factory saved = factoryService.save(mapper.toEntity(factoryDto));
+        return mapper.toDto(saved);
     }
 
     @DeleteMapping("/{id}")
     public FactoryDto delete(@PathVariable long id) {
         Factory deletedFactory = factoryService.deleteById(id);
-        return factoryMapper.toDto(deletedFactory);
+        return mapper.toDto(deletedFactory);
     }
 
     @PatchMapping("/{id}")
     public FactoryDto update(@PathVariable long id,
                              @Valid @RequestBody FactoryDto factoryDto) {
         Factory updatedFactory = factoryService.update(id, factoryDto);
-        return factoryMapper.toDto(updatedFactory);
+        return mapper.toDto(updatedFactory);
     }
 }

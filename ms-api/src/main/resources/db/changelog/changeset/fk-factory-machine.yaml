@@ -1,0 +1,21 @@
+databaseChangeLog:
+    - changeSet:
+        id: add factory-machine fk
+        author: vadim
+        changes:
+          - addColumn:
+              tableName: machine
+              columns:
+                - column:
+                    name: factory_id
+                    type: int
+                    constraints:
+                      nullable: false
+
+          - addForeignKeyConstraint:
+              constraintName: factory_machine_fk
+              baseTableName: machine
+              baseColumnNames: factory_id
+              referencedTableName: factory
+              referencedColumnNames: id
+              onDelete: CASCADE

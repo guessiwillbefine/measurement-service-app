@@ -17,7 +17,7 @@ import java.util.Objects;
 @Table(name = "factory")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Factory implements Serializable {
+public class Factory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -30,14 +30,19 @@ public class Factory implements Serializable {
     @OneToMany(mappedBy = "factory")
     private List<User> employees;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "factory")
+    private List<Machine> machines;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Factory factory = (Factory) o;
-        return  Objects.equals(id, factory.id) &&
+        return Objects.equals(id, factory.id) &&
                 Objects.equals(name, factory.name) &&
-                Objects.equals(employees, factory.employees);
+                Objects.equals(employees, factory.employees) &&
+                Objects.equals(machines, factory.machines);
     }
 
     @Override

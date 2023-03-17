@@ -1,6 +1,5 @@
 package ua.ms.entity.dto;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +14,6 @@ import ua.ms.util.ApplicationConstants.Validation;
 @Getter
 @Builder
 @Jacksonized
-@Tag(name = "User DTO")
 public class UserDto {
     @Nullable
     private Long id;
@@ -42,4 +40,5 @@ public class UserDto {
     private Status status;
     @NotNull
     private Role role;
+    private Long factoryId;
 }

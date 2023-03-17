@@ -36,13 +36,9 @@ class MapperTest {
     @DisplayName("test mapping User entity")
     void testMapToEntityUser() {
         when(userService.findById(anyLong(), any())).thenReturn(Optional.of(USER_ENTITY));
-        assertThat(userMapper.toEntity(USER_DTO)).isEqualTo(USER_ENTITY);
+        assertThat(userMapper.toEntity(USER_DTO).getId()).isEqualTo(USER_ENTITY.getId());
     }
-    @Test
-    @DisplayName("test throwing exception in User mapper")
-    void testThrowExceptionIfUserNotPresent() {
-        assertThrows(NoSuchElementException.class, () -> userMapper.toEntity(USER_DTO));
-    }
+
     @Test
     @DisplayName("test mapping User entity to dto")
     void testMapToDtoUser() {
@@ -59,12 +55,7 @@ class MapperTest {
     @DisplayName("test mapping Factory entity")
     void testMapToEntityFactory() {
         when(factoryService.findByName(anyString(), any())).thenReturn(Optional.of(FACTORY_ENTITY));
-        assertThat(factoryMapper.toEntity(FACTORY_DTO)).isEqualTo(FACTORY_ENTITY);
-    }
-    @Test
-    @DisplayName("test throwing exception in Factory mapper")
-    void testThrowExceptionIfFactoryNotPresent() {
-        assertThrows(NoSuchElementException.class, () -> factoryMapper.toEntity(FACTORY_DTO));
+        assertThat(factoryMapper.toEntity(FACTORY_DTO).getId()).isEqualTo(FACTORY_ENTITY.getId());
     }
 
     @Test

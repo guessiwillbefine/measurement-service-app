@@ -2,6 +2,7 @@ package ua.ms.util.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ua.ms.entity.Factory;
 import ua.ms.entity.User;
 import ua.ms.entity.dto.UserDto;
 import ua.ms.service.UserService;
@@ -12,12 +13,20 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class UserMapper implements Mapper<User, UserDto> {
-    private final UserService userService;
 
     @Override
     public User toEntity(UserDto userDto) {
-        Optional<User> byId = userService.findById(userDto.getId(), User.class);
-        return byId.orElseThrow();
+       return User.builder()
+               .id(userDto.getId())
+               .username(userDto.getUsername())
+               .factory(Factory.builder().id(userDto.getFactoryId())
+                       .build())
+               .status(userDto.getStatus())
+               .role(userDto.getRole())
+               .email(userDto.getEmail())
+               .firstName(userDto.getFirstName())
+               .lastName(userDto.getLastName())
+               .build();
     }
 
     @Override

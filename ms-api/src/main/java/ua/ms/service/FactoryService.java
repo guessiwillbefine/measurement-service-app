@@ -24,16 +24,13 @@ public class FactoryService {
         return factoryRepository.findById(id, type);
     }
 
-    @Transactional
-    public Factory save(FactoryDto factoryDto) {
-        Optional<Factory> byName = factoryRepository.findByName(factoryDto.getName(), Factory.class);
+    @Transactional //todo need to remove checking duplicate
+    public Factory save(Factory factory) {
+        Optional<Factory> byName = factoryRepository.findByName(factory.getName(), Factory.class);
         if (byName.isEmpty()) {
-                Factory factoryToSave = Factory.builder()
-                        .name(factoryDto.getName())
-                        .build();
-                return factoryRepository.save(factoryToSave);
+                return factoryRepository.save(factory);
         }
-        throw new FactoryDuplicateException(format("Factory[%s] is already exists", factoryDto.getName()));
+        throw new FactoryDuplicateException(format("Factory[%s] is already exists", factory.getName()));
     }
 
     @Transactional

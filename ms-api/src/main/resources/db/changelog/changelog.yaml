@@ -18,6 +18,8 @@ databaseChangeLog:
       file: db/changelog/changeset/machine-entity.yaml
   - include:
       file: db/changelog/changeset/measure-table.yaml
+  - include:
+      file: db/changelog/changeset/fk-factory-machine.yaml
 
 
   ### datasets
