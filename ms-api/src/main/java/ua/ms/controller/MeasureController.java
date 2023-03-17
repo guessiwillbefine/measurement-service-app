@@ -10,7 +10,7 @@ import ua.ms.entity.dto.MeasureDto;
 import ua.ms.entity.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.util.exception.MeasureValidationException;
-import ua.ms.util.mapper.impl.MeasureMapper;
+import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MeasureController {
     private final MeasureService measureService;
-    private final MeasureMapper measureMapper;
+    private final Mapper<Measure, MeasureDto> mapper;
 
     @GetMapping("/{id}")
     public List<MeasureView> getBySensorId(@PathVariable("id") long id) {
@@ -36,8 +36,8 @@ public class MeasureController {
         if (bindingResult.hasErrors())
             throw new MeasureValidationException(bindingResult.getAllErrors().toString());
 
-        Measure createdMeasure = measureService.create(measureMapper.toEntity(measureDto));
-        return measureMapper.toDto(createdMeasure);
+        Measure createdMeasure = measureService.create(mapper.toEntity(measureDto));
+        return mapper.toDto(createdMeasure);
     }
 
     @DeleteMapping("/{id}")
@@ -46,6 +46,6 @@ public class MeasureController {
     }
 
     private List<MeasureDto> listOfMeasuresToDto(List<Measure> measures){
-        return measures.stream().map(measureMapper::toDto).toList();
+        return measures.stream().map(mapper::toDto).toList();
     }
 }
