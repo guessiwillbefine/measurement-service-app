@@ -3,6 +3,7 @@ package ua.ms.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ms.entity.factory.AbstractFactoryIdentifiable;
 import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.service.repository.FactoryRepository;
@@ -20,7 +21,7 @@ public class FactoryService {
     private final FactoryRepository factoryRepository;
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findById(long id, Class<T> type) {
+    public <T extends AbstractFactoryIdentifiable> Optional<T> findById(long id, Class<T> type) {
         return factoryRepository.findById(id, type);
     }
 
@@ -60,12 +61,12 @@ public class FactoryService {
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findByName(String name, Class<T> type) {
+    public <T extends AbstractFactoryIdentifiable> Optional<T> findByName(String name, Class<T> type) {
         return factoryRepository.findByName(name, type);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Class<T> type) {
+    public <T extends AbstractFactoryIdentifiable> List<T> findAll(Class<T> type) {
         return factoryRepository.findBy(type);
     }
 }

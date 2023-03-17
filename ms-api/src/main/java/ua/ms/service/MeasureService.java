@@ -3,6 +3,7 @@ package ua.ms.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ms.entity.measure.AbstractMeasureIdentifiable;
 import ua.ms.entity.measure.Measure;
 import ua.ms.service.repository.MeasureRepository;
 
@@ -15,7 +16,7 @@ public class MeasureService {
     private final MeasureRepository measureRepository;
 
     @Transactional(readOnly = true)
-    public <T> List<T> findBySensorId(long id, Class<T> type) {
+    public <T extends AbstractMeasureIdentifiable> List<T> findBySensorId(long id, Class<T> type) {
         return measureRepository.findBySensorIdOrderByCreatedAtDesc(id, type);
     }
 

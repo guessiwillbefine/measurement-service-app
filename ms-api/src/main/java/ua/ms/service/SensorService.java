@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.service.repository.SensorRepository;
@@ -19,12 +20,12 @@ public class SensorService {
     private final SensorRepository sensorRepository;
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Pageable pagination, Class<T> type) {
+    public <T extends AbstractSensorIdentifiable> List<T> findAll(Pageable pagination, Class<T> type) {
         return sensorRepository.findBy(pagination, type);
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findOne(long id, Class<T> type) {
+    public <T extends AbstractSensorIdentifiable> Optional<T> findOne(long id, Class<T> type) {
         return sensorRepository.findById(id, type);
     }
 
