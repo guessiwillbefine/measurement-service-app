@@ -32,11 +32,3 @@ databaseChangeLog:
                   type: timestamp
                   constraints:
                     nullable: false
-#              - column:
-#                  name: measure_id
-#                  type: varchar(20)
-#                  constraints:
-#                    foreignKeyName: measure_measure_system_fk
-#                    referencedTableName: measure_system
-#                    referencedColumnNames: id
-#                    nullable: false

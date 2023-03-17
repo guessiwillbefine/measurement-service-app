@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
+import ua.ms.entity.MeasureSystem;
 import ua.ms.util.ApplicationConstants;
 
 @Getter
@@ -21,4 +22,7 @@ public class SensorDto {
             max = ApplicationConstants.Validation.MAX_NAME_LENGTH,
             message = ApplicationConstants.Validation.SENSOR_NAME_MSG)
     private String name;
+
+    @Nullable
+    private MeasureSystem measureSystem;
 }

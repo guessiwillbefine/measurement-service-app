@@ -9,11 +9,13 @@ import ua.ms.util.mapper.Mapper;
 @Component
 @RequiredArgsConstructor
 public class SensorMapper implements Mapper<Sensor, SensorDto> {
+
     @Override
     public Sensor toEntity(SensorDto dto) {
         return Sensor.builder()
                 .id(dto.getId())
                 .name(dto.getName())
+                .measureSystem(dto.getMeasureSystem())
                 .build();
     }
 
@@ -22,6 +24,7 @@ public class SensorMapper implements Mapper<Sensor, SensorDto> {
         return SensorDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .measureSystem(entity.getMeasureSystem())
                 .build();
     }
 }

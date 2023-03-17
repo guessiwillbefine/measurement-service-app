@@ -10,7 +10,7 @@ import ua.ms.entity.dto.MeasureDto;
 import ua.ms.entity.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.util.exception.MeasureValidationException;
-import ua.ms.util.mapper.MeasureMapper;
+import ua.ms.util.mapper.impl.MeasureMapper;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public class MeasureController {
 
     @GetMapping("/{id}")
     public List<MeasureView> getBySensorId(@PathVariable("id") long id) {
+        System.out.println("hui");
         return measureService.findBySensorId(id, MeasureView.class);
     }
 

@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.util.JWTUtils;
+import ua.ms.entity.MeasureSystem;
 import ua.ms.entity.dto.MeasureDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,6 +48,7 @@ class MeasureControllerTest {
                 .value(27.7)
                 .sensorId(1)
                 .build();
+        System.out.println(measureDto);
         String measureDtoJson = objectMapper.writeValueAsString(measureDto);
 
         mockMvc.perform(post("/measures/1")

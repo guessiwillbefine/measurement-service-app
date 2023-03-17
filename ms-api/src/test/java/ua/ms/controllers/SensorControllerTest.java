@@ -11,7 +11,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.util.JWTUtils;
+import ua.ms.entity.MeasureSystem;
 import ua.ms.entity.Sensor;
+import ua.ms.entity.dto.SensorDto;
 import ua.ms.service.repository.SensorRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -108,8 +110,9 @@ class SensorControllerTest {
     @Test
     @DisplayName("test to create sensor")
     void testCreateSensor() throws Exception {
-        final Sensor sensor = Sensor.builder()
+        final SensorDto sensor = SensorDto.builder()
                 .name("newSensorTest")
+                .measureSystem(MeasureSystem.VOLT)
                 .build();
         final String token = jwtUtils.generateToken(ADMIN_USER);
 
@@ -118,9 +121,10 @@ class SensorControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(sensorToCreate)
                         .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").exists())
                 .andExpect(jsonPath("name").exists())
+                .andExpect(jsonPath("measureSystem").exists())
                 .andReturn();
     }
 

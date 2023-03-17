@@ -56,6 +56,7 @@ public final class TestConstants {
             .id(1)
             .name("someSensorName")
             .machine(MACHINE_ENTITY)
+            .measureSystem(MeasureSystem.VOLT)
             .build();
 
     public static final SensorDto SENSOR_DTO = SensorDto.builder()
@@ -143,6 +144,11 @@ public final class TestConstants {
         }
 
         @Override
+        public SensorView getSensor() {
+            return SENSOR_VIEW;
+        }
+
+        @Override
         public LocalDateTime getCreatedAt() {
             return MEASURE_ENTITY.getCreatedAt();
         }
@@ -160,8 +166,8 @@ public final class TestConstants {
         }
 
         @Override
-        public List<MeasureView> getMeasures() {
-            return List.of(MEASURE_VIEW, MEASURE_VIEW, MEASURE_VIEW, MEASURE_VIEW);
+        public MeasureSystem getMeasureSystem() {
+            return SENSOR_ENTITY.getMeasureSystem();
         }
     };
 
