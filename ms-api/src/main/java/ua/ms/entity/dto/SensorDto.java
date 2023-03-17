@@ -1,11 +1,13 @@
 package ua.ms.entity.dto;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
+import ua.ms.entity.MeasureSystem;
 import ua.ms.util.ApplicationConstants;
 
 @Getter
@@ -21,6 +23,9 @@ public class SensorDto {
             max = ApplicationConstants.Validation.MAX_NAME_LENGTH,
             message = ApplicationConstants.Validation.SENSOR_NAME_MSG)
     private String name;
+
+    @NotNull
+    private MeasureSystem measureSystem;
 
     private Long machineId;
 }

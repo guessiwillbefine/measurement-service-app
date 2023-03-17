@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 import org.springframework.lang.Nullable;
+import ua.ms.entity.MeasureSystem;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ public class MeasureDto {
     private long id;
     @NotNull
     private double value;
+
     @NotNull
     @Min(1)
     private long sensorId;

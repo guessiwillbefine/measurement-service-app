@@ -27,4 +27,23 @@
             DELETE FROM user_status;
         </rollback>
     </changeSet>
+
+    <changeSet id="measure system dataset" author="moksem">
+        <insert tableName="measure_system">
+            <column name="id" value="SECONDS" />
+        </insert>
+        <insert tableName="measure_system">
+            <column name="id" value="CELSIUS" />
+        </insert>
+        <insert tableName="measure_system">
+            <column name="id" value="VOLT" />
+        </insert>
+        <insert tableName="measure_system">
+            <column name="id" value="AMPERE" />
+        </insert>
+        <rollback>
+            DELETE FROM measure_system;
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

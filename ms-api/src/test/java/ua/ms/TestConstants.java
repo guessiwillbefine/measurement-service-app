@@ -129,6 +129,11 @@ public final class TestConstants {
         }
 
         @Override
+        public SensorView getSensor() {
+            return SENSOR_VIEW;
+        }
+
+        @Override
         public LocalDateTime getCreatedAt() {
             return MEASURE_ENTITY.getCreatedAt();
         }
@@ -146,8 +151,8 @@ public final class TestConstants {
         }
 
         @Override
-        public List<MeasureView> getMeasures() {
-            return List.of(MEASURE_VIEW, MEASURE_VIEW, MEASURE_VIEW, MEASURE_VIEW);
+        public MeasureSystem getMeasureSystem() {
+            return SENSOR_ENTITY.getMeasureSystem();
         }
     };
 

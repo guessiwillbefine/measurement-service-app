@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.Sensor;
@@ -27,11 +28,11 @@ public class SensorController {
     private final Mapper<Sensor,SensorDto> mapper;
 
     @GetMapping()
-    public List<SensorView> getAll(@RequestParam(value = "page") int page,
+    public List<SensorDto> getAll(@RequestParam(value = "page") int page,
                                    @RequestParam(value = "size") int size) {
 
         Pageable paginationParams = PageRequest.of(page, size);
-        return sensorService.findAll(paginationParams, SensorView.class);
+        return sensorService.findAll(paginationParams, SensorDto.class);
     }
 
     @GetMapping("/{id}")
@@ -52,6 +53,7 @@ public class SensorController {
         return mapper.toDto(updatedSensor);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     public SensorDto create(@RequestBody @Valid SensorDto sensorDto,
                             BindingResult bindingResult) {

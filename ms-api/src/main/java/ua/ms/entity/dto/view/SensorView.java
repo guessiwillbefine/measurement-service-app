@@ -1,9 +1,9 @@
 package ua.ms.entity.dto.view;
 
-import java.util.List;
+import ua.ms.entity.MeasureSystem;
 
 public interface SensorView {
     long getId();
     String getName();
-    List<MeasureView> getMeasures();
+    MeasureSystem getMeasureSystem();
 }

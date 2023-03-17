@@ -4,11 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.util.List;
-
-
 import java.util.Objects;
 
 @Entity
@@ -33,6 +30,10 @@ public class Sensor {
     @JsonBackReference
     @JoinColumn(name = "machine_id", referencedColumnName = "id")
     private Machine machine;
+
+    @Column(name = "measure_id")
+    @Enumerated(EnumType.STRING)
+    private MeasureSystem measureSystem;
 
     @ToString.Exclude
     @JsonBackReference
