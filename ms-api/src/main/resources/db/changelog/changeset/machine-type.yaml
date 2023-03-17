@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      author: vadim
+      id: add machine type constants
+      changes:
+        - createTable:
+            tableName: machine_type
+            columns:
+              - column:
+                  name: id
+                  type: varchar(15)
+                  constraints:
+                    primaryKey: true

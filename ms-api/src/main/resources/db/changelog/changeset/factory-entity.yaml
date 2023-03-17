@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-factory-entity
+      author: vadim
+      changes:
+        - createTable:
+            tableName: factory
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(40)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+        - addColumn:
+            tableName: user_account
+            columns:
+              - column:
+                  name: factory_id
+                  type: int
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            constraintName: factory_owner_fk
+            baseTableName: user_account
+            baseColumnNames: factory_id
+            referencedTableName: factory
+            referencedColumnNames: id
+            onDelete: SET NULL

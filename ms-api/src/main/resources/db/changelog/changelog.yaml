@@ -1,3 +1,43 @@
 databaseChangeLog:
+  ### changes
+  - include:
+      file: db/changelog/changeset/role-entity.yaml
+  - include:
+      file: db/changelog/changeset/status-entity.yaml
+  - include:
+      file: db/changelog/changeset/measure-system-entity.yaml
   - include:
       file: db/changelog/changeset/user-table.yaml
+  - include:
+      file: db/changelog/changeset/user-columns.yaml
+  - include:
+      file: db/changelog/changeset/sensor-table.yaml
+  - include:
+      file: db/changelog/changeset/factory-entity.yaml
+  - include:
+      file: db/changelog/changeset/machine-type.yaml
+  - include:
+      file: db/changelog/changeset/machine-entity.yaml
+  - include:
+      file: db/changelog/changeset/measure-table.yaml
+  - include:
+      file: db/changelog/changeset/fk-factory-machine.yaml
+
+
+  ### datasets
+  - include:
+      file: db/changelog/dataset/constants-dataset.xml
+  - include:
+      file: db/changelog/dataset/factory-dataset.xml
+  - include:
+      file: db/changelog/dataset/user-dataset.xml
+  - include:
+      file: db/changelog/dataset/default-admin-dataset.xml
+  - include:
+      file: db/changelog/dataset/machine-type-dataset.xml
+  - include:
+      file: db/changelog/dataset/machine-dataset.xml
+  - include:
+      file: db/changelog/dataset/sensor-dataset.xml
+  - include:
+      file: db/changelog/dataset/measure-dataset.xml

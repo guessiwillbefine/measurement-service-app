@@ -2,9 +2,10 @@ databaseChangeLog:
   - changeSet:
       id: adding-simple-user-table
       author: vadim
+
       changes:
         - createTable:
-            tableName: user
+            tableName: user_account
             columns:
               - column:
                   name: id

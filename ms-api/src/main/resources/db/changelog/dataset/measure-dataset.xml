@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="measure dataset" author="moksem">
+        <insert tableName="measure">
+            <column name="measure_value" value="38.9"/>
+            <column name="sensor_id" value="1"/>
+            <column name="created_at" value="2023-03-09 21:40:31"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="38.9"/>
+            <column name="sensor_id" value="1"/>
+            <column name="created_at" value="2023-03-09 21:40:31"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="-38.9"/>
+            <column name="sensor_id" value="2"/>
+            <column name="created_at" value="2021-03-08 20:40:31"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="12.2"/>
+            <column name="sensor_id" value="2"/>
+            <column name="created_at" value="2022-02-09 14:30:59"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="99.9"/>
+            <column name="sensor_id" value="3"/>
+            <column name="created_at" value="2023-03-09 19:29:46"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="-99.9"/>
+            <column name="sensor_id" value="3"/>
+            <column name="created_at" value="2021-11-17 13:40:15"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="666.6"/>
+            <column name="sensor_id" value="4"/>
+            <column name="created_at" value="2016-05-25 17:54:23"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="777.7"/>
+            <column name="sensor_id" value="4"/>
+            <column name="created_at" value="2017-05-25 17:54:24"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="-2.4"/>
+            <column name="sensor_id" value="5"/>
+            <column name="created_at" value="2023-03-09 21:25:31"/>
+        </insert>
+        <insert tableName="measure">
+            <column name="measure_value" value="-1.0"/>
+            <column name="sensor_id" value="5"/>
+            <column name="created_at" value="2023-03-09 21:26:31"/>
+        </insert>
+        <rollback>
+            DELETE FROM measure;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

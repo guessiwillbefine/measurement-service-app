@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-machine-entity
+      author: vadim
+      changes:
+        - createTable:
+            tableName: machine
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(25)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: model
+                  type: varchar(25)
+              - column:
+                  name: type_id
+                  type: varchar(25)
+
+        - addColumn:
+            tableName: sensor
+            columns:
+              - column:
+                  name: machine_id
+                  type: int
+
+        - addForeignKeyConstraint:
+            referencedTableName: machine
+            referencedColumnNames: id
+            baseTableName: sensor
+            baseColumnNames: machine_id
+            constraintName: machine_sensor_fk
+
+        - addForeignKeyConstraint:
+            referencedTableName: machine_type
+            referencedColumnNames: id
+            baseTableName: machine
+            baseColumnNames: type_id
+            constraintName: machine_type_fk

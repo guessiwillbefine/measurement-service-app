@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="machine_type dataset" author="vadim">
+
+        <insert tableName="machine_type">
+            <column name="id" value="MILLING"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="LATHE"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="DRILLING"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="PRESS"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="CONVEYOR"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="MANIPULATOR"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="OTHER"/>
+        </insert>
+        <insert tableName="machine_type">
+            <column name="id" value="MELTING"/>
+        </insert>
+        <rollback>
+            DELETE FROM machine_type;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

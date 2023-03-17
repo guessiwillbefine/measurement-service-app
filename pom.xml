@@ -26,4 +26,15 @@
         <module>ms-api</module>
         <module>e2e-tests</module>
     </modules>
+
+    <name>root</name>
+    <profiles>
+        <profile>
+            <id>api-only</id>
+            <modules>
+                <module>ms-api</module>
+            </modules>
+        </profile>
+    </profiles>
+
 </project>

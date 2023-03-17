@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="factories dataset" author="vadim">
+        <insert tableName="factory">
+            <column name="name" value="Steel factory"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Uranium factory"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Beer factory"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Beer factory #2"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Beer factory #3"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Silk factory"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Wood factory"/>
+        </insert>
+        <insert tableName="factory">
+            <column name="name" value="Anime factory"/>
+        </insert>
+
+        <rollback>
+            DELETE FROM factory;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
