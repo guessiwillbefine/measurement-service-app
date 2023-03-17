@@ -27,4 +27,5 @@ public class MachineDto {
     private String model;
     @Nullable
     private MachineType type;
+    private Long factoryId;
 }

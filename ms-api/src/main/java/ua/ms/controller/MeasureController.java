@@ -1,5 +1,6 @@
 package ua.ms.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,19 +12,20 @@ import ua.ms.entity.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.util.exception.MeasureValidationException;
 import ua.ms.util.mapper.Mapper;
+import ua.ms.util.mapper.impl.MeasureMapper;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/measures")
 @RequiredArgsConstructor
+@Tag(name = "Measure entity controller")
 public class MeasureController {
     private final MeasureService measureService;
     private final Mapper<Measure, MeasureDto> mapper;
 
     @GetMapping("/{id}")
     public List<MeasureView> getBySensorId(@PathVariable("id") long id) {
-        System.out.println("hui");
         return measureService.findBySensorId(id, MeasureView.class);
     }
 

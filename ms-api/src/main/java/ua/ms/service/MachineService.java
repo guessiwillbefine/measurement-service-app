@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ms.entity.Factory;
 import ua.ms.entity.Machine;
 import ua.ms.entity.dto.MachineDto;
 import ua.ms.service.repository.MachineRepository;
@@ -31,13 +32,8 @@ public class MachineService {
     }
 
     @Transactional
-    public Machine save(final MachineDto machineDto) {
-        Machine machineToSave = Machine.builder()
-                .name(machineDto.getName())
-                .model(machineDto.getModel())
-                .type(machineDto.getType())
-                .build();
-        return machineRepository.save(machineToSave);
+    public Machine save(final Machine machine) {
+        return machineRepository.save(machine);
     }
 
     @Transactional

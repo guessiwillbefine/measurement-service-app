@@ -56,7 +56,7 @@ class MachineServiceTest {
     @DisplayName("should return entity after saving")
     void saveShouldReturnEntity() {
         when(machineRepository.save(any())).thenReturn(MACHINE_ENTITY);
-        assertThat(machineService.save(MACHINE_DTO))
+        assertThat(machineService.save(MACHINE_ENTITY))
                 .isInstanceOf(Machine.class)
                 .isEqualTo(MACHINE_ENTITY);
     }

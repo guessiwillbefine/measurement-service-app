@@ -14,7 +14,7 @@ import ua.ms.entity.dto.view.SensorView;
 import ua.ms.service.SensorService;
 import ua.ms.util.exception.SensorNotFoundException;
 import ua.ms.util.exception.SensorValidationException;
-import ua.ms.util.mapper.impl.SensorMapper;
+import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @Tag(name = "Sensor entity controller")
 public class SensorController {
     private final SensorService sensorService;
-    private final SensorMapper sensorMapper;
+    private final Mapper<Sensor,SensorDto> mapper;
 
     @GetMapping()
     public List<SensorDto> getAll(@RequestParam(value = "page") int page,
@@ -50,7 +50,7 @@ public class SensorController {
             throw new SensorValidationException(bindingResult.getAllErrors().toString());
 
         Sensor updatedSensor = sensorService.update(id, sensorDto);
-        return sensorMapper.toDto(updatedSensor);
+        return mapper.toDto(updatedSensor);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,14 +61,13 @@ public class SensorController {
         if (bindingResult.hasErrors())
             throw new SensorValidationException(bindingResult.getAllErrors().toString());
 
-        System.out.println(sensorDto);
-        Sensor sensorToCreate = sensorMapper.toEntity(sensorDto);
+        Sensor sensorToCreate = mapper.toEntity(sensorDto);
         Sensor createdSensor = sensorService.create(sensorToCreate);
-        return sensorMapper.toDto(createdSensor);
+        return mapper.toDto(createdSensor);
     }
 
     @DeleteMapping("/{id}")
     public SensorDto delete(@PathVariable("id") long id) {
-        return sensorMapper.toDto(sensorService.delete(id));
+        return mapper.toDto(sensorService.delete(id));
     }
 }

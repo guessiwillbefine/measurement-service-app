@@ -2,6 +2,7 @@ package ua.ms.util.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ua.ms.entity.Machine;
 import ua.ms.entity.Sensor;
 import ua.ms.entity.dto.SensorDto;
 import ua.ms.util.mapper.Mapper;
@@ -16,6 +17,7 @@ public class SensorMapper implements Mapper<Sensor, SensorDto> {
                 .id(dto.getId())
                 .name(dto.getName())
                 .measureSystem(dto.getMeasureSystem())
+                .machine(Machine.builder().id(dto.getMachineId()).build())
                 .build();
     }
 

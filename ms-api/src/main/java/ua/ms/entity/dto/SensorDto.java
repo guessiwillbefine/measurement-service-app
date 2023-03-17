@@ -1,6 +1,7 @@
 package ua.ms.entity.dto;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -23,6 +24,8 @@ public class SensorDto {
             message = ApplicationConstants.Validation.SENSOR_NAME_MSG)
     private String name;
 
-    @Nullable
+    @NotNull
     private MeasureSystem measureSystem;
+
+    private Long machineId;
 }

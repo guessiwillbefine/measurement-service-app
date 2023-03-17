@@ -2,10 +2,7 @@ package ua.ms;
 
 import ua.ms.entity.*;
 import ua.ms.entity.dto.*;
-import ua.ms.entity.dto.view.FactoryView;
-import ua.ms.entity.dto.view.MeasureView;
-import ua.ms.entity.dto.view.SensorView;
-import ua.ms.entity.dto.view.UserView;
+import ua.ms.entity.dto.view.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -19,65 +16,48 @@ public final class TestConstants {
     public static final AuthenticationCredentialsDto INVALID_USER_CREDENTIALS = AuthenticationCredentialsDto.builder()
             .username("")
             .password("").build();
+
     public static final Factory FACTORY_ENTITY = Factory.builder()
             .employees(Collections.emptyList())
             .name("someFactoryName")
-            .id(1L)
-            .build();
+            .id(1L).build();
     public static final FactoryDto FACTORY_DTO = FactoryDto.builder()
             .name("someFactoryName")
-            .id(1L)
-            .build();
-    public static final User USER_ENTITY = User.builder()
-            .id(1L)
-            .username("username")
-            .email("test@gmail.com")
-            .firstName("name")
-            .lastName("sname")
-            .status(Status.ACTIVE)
-            .role(Role.ADMIN)
-            .password("password")
-            .factory(FACTORY_ENTITY).build();
-    public static final UserDto USER_DTO = UserDto.builder()
-            .id(1L)
-            .username("username")
-            .email("test@gmail.com")
-            .firstName("name")
-            .lastName("sname")
-            .status(Status.ACTIVE)
-            .role(Role.ADMIN)
-            .build();
-
+            .id(1L).build();
     public static final MachineDto MACHINE_DTO = MachineDto.builder()
-            .id(1L).name("name").model("ZXC993-EZ").type(MachineType.MANIPULATOR).build();
+            .id(1L).name("name").model("ZXC993-EZ").type(MachineType.MANIPULATOR)
+            .factoryId(FACTORY_DTO.getId()).build();
     public static final Machine MACHINE_ENTITY = Machine.builder().id(1L)
-            .model("ZXC993-EZ").type(MachineType.MANIPULATOR).build();
+            .model("ZXC993-EZ").type(MachineType.MANIPULATOR).factory(FACTORY_ENTITY).build();
     public static final Sensor SENSOR_ENTITY = Sensor.builder()
-            .id(1)
-            .name("someSensorName")
-            .machine(MACHINE_ENTITY)
-            .measureSystem(MeasureSystem.VOLT)
-            .build();
+            .id(1).name("someSensorName")
+            .machine(MACHINE_ENTITY).build();
 
     public static final SensorDto SENSOR_DTO = SensorDto.builder()
-            .id(1)
-            .name("someSensorName")
+            .id(1).name("someSensorName")
             .build();
 
     public static final Measure MEASURE_ENTITY = Measure.builder()
-            .id(1)
-            .value(37.1)
-            .sensor(SENSOR_ENTITY)
+            .id(1).value(37.1).sensor(SENSOR_ENTITY)
             .createdAt(LocalDateTime.now())
             .build();
 
     public static final MeasureDto MEASURE_DTO = MeasureDto.builder()
-            .id(1)
-            .value(37.1)
-            .sensorId(SENSOR_ENTITY.getId())
+            .id(1).value(37.1).sensorId(SENSOR_ENTITY.getId())
             .createdAt(LocalDateTime.now())
             .build();
-
+    public static final User USER_ENTITY = User.builder()
+            .id(1L).username("username")
+            .email("test@gmail.com").firstName("name")
+            .lastName("sname").status(Status.ACTIVE)
+            .role(Role.ADMIN).password("password")
+            .factory(FACTORY_ENTITY).build();
+    public static final UserDto USER_DTO = UserDto.builder()
+            .id(1L).username("username")
+            .email("test@gmail.com").firstName("name")
+            .lastName("sname").status(Status.ACTIVE)
+            .factoryId(MACHINE_DTO.getFactoryId())
+            .role(Role.ADMIN).build();
     public static final UserView USER_VIEW = new UserView() {
         @Override
         public long getId() {
@@ -129,6 +109,11 @@ public final class TestConstants {
         @Override
         public List<UserView> getEmployees() {
             return List.of(USER_VIEW, USER_VIEW, USER_VIEW, USER_VIEW, USER_VIEW, USER_VIEW);
+        }
+
+        @Override
+        public List<MachineView> getMachines() {
+            return Collections.emptyList();
         }
     };
 
