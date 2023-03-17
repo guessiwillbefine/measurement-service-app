@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Measure;
-import ua.ms.entity.dto.MeasureDto;
-import ua.ms.entity.dto.view.MeasureView;
+import ua.ms.entity.measure.Measure;
+import ua.ms.entity.measure.dto.MeasureDto;
+import ua.ms.entity.measure.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.service.repository.MeasureRepository;
 

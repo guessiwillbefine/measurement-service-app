@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.MsApiApplication;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 
 import java.util.Map;
 

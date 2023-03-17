@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.ms.configuration.security.repository.RegistrationService;
-import ua.ms.entity.User;
+import ua.ms.entity.user.User;
 
 import java.io.IOException;
 import java.util.Optional;

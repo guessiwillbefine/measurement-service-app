@@ -2,7 +2,7 @@ package ua.ms.service.repository;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ua.ms.entity.Sensor;
+import ua.ms.entity.sensor.Sensor;
 
 
 import java.util.List;

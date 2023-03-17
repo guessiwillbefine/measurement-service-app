@@ -2,7 +2,7 @@ package ua.ms.service.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.ms.entity.Factory;
+import ua.ms.entity.factory.Factory;
 
 import java.util.List;
 import java.util.Optional;

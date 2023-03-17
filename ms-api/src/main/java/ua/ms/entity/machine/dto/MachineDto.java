@@ -1,4 +1,4 @@
-package ua.ms.entity.dto;
+package ua.ms.entity.machine.dto;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,14 +7,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
-import ua.ms.entity.MachineType;
+import ua.ms.entity.machine.AbstractMachineIdentifiable;
+import ua.ms.entity.machine.MachineType;
 import ua.ms.util.ApplicationConstants.Validation;
 
 @Builder
 @Jacksonized
 @Getter
 @Setter
-public class MachineDto {
+public class MachineDto implements AbstractMachineIdentifiable {
     @Nullable
     private Long id;
     @NotEmpty

@@ -1,4 +1,4 @@
-package ua.ms.entity.dto;
+package ua.ms.entity.sensor.dto;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -7,14 +7,15 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
-import ua.ms.entity.MeasureSystem;
+import ua.ms.entity.measure.MeasureSystem;
+import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import ua.ms.util.ApplicationConstants;
 
 @Getter
 @Builder
 @ToString
 @Jacksonized
-public class SensorDto {
+public class SensorDto implements AbstractSensorIdentifiable {
 
     @Nullable
     private long id;

@@ -2,14 +2,10 @@ package ua.ms.util.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ua.ms.entity.Factory;
-import ua.ms.entity.Machine;
-import ua.ms.entity.dto.MachineDto;
-import ua.ms.service.MachineService;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.util.mapper.Mapper;
-
-import javax.crypto.Mac;
-import java.util.Optional;
 
 @Component("MachineMapper")
 @RequiredArgsConstructor

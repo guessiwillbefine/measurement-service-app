@@ -6,13 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.ms.entity.Measure;
-import ua.ms.entity.dto.MeasureDto;
-import ua.ms.entity.dto.view.MeasureView;
+import ua.ms.entity.measure.Measure;
+import ua.ms.entity.measure.dto.MeasureDto;
+import ua.ms.entity.measure.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.util.exception.MeasureValidationException;
 import ua.ms.util.mapper.Mapper;
-import ua.ms.util.mapper.impl.MeasureMapper;
 
 import java.util.List;
 

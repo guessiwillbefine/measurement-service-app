@@ -2,7 +2,7 @@ package ua.ms.service.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.ms.entity.Measure;
+import ua.ms.entity.measure.Measure;
 
 import java.util.List;
 

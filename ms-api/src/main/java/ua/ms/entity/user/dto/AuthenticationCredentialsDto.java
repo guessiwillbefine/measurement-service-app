@@ -1,4 +1,4 @@
-package ua.ms.entity.dto;
+package ua.ms.entity.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;

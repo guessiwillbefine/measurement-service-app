@@ -1,4 +1,4 @@
-package ua.ms.entity.dto;
+package ua.ms.entity.factory.dto;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
+import ua.ms.entity.factory.AbstractFactoryIdentifiable;
+
 import static ua.ms.util.ApplicationConstants.Validation;
 
 @Builder
@@ -14,7 +16,7 @@ import static ua.ms.util.ApplicationConstants.Validation;
 @Getter
 @Setter
 @Tag(name = "Factory DTO")
-public class FactoryDto {
+public class FactoryDto implements AbstractFactoryIdentifiable {
     private Long id;
     @NotEmpty
     @Length(max = Validation.MAX_FACTORY_NAME_LENGTH,

@@ -2,12 +2,9 @@ package ua.ms.util.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ua.ms.entity.Factory;
-import ua.ms.entity.dto.FactoryDto;
-import ua.ms.service.FactoryService;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.util.mapper.Mapper;
-
-import java.util.Optional;
 
 @Component("FactoryMapper")
 @RequiredArgsConstructor

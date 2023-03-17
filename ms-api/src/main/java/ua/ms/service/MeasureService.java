@@ -3,7 +3,7 @@ package ua.ms.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Measure;
+import ua.ms.entity.measure.Measure;
 import ua.ms.service.repository.MeasureRepository;
 
 import java.time.LocalDateTime;

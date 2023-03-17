@@ -1,11 +1,12 @@
-package ua.ms.entity;
+package ua.ms.entity.machine;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.sensor.Sensor;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ import java.util.Objects;
 @Table(name = "machine")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Machine {
+public class Machine implements AbstractMachineIdentifiable{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)

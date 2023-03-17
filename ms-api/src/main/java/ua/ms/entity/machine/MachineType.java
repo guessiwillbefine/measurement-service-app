@@ -1,4 +1,4 @@
-package ua.ms.entity;
+package ua.ms.entity.machine;
 
 public enum MachineType {
     MILLING,     // фрезерный

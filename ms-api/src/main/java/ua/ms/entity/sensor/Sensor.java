@@ -1,9 +1,12 @@
-package ua.ms.entity;
+package ua.ms.entity.sensor;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.measure.Measure;
+import ua.ms.entity.measure.MeasureSystem;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +20,7 @@ import java.util.Objects;
 @Table(name = "sensor")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sensor {
+public class Sensor implements AbstractSensorIdentifiable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.dto.UserDto;
+import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.UserService;
 import ua.ms.util.exception.UserDuplicateException;
 

@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Factory;
-import ua.ms.entity.Machine;
-import ua.ms.entity.dto.MachineDto;
+import ua.ms.entity.machine.Machine;
+import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.service.repository.MachineRepository;
 import ua.ms.util.exception.MachineNotFoundException;
-import ua.ms.util.mapper.impl.MachineMapper;
 
 import java.util.List;
 import java.util.Optional;
