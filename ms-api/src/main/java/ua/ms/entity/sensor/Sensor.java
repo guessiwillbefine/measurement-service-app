@@ -29,7 +29,7 @@ public class Sensor implements AbstractSensorIdentifiable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "machine_id", referencedColumnName = "id")
     private Machine machine;
@@ -40,7 +40,7 @@ public class Sensor implements AbstractSensorIdentifiable {
 
     @ToString.Exclude
     @JsonBackReference
-    @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sensor")
     private List<Measure> measures;
 
     @Override

@@ -37,7 +37,7 @@ public class SensorController {
     }
 
     @GetMapping("/{id}")
-    public AbstractSensorIdentifiable find(@PathVariable("id") long id) {
+    public SensorView find(@PathVariable("id") long id) {
         Optional<SensorView> byId = sensorService.findOne(id, SensorView.class);
         if (byId.isEmpty()) throw new SensorNotFoundException("Sensor with this id is not found");
         return byId.get();
