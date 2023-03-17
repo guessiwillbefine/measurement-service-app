@@ -10,7 +10,7 @@ import java.util.List;
 public interface SensorView extends AbstractSensorIdentifiable {
     long getId();
     String getName();
-    @JsonIgnoreProperties("measures")
+    @JsonIgnoreProperties("sensor")
     List<MeasureView> getMeasures();
     MeasureSystem getMeasureSystem();
 }

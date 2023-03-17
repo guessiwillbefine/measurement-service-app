@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.entity.sensor.dto.view.SensorView;
@@ -36,7 +37,7 @@ public class SensorController {
     }
 
     @GetMapping("/{id}")
-    public SensorView find(@PathVariable("id") long id) {
+    public AbstractSensorIdentifiable find(@PathVariable("id") long id) {
         Optional<SensorView> byId = sensorService.findOne(id, SensorView.class);
         if (byId.isEmpty()) throw new SensorNotFoundException("Sensor with this id is not found");
         return byId.get();
