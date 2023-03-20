@@ -9,7 +9,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: int
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     nullable: false
@@ -21,7 +21,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: sensor_id
-                  type: int
+                  type: bigint
                   constraints:
                     foreignKeyName: sensor_measure_fk
                     referencedTableName: sensor
