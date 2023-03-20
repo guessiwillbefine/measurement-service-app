@@ -47,20 +47,20 @@ public final class TestConstants {
     public static final Machine MACHINE_ENTITY = Machine.builder().id(1L)
             .model("ZXC993-EZ").type(MachineType.MANIPULATOR).factory(FACTORY_ENTITY).build();
     public static final Sensor SENSOR_ENTITY = Sensor.builder()
-            .id(1).name("someSensorName")
+            .id(1L).name("someSensorName")
             .machine(MACHINE_ENTITY).build();
 
     public static final SensorDto SENSOR_DTO = SensorDto.builder()
-            .id(1).name("someSensorName")
+            .id(1L).name("someSensorName")
             .build();
 
     public static final Measure MEASURE_ENTITY = Measure.builder()
-            .id(1).value(37.1).sensor(SENSOR_ENTITY)
+            .id(1L).value(37.1).sensor(SENSOR_ENTITY)
             .createdAt(LocalDateTime.now())
             .build();
 
     public static final MeasureDto MEASURE_DTO = MeasureDto.builder()
-            .id(1).value(37.1).sensorId(SENSOR_ENTITY.getId())
+            .id(1L).value(37.1).sensorId(SENSOR_ENTITY.getId())
             .createdAt(LocalDateTime.now())
             .build();
     public static final User USER_ENTITY = User.builder()
@@ -114,7 +114,7 @@ public final class TestConstants {
     };
     public static final FactoryView FACTORY_VIEW = new FactoryView() {
         @Override
-        public long getId() {
+        public Long getId() {
             return 1L;
         }
 
@@ -136,7 +136,7 @@ public final class TestConstants {
 
     public static final MeasureView MEASURE_VIEW = new MeasureView() {
         @Override
-        public long getId() {
+        public Long getId() {
             return MEASURE_ENTITY.getId();
         }
 
@@ -158,7 +158,7 @@ public final class TestConstants {
 
     public static final SensorView SENSOR_VIEW = new SensorView() {
         @Override
-        public long getId() {
+        public Long getId() {
             return SENSOR_ENTITY.getId();
         }
 

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Jacksonized
 public class MeasureDto implements AbstractMeasureIdentifiable {
     @Nullable
-    private long id;
+    private Long id;
     @NotNull
     private double value;
 

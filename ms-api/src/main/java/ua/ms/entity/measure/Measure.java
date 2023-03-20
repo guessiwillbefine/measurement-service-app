@@ -22,7 +22,7 @@ public class Measure implements AbstractMeasureIdentifiable{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "measure_value")
     private double value;
@@ -43,7 +43,7 @@ public class Measure implements AbstractMeasureIdentifiable{
 
         Measure measure = (Measure) o;
 
-        if (id != measure.id) return false;
+        if (!Objects.equals(id, measure.id)) return false;
         if (Double.compare(measure.value, value) != 0) return false;
         if (!Objects.equals(sensor, measure.sensor)) return false;
         return Objects.equals(createdAt, measure.createdAt);
