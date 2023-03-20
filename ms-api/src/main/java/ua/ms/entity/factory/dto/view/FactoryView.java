@@ -7,7 +7,7 @@ import ua.ms.entity.user.dto.view.UserView;
 import java.util.List;
 
 public interface FactoryView extends AbstractFactoryIdentifiable {
-    long getId();
+    Long getId();
     String getName();
     List<UserView> getEmployees();
     List<MachineView> getMachines();

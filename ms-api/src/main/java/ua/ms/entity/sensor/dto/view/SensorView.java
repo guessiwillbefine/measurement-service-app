@@ -8,7 +8,7 @@ import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import java.util.List;
 
 public interface SensorView extends AbstractSensorIdentifiable {
-    long getId();
+    Long getId();
     String getName();
     @JsonIgnoreProperties("sensor")
     List<MeasureView> getMeasures();
