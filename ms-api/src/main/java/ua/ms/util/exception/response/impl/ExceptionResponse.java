@@ -22,6 +22,9 @@ public class ExceptionResponse implements ExceptionResponseWrapper<String, Entit
 
     @Override
     public String getResponse() {
+        if (response == null) {
+            throw new IllegalStateException("the handler must first get an exception, on the basis of which the response body will be generated");
+        }
         return response;
     }
 }

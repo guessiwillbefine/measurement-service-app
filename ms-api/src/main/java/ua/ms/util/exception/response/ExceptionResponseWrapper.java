@@ -10,5 +10,5 @@ public interface ExceptionResponseWrapper<T, E extends RuntimeException> {
     /**method that receives as argument an exception we need to wrap*/
     ExceptionResponseWrapper<T, E> of(E exception);
     /** @return response body we need to put into HTTP response */
-    T getResponse();
+    T getResponse() throws IllegalStateException;
 }

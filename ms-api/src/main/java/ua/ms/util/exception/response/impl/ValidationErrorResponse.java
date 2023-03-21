@@ -27,6 +27,9 @@ public class ValidationErrorResponse implements ExceptionResponseWrapper<List<Va
 
     @Override
     public List<ValidationErrorsDto> getResponse() {
+        if (response == null) {
+            throw new IllegalStateException("the handler must first get an exception, on the basis of which the response body will be generated");
+        }
         return response;
     }
 }
