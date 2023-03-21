@@ -10,13 +10,10 @@ import ua.ms.util.exception.response.ExceptionResponseWrapper;
 public class ExceptionResponse implements ExceptionResponseWrapper<String, EntityException> {
     private String response;
 
-    private ExceptionResponse(String response) {
-        this.response = response;
-    }
-
     @Override
     public ExceptionResponseWrapper<String, EntityException> of(EntityException runtimeException) {
-        return new ExceptionResponse(runtimeException.getMessage());
+        this.response = runtimeException.getMessage();
+        return this;
     }
 
     @Override

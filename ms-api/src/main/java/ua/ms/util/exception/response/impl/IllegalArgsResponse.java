@@ -8,13 +8,10 @@ import ua.ms.util.exception.response.ExceptionResponseWrapper;
 public class IllegalArgsResponse implements ExceptionResponseWrapper<String, IllegalArgumentException> {
     private String response;
 
-    private IllegalArgsResponse(String response) {
-        this.response = response;
-    }
-
     @Override
     public ExceptionResponseWrapper<String, IllegalArgumentException> of(IllegalArgumentException exception) {
-        return new IllegalArgsResponse(exception.getMessage());
+        this.response = exception.getMessage();
+        return this;
     }
 
     @Override
