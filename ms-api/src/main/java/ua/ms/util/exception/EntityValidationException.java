@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 public class EntityValidationException extends EntityException {
     private BindingResult bindingResult;
 
+    @Deprecated(forRemoval = true)
     public EntityValidationException(String msg) {
         super(msg);
     }
