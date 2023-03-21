@@ -13,8 +13,8 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.repository.UserRepository;
-import ua.ms.util.exception.UserDuplicateException;
-import ua.ms.util.exception.UserNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +53,7 @@ public class UserService implements RegistrationService {
                     .build());
         }
         log.debug("UserDuplicationException was thrown");
-        throw new UserDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
+        throw new EntityDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
     }
 
     @Transactional(readOnly = true)
@@ -81,7 +81,7 @@ public class UserService implements RegistrationService {
             return byId.get();
         }
         log.debug("User wasn't found, throwing UserNotFoundException");
-        throw new UserNotFoundException(format("User with id[%d] wasn't found", id));
+        throw new EntityNotFoundException(format("User with id[%d] wasn't found", id));
     }
 
     @Transactional
@@ -93,7 +93,7 @@ public class UserService implements RegistrationService {
             return userRepository.save(updated);
         }
         log.debug("User wasn't found, throwing UserNotFoundException");
-        throw new UserNotFoundException(format("User [%s] wasn't found", userDto.getUsername()));
+        throw new EntityNotFoundException(format("User [%s] wasn't found", userDto.getUsername()));
     }
 
     private User updateEntityFields(User entity, UserDto dto) {

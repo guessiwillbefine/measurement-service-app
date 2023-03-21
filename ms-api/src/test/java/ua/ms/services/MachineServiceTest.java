@@ -12,9 +12,11 @@ import ua.ms.entity.machine.Machine;
 import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.service.MachineService;
 import ua.ms.service.repository.MachineRepository;
-import ua.ms.util.exception.MachineNotFoundException;
+import ua.ms.util.exception.EntityNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -77,7 +79,7 @@ class MachineServiceTest {
                 .thenReturn(Optional.empty());
         doNothing().when(machineRepository).deleteById(anyLong());
         assertThatThrownBy(()-> machineService.delete(1L))
-                .isInstanceOf(MachineNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
@@ -94,6 +96,6 @@ class MachineServiceTest {
         when(machineRepository.findById(1L, MachineDto.class))
                 .thenReturn(Optional.empty());
         assertThatThrownBy(()-> machineService.update(1L, MACHINE_DTO))
-                .isInstanceOf(MachineNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 }

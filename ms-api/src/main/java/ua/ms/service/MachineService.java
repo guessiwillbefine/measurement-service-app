@@ -8,7 +8,7 @@ import ua.ms.entity.machine.AbstractMachineIdentifiable;
 import ua.ms.entity.machine.Machine;
 import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.service.repository.MachineRepository;
-import ua.ms.util.exception.MachineNotFoundException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +43,7 @@ public class MachineService {
             machineRepository.save(updated);
             return machineDto;
         }
-        throw new MachineNotFoundException(format("Machine with id[%d] not found", id));
+        throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
     }
     private Machine updateEntity(final Machine machine, final MachineDto machineDto) {
         machine.setType(machineDto.getType());
@@ -59,6 +59,6 @@ public class MachineService {
             machineRepository.deleteById(id);
             return byId.get();
         }
-        throw new MachineNotFoundException(format("Machine with id[%d] not found", id));
+        throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
     }
 }

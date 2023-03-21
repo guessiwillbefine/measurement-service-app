@@ -12,8 +12,8 @@ import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.entity.sensor.dto.view.SensorView;
 import ua.ms.service.SensorService;
 import ua.ms.service.repository.SensorRepository;
-import ua.ms.util.exception.SensorDuplicateException;
-import ua.ms.util.exception.SensorNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -94,7 +94,7 @@ class SensorServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> sensorService.update(1L, SENSOR_DTO))
-                .isInstanceOf(SensorNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
@@ -113,7 +113,7 @@ class SensorServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> sensorService.delete(1L))
-                .isInstanceOf(SensorNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
@@ -132,7 +132,7 @@ class SensorServiceTest {
                 .thenReturn(Optional.of(SENSOR_ENTITY));
 
         assertThatThrownBy(() -> sensorService.create(SENSOR_ENTITY))
-                .isInstanceOf(SensorDuplicateException.class);
+                .isInstanceOf(EntityDuplicateException.class);
     }
 
 }
