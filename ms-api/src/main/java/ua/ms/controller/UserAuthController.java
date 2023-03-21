@@ -17,8 +17,10 @@ import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.service.UserService;
 import ua.ms.util.exception.AccessException;
-import ua.ms.util.exception.UserValidationException;
+import ua.ms.util.exception.EntityValidationException;
+
 import java.util.Map;
+
 import static java.lang.String.format;
 import static ua.ms.util.ApplicationConstants.Security.JWT_TOKEN_RESPONSE_KEY;
 
@@ -62,7 +64,7 @@ public class UserAuthController {
 
         boolean isAdmin = authentication.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("ADMIN"));
         if (!isAdmin) throw new AccessException("Only admin can register new user");
-        if (bindingResult.hasErrors()) throw new UserValidationException("Invalid credentials");
+        if (bindingResult.hasErrors()) throw new EntityValidationException("Invalid credentials");
         log.debug("Attempt to register user [%s]");
         userService.register(credentialsDto);
         return Map.of(JWT_TOKEN_RESPONSE_KEY, jwtUtils.generateToken(credentialsDto.getUsername()));

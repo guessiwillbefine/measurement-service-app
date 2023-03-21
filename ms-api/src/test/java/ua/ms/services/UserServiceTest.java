@@ -13,12 +13,13 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.UserService;
 import ua.ms.service.repository.UserRepository;
-import ua.ms.util.exception.UserDuplicateException;
-import ua.ms.util.exception.UserNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
@@ -50,7 +51,7 @@ class UserServiceTest {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(USER_ENTITY));
         assertThatThrownBy(() -> userService.register(USER_CREDENTIALS))
                 .isInstanceOf(RuntimeException.class)
-                .isInstanceOf(UserDuplicateException.class);
+                .isInstanceOf(EntityDuplicateException.class);
     }
 
     @Test
@@ -101,7 +102,7 @@ class UserServiceTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
         long id = USER_DTO.getId();
         assertThatThrownBy(() -> userService.delete(id))
-                .isInstanceOf(UserNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test

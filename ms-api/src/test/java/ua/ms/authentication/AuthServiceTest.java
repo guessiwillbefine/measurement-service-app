@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.entity.user.User;
 import ua.ms.service.repository.UserRepository;
-import ua.ms.util.exception.UserDuplicateException;
+import ua.ms.util.exception.EntityDuplicateException;
 
 import java.util.Optional;
 
@@ -45,6 +45,6 @@ class AuthServiceTest {
         when(userRepository.save(any(User.class))).thenReturn(new User());
         assertThatThrownBy(() -> registrationService.register(INVALID_USER_CREDENTIALS))
                 .isInstanceOf(RuntimeException.class)
-                .isInstanceOf(UserDuplicateException.class);
+                .isInstanceOf(EntityDuplicateException.class);
     }
 }
