@@ -37,6 +37,7 @@ databaseChangeLog:
             baseTableName: sensor
             baseColumnNames: machine_id
             constraintName: machine_sensor_fk
+            deleteCascade: true
 
         - addForeignKeyConstraint:
             referencedTableName: machine_type
@@ -44,3 +45,4 @@ databaseChangeLog:
             baseTableName: machine
             baseColumnNames: type_id
             constraintName: machine_type_fk
+            deleteCascade: true

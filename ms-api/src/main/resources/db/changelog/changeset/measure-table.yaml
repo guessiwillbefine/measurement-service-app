@@ -27,6 +27,7 @@ databaseChangeLog:
                     referencedTableName: sensor
                     referencedColumnNames: id
                     nullable: false
+                    deleteCascade: true
               - column:
                   name: created_at
                   type: timestamp

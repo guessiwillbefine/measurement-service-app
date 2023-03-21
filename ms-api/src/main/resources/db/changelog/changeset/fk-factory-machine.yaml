@@ -18,4 +18,4 @@ databaseChangeLog:
               baseColumnNames: factory_id
               referencedTableName: factory
               referencedColumnNames: id
-              onDelete: CASCADE
+              deleteCascade: true

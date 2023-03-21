@@ -28,3 +28,4 @@ databaseChangeLog:
                     referencedTableName: measure_system
                     referencedColumnNames: id
                     nullable: false
+                    deleteCascade: true
