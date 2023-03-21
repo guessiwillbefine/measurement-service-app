@@ -51,7 +51,7 @@ public class MachineController {
     @ResponseStatus(HttpStatus.CREATED)
     public MachineDto save(@RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new EntityValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
         }
         return mapper.toDto(machineService.save(mapper.toEntity(machineDto)));
     }
@@ -59,7 +59,7 @@ public class MachineController {
     @PatchMapping("/{id}")
     public MachineDto update(@PathVariable Long id,
                              @RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult.getAllErrors().toString());
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         return machineService.update(id, machineDto);
     }
 

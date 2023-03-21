@@ -64,7 +64,7 @@ public class UserAuthController {
 
         boolean isAdmin = authentication.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("ADMIN"));
         if (!isAdmin) throw new AccessException("Only admin can register new user");
-        if (bindingResult.hasErrors()) throw new EntityValidationException("Invalid credentials");
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         log.debug("Attempt to register user [%s]");
         userService.register(credentialsDto);
         return Map.of(JWT_TOKEN_RESPONSE_KEY, jwtUtils.generateToken(credentialsDto.getUsername()));

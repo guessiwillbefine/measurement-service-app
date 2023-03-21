@@ -47,7 +47,7 @@ public class SensorController {
                             @RequestBody @Valid SensorDto sensorDto,
                             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new EntityValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
 
         Sensor updatedSensor = sensorService.update(id, sensorDto);
         return mapper.toDto(updatedSensor);
@@ -59,7 +59,7 @@ public class SensorController {
                             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
-            throw new EntityValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
 
         Sensor sensorToCreate = mapper.toEntity(sensorDto);
         Sensor createdSensor = sensorService.create(sensorToCreate);
