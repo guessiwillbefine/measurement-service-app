@@ -40,7 +40,7 @@ public class FactoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FactoryDto create(@Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult.getAllErrors().toString());
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         Factory saved = factoryService.save(mapper.toEntity(factoryDto));
         return mapper.toDto(saved);
     }
@@ -53,7 +53,8 @@ public class FactoryController {
 
     @PatchMapping("/{id}")
     public FactoryDto update(@PathVariable long id,
-                             @Valid @RequestBody FactoryDto factoryDto) {
+                             @Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         Factory updatedFactory = factoryService.update(id, factoryDto);
         return mapper.toDto(updatedFactory);
     }

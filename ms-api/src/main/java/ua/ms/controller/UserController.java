@@ -64,7 +64,7 @@ public class UserController {
     @PatchMapping("/{id}")
     public UserDto update(@PathVariable long id,
                           @RequestBody  @Valid UserDto userDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult.getAllErrors().toString());
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         return mapper.toDto(userService.update(id, userDto));
     }
 }

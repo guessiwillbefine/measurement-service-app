@@ -59,7 +59,7 @@ public class MachineController {
     @PatchMapping("/{id}")
     public MachineDto update(@PathVariable Long id,
                              @RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult.getAllErrors().toString());
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         return machineService.update(id, machineDto);
     }
 

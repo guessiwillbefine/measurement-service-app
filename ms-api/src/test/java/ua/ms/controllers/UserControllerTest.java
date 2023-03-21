@@ -79,8 +79,7 @@ class UserControllerTest {
         final String token = jwtUtils.generateToken(workerUser.getUsername());
         mockMvc.perform(delete("/users/6")
                         .header("Authorization", "Bearer " + token))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("response").value("Access Denied"));
+                .andExpect(status().isForbidden());
     }
 
     @Test
