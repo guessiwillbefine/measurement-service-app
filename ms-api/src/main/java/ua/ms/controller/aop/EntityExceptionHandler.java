@@ -17,23 +17,23 @@ import java.util.List;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class EntityExceptionHandler {
-    private final ExceptionResponseWrapper<List<ValidationErrorsDto>, EntityValidationException> validationErrorResponse;
-    private final ExceptionResponseWrapper<String, EntityException> entityExceptionExceptionResponse;
+    private final ExceptionResponseWrapper<List<ValidationErrorsDto>, EntityValidationException> validationErrorWrapper;
+    private final ExceptionResponseWrapper<String, EntityException> entityExceptionWrapper;
     @ExceptionHandler({EntityValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public List<ValidationErrorsDto> validationExceptionResponse(EntityValidationException e) {
-        return validationErrorResponse.of(e).getResponse();
+        return validationErrorWrapper.of(e).getResponse();
     }
 
     @ExceptionHandler({EntityDuplicateException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponseWrapper<String, EntityException> duplicateExceptionResponse(EntityException e) {
-        return entityExceptionExceptionResponse.of(e);
+        return entityExceptionWrapper.of(e);
     }
 
     @ExceptionHandler({EntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponseWrapper<String, EntityException> notFoundExceptionResponse(EntityException e) {
-        return entityExceptionExceptionResponse.of(e);
+        return entityExceptionWrapper.of(e);
     }
 }
