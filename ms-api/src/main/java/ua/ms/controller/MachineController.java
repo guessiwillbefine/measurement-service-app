@@ -51,7 +51,7 @@ public class MachineController {
     @ResponseStatus(HttpStatus.CREATED)
     public MachineDto save(@RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new EntityValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
         }
         return mapper.toDto(machineService.save(mapper.toEntity(machineDto)));
     }
