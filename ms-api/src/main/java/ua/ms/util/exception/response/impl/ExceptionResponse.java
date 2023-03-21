@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 import ua.ms.util.exception.EntityException;
 import ua.ms.util.exception.response.ExceptionResponseWrapper;
 
+/**
+ * default implementation that handles entity exceptions
+ * @see ua.ms.util.exception.response.ExceptionResponseWrapper
+ */
 @Component
 @NoArgsConstructor
 public class ExceptionResponse implements ExceptionResponseWrapper<String, EntityException> {
