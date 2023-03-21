@@ -21,9 +21,6 @@ public class IllegalArgsResponse implements ExceptionResponseWrapper<String, Ill
 
     @Override
     public String getResponse() {
-        if (response == null) {
-            throw new IllegalStateException("the handler must first get an exception, on the basis of which the response body will be generated");
-        }
         return response;
     }
 }

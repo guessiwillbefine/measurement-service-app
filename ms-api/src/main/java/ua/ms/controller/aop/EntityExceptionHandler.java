@@ -21,8 +21,8 @@ public class EntityExceptionHandler {
     private final ExceptionResponseWrapper<String, EntityException> entityExceptionWrapper;
     @ExceptionHandler({EntityValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<ValidationErrorsDto> validationExceptionResponse(EntityValidationException e) {
-        return validationErrorWrapper.of(e).getResponse();
+    public ExceptionResponseWrapper<List<ValidationErrorsDto>, EntityValidationException> validationExceptionResponse(EntityValidationException e) {
+        return validationErrorWrapper.of(e);
     }
 
     @ExceptionHandler({EntityDuplicateException.class})
