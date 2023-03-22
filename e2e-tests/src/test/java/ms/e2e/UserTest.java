@@ -47,7 +47,7 @@ class UserTest {
         final String token = getToken(response.getResponse().getContentAsString());
 
         var allUsersResponse = mockMvc.perform(get("/users/all")
-                        .header("Authorization", "Bearer " + token))
+                        .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
                 .andExpect(status().isOk()).andReturn();
 
         String responseString = allUsersResponse.getResponse().getContentAsString();
