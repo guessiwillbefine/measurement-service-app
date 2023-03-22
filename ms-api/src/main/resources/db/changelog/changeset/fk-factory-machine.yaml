@@ -8,7 +8,7 @@ databaseChangeLog:
               columns:
                 - column:
                     name: factory_id
-                    type: int
+                    type: bigint
                     constraints:
                       nullable: false
 
@@ -18,4 +18,4 @@ databaseChangeLog:
               baseColumnNames: factory_id
               referencedTableName: factory
               referencedColumnNames: id
-              onDelete: CASCADE
+              deleteCascade: true

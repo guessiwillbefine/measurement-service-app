@@ -10,8 +10,8 @@ import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.entity.factory.dto.view.FactoryView;
 import ua.ms.service.FactoryService;
-import ua.ms.util.exception.FactoryNotFoundException;
-import ua.ms.util.exception.FactoryValidationException;
+import ua.ms.util.exception.EntityNotFoundException;
+import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class FactoryController {
     @GetMapping("/{id}")
     public FactoryView findById(@PathVariable long id) {
         Optional<FactoryView> byId = factoryService.findById(id, FactoryView.class);
-        if (byId.isEmpty()) throw new FactoryNotFoundException("Factory with id[%d] wasn't found");
+        if (byId.isEmpty()) throw new EntityNotFoundException("Factory with id[%d] wasn't found");
         return byId.get();
     }
 
@@ -40,7 +40,7 @@ public class FactoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FactoryDto create(@Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new FactoryValidationException(bindingResult.getAllErrors().toString());
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         Factory saved = factoryService.save(mapper.toEntity(factoryDto));
         return mapper.toDto(saved);
     }
@@ -53,7 +53,8 @@ public class FactoryController {
 
     @PatchMapping("/{id}")
     public FactoryDto update(@PathVariable long id,
-                             @Valid @RequestBody FactoryDto factoryDto) {
+                             @Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         Factory updatedFactory = factoryService.update(id, factoryDto);
         return mapper.toDto(updatedFactory);
     }

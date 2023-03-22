@@ -5,19 +5,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.factory.Factory;
-import ua.ms.entity.user.User;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.entity.factory.dto.view.FactoryView;
+import ua.ms.entity.user.User;
 import ua.ms.service.FactoryService;
 import ua.ms.service.UserService;
 import ua.ms.service.repository.FactoryRepository;
-import ua.ms.util.exception.FactoryDuplicateException;
-import ua.ms.util.exception.FactoryNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
@@ -101,15 +104,10 @@ class FactoryServiceTest {
     @Test
     @DisplayName("test throwing exception if duplicating entity")
     void shouldThrowExceptionIfEntityIsPresent() {
-        final Long userId = USER_ENTITY.getId();
-        when(factoryRepository.findByName(anyString(), any()))
-                .thenReturn(Optional.of(FACTORY_ENTITY));
-        when(userService.findById(userId, User.class))
-                .thenReturn(Optional.of(USER_ENTITY));
-        when(factoryRepository.save(any())).thenReturn(FACTORY_ENTITY);
-
+        when(factoryRepository.save(FACTORY_ENTITY)).thenThrow(DataIntegrityViolationException.class);
         assertThatThrownBy(() -> factoryService.save(FACTORY_ENTITY))
-                .isInstanceOf(FactoryDuplicateException.class);
+                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(EntityDuplicateException.class);
     }
 
     @Test
@@ -126,7 +124,7 @@ class FactoryServiceTest {
         final long id = FACTORY_ENTITY.getId();
         when(factoryRepository.findById(anyLong(), any())).thenReturn(Optional.empty());
         assertThatThrownBy(() -> factoryService.deleteById(id))
-                .isInstanceOf(FactoryNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
@@ -151,7 +149,7 @@ class FactoryServiceTest {
     void shouldThrowExceptionWhenEntityWasNotFound() {
         when(factoryRepository.findById(anyLong(), any())).thenReturn(Optional.empty());
         assertThatThrownBy(() -> factoryService.update(1L, FACTORY_DTO))
-                .isInstanceOf(FactoryNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test

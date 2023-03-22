@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
@@ -13,12 +15,14 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.UserService;
 import ua.ms.service.repository.UserRepository;
-import ua.ms.util.exception.UserDuplicateException;
-import ua.ms.util.exception.UserNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
@@ -47,10 +51,10 @@ class UserServiceTest {
     @Test
     @DisplayName("test throwing exception for duplicates while registering")
     void shouldThrowDuplicate() {
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(USER_ENTITY));
+        when(userRepository.save(USER_ENTITY_FOR_REGISTRATION)).thenThrow(DataIntegrityViolationException.class);
         assertThatThrownBy(() -> userService.register(USER_CREDENTIALS))
                 .isInstanceOf(RuntimeException.class)
-                .isInstanceOf(UserDuplicateException.class);
+                .isInstanceOf(EntityDuplicateException.class);
     }
 
     @Test
@@ -101,7 +105,7 @@ class UserServiceTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
         long id = USER_DTO.getId();
         assertThatThrownBy(() -> userService.delete(id))
-                .isInstanceOf(UserNotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test

@@ -129,21 +129,6 @@ class SensorControllerTest {
     }
 
     @Test
-    @DisplayName("test to create sensor that already exist")
-    void testCreateSensorThatAlreadyExist() throws Exception {
-        final Sensor sensor = sensorRepository.findFirstById(1L);
-        final String token = jwtUtils.generateToken(ADMIN_USER);
-
-        String sensorToCreate = objectMapper.writeValueAsString(sensor);
-        mockMvc.perform(post("/sensors/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(sensorToCreate)
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isBadRequest())
-                .andReturn();
-    }
-
-    @Test
     @DisplayName("test to delete sensor")
     void testDeleteSensor() throws Exception {
         final String token = jwtUtils.generateToken(ADMIN_USER);

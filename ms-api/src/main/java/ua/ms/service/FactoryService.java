@@ -1,14 +1,15 @@
 package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.factory.AbstractFactoryIdentifiable;
 import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.service.repository.FactoryRepository;
-import ua.ms.util.exception.FactoryDuplicateException;
-import ua.ms.util.exception.FactoryNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +26,13 @@ public class FactoryService {
         return factoryRepository.findById(id, type);
     }
 
-    @Transactional //todo need to remove checking duplicate
+    @Transactional
     public Factory save(Factory factory) {
-        Optional<Factory> byName = factoryRepository.findByName(factory.getName(), Factory.class);
-        if (byName.isEmpty()) {
-                return factoryRepository.save(factory);
+        try {
+            return factoryRepository.save(factory);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityDuplicateException(format("Factory[%s] is already exists", factory.getName()));
         }
-        throw new FactoryDuplicateException(format("Factory[%s] is already exists", factory.getName()));
     }
 
     @Transactional
@@ -41,7 +42,7 @@ public class FactoryService {
             factoryRepository.deleteById(id);
             return byId.get();
         }
-        throw new FactoryNotFoundException(format("Factory with id[%d] wasn't found", id));
+        throw new EntityNotFoundException(format("Factory with id[%d] wasn't found", id));
     }
 
     @Transactional
@@ -51,7 +52,7 @@ public class FactoryService {
             Factory toUpdate = updateEntity(byId.get(), factoryDto);
             return factoryRepository.save(toUpdate);
         }
-        throw new FactoryNotFoundException(format("Factory with id[%d] wasn't found", id));
+        throw new EntityNotFoundException(format("Factory with id[%d] wasn't found", id));
     }
 
     private Factory updateEntity(Factory factory, FactoryDto factoryDto) {

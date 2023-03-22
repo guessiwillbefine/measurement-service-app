@@ -13,8 +13,8 @@ import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.entity.sensor.dto.view.SensorView;
 import ua.ms.service.SensorService;
-import ua.ms.util.exception.SensorNotFoundException;
-import ua.ms.util.exception.SensorValidationException;
+import ua.ms.util.exception.EntityNotFoundException;
+import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class SensorController {
     @GetMapping("/{id}")
     public SensorView find(@PathVariable("id") long id) {
         Optional<SensorView> byId = sensorService.findOne(id, SensorView.class);
-        if (byId.isEmpty()) throw new SensorNotFoundException("Sensor with this id is not found");
+        if (byId.isEmpty()) throw new EntityNotFoundException("Sensor with this id is not found");
         return byId.get();
     }
 
@@ -48,7 +48,7 @@ public class SensorController {
                             @RequestBody @Valid SensorDto sensorDto,
                             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new SensorValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
 
         Sensor updatedSensor = sensorService.update(id, sensorDto);
         return mapper.toDto(updatedSensor);
@@ -60,7 +60,7 @@ public class SensorController {
                             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
-            throw new SensorValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
 
         Sensor sensorToCreate = mapper.toEntity(sensorDto);
         Sensor createdSensor = sensorService.create(sensorToCreate);

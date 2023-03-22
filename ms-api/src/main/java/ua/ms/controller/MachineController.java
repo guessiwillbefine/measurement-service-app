@@ -12,8 +12,8 @@ import ua.ms.entity.machine.MachineType;
 import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.entity.machine.dto.view.MachineView;
 import ua.ms.service.MachineService;
-import ua.ms.util.exception.MachineNotFoundException;
-import ua.ms.util.exception.MachineValidationException;
+import ua.ms.util.exception.EntityNotFoundException;
+import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class MachineController {
     public MachineView findById(@PathVariable Long id) {
         Optional<MachineView> byId = machineService.findById(id, MachineView.class);
         if (byId.isPresent()) return byId.get();
-        throw new MachineNotFoundException(format("Machine with id[%d] not found", id));
+        throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
     }
 
     @GetMapping("/types")
@@ -51,7 +51,7 @@ public class MachineController {
     @ResponseStatus(HttpStatus.CREATED)
     public MachineDto save(@RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new MachineValidationException(bindingResult.getAllErrors().toString());
+            throw new EntityValidationException(bindingResult);
         }
         return mapper.toDto(machineService.save(mapper.toEntity(machineDto)));
     }
@@ -59,7 +59,7 @@ public class MachineController {
     @PatchMapping("/{id}")
     public MachineDto update(@PathVariable Long id,
                              @RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new MachineValidationException(bindingResult.getAllErrors().toString());
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         return machineService.update(id, machineDto);
     }
 

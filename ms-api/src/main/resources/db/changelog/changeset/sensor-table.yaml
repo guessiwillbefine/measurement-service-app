@@ -9,7 +9,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: int
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     nullable: false
@@ -19,7 +19,6 @@ databaseChangeLog:
                   type: varchar(25)
                   constraints:
                     nullable: false
-                    unique: true
               - column:
                   name: measure_id
                   type: varchar(20)
@@ -28,3 +27,4 @@ databaseChangeLog:
                     referencedTableName: measure_system
                     referencedColumnNames: id
                     nullable: false
+                    deleteCascade: true

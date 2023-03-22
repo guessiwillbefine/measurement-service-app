@@ -1,6 +1,7 @@
 package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,11 +9,13 @@ import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.service.repository.SensorRepository;
-import ua.ms.util.exception.SensorDuplicateException;
-import ua.ms.util.exception.SensorNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class SensorService {
     public Sensor update(long id, SensorDto sensorDto) {
         Optional<Sensor> byId = sensorRepository.findById(id);
         if (byId.isEmpty())
-            throw new SensorNotFoundException("Sensor is not found");
+            throw new EntityNotFoundException("Sensor is not found");
 
         Sensor sensorToUpdate = byId.get();
         Sensor updated = updateSensorFields(sensorToUpdate, sensorDto);
@@ -49,7 +52,7 @@ public class SensorService {
     public Sensor delete(long id){
         Optional<Sensor> byId = sensorRepository.findById(id);
         if(byId.isEmpty())
-            throw new SensorNotFoundException("Sensor is not found");
+            throw new EntityNotFoundException("Sensor is not found");
 
         sensorRepository.delete(byId.get());
         return byId.get();
@@ -57,10 +60,6 @@ public class SensorService {
 
     @Transactional
     public Sensor create(Sensor sensorToCreate){
-        Optional<Sensor> sensor = sensorRepository.findByName(sensorToCreate.getName(), Sensor.class);
-        if(sensor.isPresent())
-            throw new SensorDuplicateException("Sensor wit this name is already added");
-
         return sensorRepository.save(sensorToCreate);
     }
 }
