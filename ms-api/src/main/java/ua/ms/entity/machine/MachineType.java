@@ -7,7 +7,7 @@ public enum MachineType {
     WELDING,     // сварочный
     MELTING,     // плавильный
     PRESS,       // пресс
-    CONVEYOR,    // конвеер
+    CONVEYOR,    // конвейер
     MANIPULATOR, // манипулятор
     OTHER,       // для всяких специфических машин
 }

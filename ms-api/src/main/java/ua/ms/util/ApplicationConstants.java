@@ -38,6 +38,6 @@ public class ApplicationConstants {
     public static final class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";
-        public static final String JWT_TOKEN_RESPONSE_KEY = "jwt-token";
+        public static final String JWT_TOKEN_RESPONSE_KEY = "token";
     }
 }
