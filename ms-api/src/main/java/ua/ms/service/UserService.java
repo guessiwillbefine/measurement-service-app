@@ -2,6 +2,7 @@ package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,9 +42,8 @@ public class UserService implements RegistrationService {
     @Override
     @Transactional
     public User register(AuthenticationCredentialsDto userCredentials) {
-        final Optional<User> byUsername = userRepository.findByUsername(userCredentials.getUsername());
         log.debug(format("Attempt to register user [%s]", userCredentials.getUsername()));
-        if (byUsername.isEmpty()) {
+        try {
             //todo here will be method that sends mail notification some day...
             return userRepository.save(User.builder()
                     .username(userCredentials.getUsername())
@@ -51,9 +51,12 @@ public class UserService implements RegistrationService {
                     .role(Role.ADMIN)
                     .status(Status.ACTIVE)
                     .build());
+        } catch (DataIntegrityViolationException e) {
+            log.debug("UserDuplicationException was thrown");
+            throw new EntityDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
         }
-        log.debug("UserDuplicationException was thrown");
-        throw new EntityDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
+
+
     }
 
     @Transactional(readOnly = true)

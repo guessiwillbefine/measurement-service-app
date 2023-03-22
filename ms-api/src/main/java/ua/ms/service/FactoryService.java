@@ -1,6 +1,7 @@
 package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.factory.AbstractFactoryIdentifiable;
@@ -25,13 +26,13 @@ public class FactoryService {
         return factoryRepository.findById(id, type);
     }
 
-    @Transactional //todo need to remove checking duplicate
+    @Transactional
     public Factory save(Factory factory) {
-        Optional<Factory> byName = factoryRepository.findByName(factory.getName(), Factory.class);
-        if (byName.isEmpty()) {
-                return factoryRepository.save(factory);
+        try {
+            return factoryRepository.save(factory);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityDuplicateException(format("Factory[%s] is already exists", factory.getName()));
         }
-        throw new EntityDuplicateException(format("Factory[%s] is already exists", factory.getName()));
     }
 
     @Transactional

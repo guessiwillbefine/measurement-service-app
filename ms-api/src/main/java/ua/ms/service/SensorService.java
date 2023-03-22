@@ -1,6 +1,7 @@
 package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,8 @@ import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -57,10 +60,6 @@ public class SensorService {
 
     @Transactional
     public Sensor create(Sensor sensorToCreate){
-        Optional<Sensor> sensor = sensorRepository.findByName(sensorToCreate.getName(), Sensor.class);
-        if(sensor.isPresent())
-            throw new EntityDuplicateException("Sensor wit this name is already added");
-
         return sensorRepository.save(sensorToCreate);
     }
 }

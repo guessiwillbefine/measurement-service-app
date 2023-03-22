@@ -54,7 +54,7 @@ public class UserAuthController {
             throw exception;
         }
     }
-    @SecurityRequirements
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public Map<String, String> register(@NotNull @RequestBody @Valid
