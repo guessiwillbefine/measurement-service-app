@@ -69,6 +69,13 @@ public final class TestConstants {
             .lastName("sname").status(Status.ACTIVE)
             .role(Role.ADMIN).password("password")
             .factory(FACTORY_ENTITY).build();
+
+    public static final User USER_ENTITY_FOR_REGISTRATION = User.builder()
+            .username(USER_CREDENTIALS.getUsername())
+            .password(USER_CREDENTIALS.getPassword())
+            .role(Role.ADMIN)
+            .status(Status.ACTIVE)
+            .build();
     public static final UserDto USER_DTO = UserDto.builder()
             .id(1L).username("username")
             .email("test@gmail.com").firstName("name")

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import ua.ms.configuration.security.repository.RegistrationService;
 import ua.ms.entity.user.User;
@@ -41,8 +42,7 @@ class AuthServiceTest {
     @Test
     @DisplayName("Should throw RuntimeException if user can't be registered")
     void shouldThrowExceptionIfDuplicate() {
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(new User()));
-        when(userRepository.save(any(User.class))).thenReturn(new User());
+        when(userRepository.save(any(User.class))).thenThrow(DataIntegrityViolationException.class);
         assertThatThrownBy(() -> registrationService.register(INVALID_USER_CREDENTIALS))
                 .isInstanceOf(RuntimeException.class)
                 .isInstanceOf(EntityDuplicateException.class);

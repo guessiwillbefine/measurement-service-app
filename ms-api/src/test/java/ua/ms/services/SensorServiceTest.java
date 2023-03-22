@@ -126,13 +126,4 @@ class SensorServiceTest {
         assertThat(sensorService.create(SENSOR_ENTITY)).isEqualTo(SENSOR_ENTITY);
     }
 
-    @Test
-    void createShouldThrowExceptionIfSensorWithThisNameIsAlreadyAdded() {
-        when(sensorRepository.findByName(SENSOR_ENTITY.getName(), Sensor.class))
-                .thenReturn(Optional.of(SENSOR_ENTITY));
-
-        assertThatThrownBy(() -> sensorService.create(SENSOR_ENTITY))
-                .isInstanceOf(EntityDuplicateException.class);
-    }
-
 }

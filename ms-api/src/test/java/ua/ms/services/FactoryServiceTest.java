@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.factory.Factory;
@@ -103,14 +104,9 @@ class FactoryServiceTest {
     @Test
     @DisplayName("test throwing exception if duplicating entity")
     void shouldThrowExceptionIfEntityIsPresent() {
-        final Long userId = USER_ENTITY.getId();
-        when(factoryRepository.findByName(anyString(), any()))
-                .thenReturn(Optional.of(FACTORY_ENTITY));
-        when(userService.findById(userId, User.class))
-                .thenReturn(Optional.of(USER_ENTITY));
-        when(factoryRepository.save(any())).thenReturn(FACTORY_ENTITY);
-
+        when(factoryRepository.save(FACTORY_ENTITY)).thenThrow(DataIntegrityViolationException.class);
         assertThatThrownBy(() -> factoryService.save(FACTORY_ENTITY))
+                .isInstanceOf(RuntimeException.class)
                 .isInstanceOf(EntityDuplicateException.class);
     }
 
