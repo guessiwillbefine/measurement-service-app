@@ -1,4 +1,10 @@
 cd %~dp0
-del logs\
+del /s /q logs\*.*
+rd /s /q logs\
 cd ms-api
-del logs\
+del /s /q logs\*.*
+rd /s /q logs\
+cd %~dp0
+cd ms-consumer
+del /s /q logs\*.*
+rd /s /q logs\
