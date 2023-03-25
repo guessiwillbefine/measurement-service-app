@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Factory;
-import ua.ms.entity.dto.FactoryDto;
-import ua.ms.entity.dto.view.FactoryView;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.factory.dto.FactoryDto;
+import ua.ms.entity.factory.dto.view.FactoryView;
 import ua.ms.service.repository.FactoryRepository;
 
 import java.util.List;

@@ -24,14 +24,20 @@ public class ApplicationConstants {
                 "Password must be between " + MIN_PASSWORD_LENGTH + " and " + MAX_PASSWORD_LENGTH + " symbols";
         public static final String EMAIL_REGEXP = "^([\\w-\\.]+)@([\\w-]+\\.)+[\\w-]{2,4}$";
         public static final String EMAIL_MSG = "Invalid email";
+        public static final String SENSOR_NAME_MSG =
+                "Sensor name must be between " + MIN_NAME_LENGTH + " and " + MAX_NAME_LENGTH + " symbols";
         public static final int MAX_FACTORY_NAME_LENGTH = 40;
         public static final String FACTORY_NAME_MSG = "Factory name must be between 0 and " + MAX_FACTORY_NAME_LENGTH;
+        public static final int MAX_MACHINE_MODEL_LENGTH = 20;
+        public static final int MAX_MACHINE_NAME_LENGTH = 20;
+        public static final String MACHINE_NAME_MSG = "Machine name must be between 0 and " + MAX_MACHINE_NAME_LENGTH;
+        public static final String MACHINE_MODEL_MSG = "Machine model must be between 0 and " + MAX_MACHINE_MODEL_LENGTH;
     }
 
     @UtilityClass
     public static final class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";
-        public static final String JWT_TOKEN_RESPONSE_KEY = "jwt-token";
+        public static final String JWT_TOKEN_RESPONSE_KEY = "token";
     }
 }

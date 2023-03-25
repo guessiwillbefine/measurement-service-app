@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.ms.entity.Factory;
-import ua.ms.entity.dto.FactoryDto;
-import ua.ms.entity.dto.view.FactoryView;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.factory.dto.FactoryDto;
+import ua.ms.entity.factory.dto.view.FactoryView;
 import ua.ms.service.FactoryService;
-import ua.ms.util.exception.FactoryNotFoundException;
-import ua.ms.util.exception.FactoryValidationException;
-import ua.ms.util.mapper.FactoryMapper;
+import ua.ms.util.exception.EntityNotFoundException;
+import ua.ms.util.exception.EntityValidationException;
+import ua.ms.util.mapper.Mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +23,12 @@ import java.util.Optional;
 @Tag(name = "Factory entity controller")
 public class FactoryController {
     private final FactoryService factoryService;
-    private final FactoryMapper factoryMapper;
+    private final Mapper<Factory,FactoryDto> mapper;
 
     @GetMapping("/{id}")
     public FactoryView findById(@PathVariable long id) {
         Optional<FactoryView> byId = factoryService.findById(id, FactoryView.class);
-        if (byId.isEmpty()) throw new FactoryNotFoundException("Factory with id[%d] wasn't found");
+        if (byId.isEmpty()) throw new EntityNotFoundException("Factory with id[%d] wasn't found");
         return byId.get();
     }
 
@@ -40,21 +40,22 @@ public class FactoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FactoryDto create(@Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new FactoryValidationException(bindingResult.getAllErrors().toString());
-        Factory saved = factoryService.save(factoryDto);
-        return factoryMapper.toDto(saved);
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
+        Factory saved = factoryService.save(mapper.toEntity(factoryDto));
+        return mapper.toDto(saved);
     }
 
     @DeleteMapping("/{id}")
     public FactoryDto delete(@PathVariable long id) {
         Factory deletedFactory = factoryService.deleteById(id);
-        return factoryMapper.toDto(deletedFactory);
+        return mapper.toDto(deletedFactory);
     }
 
     @PatchMapping("/{id}")
     public FactoryDto update(@PathVariable long id,
-                             @Valid @RequestBody FactoryDto factoryDto) {
+                             @Valid @RequestBody FactoryDto factoryDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
         Factory updatedFactory = factoryService.update(id, factoryDto);
-        return factoryMapper.toDto(updatedFactory);
+        return mapper.toDto(updatedFactory);
     }
 }

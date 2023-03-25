@@ -12,9 +12,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.dto.UserDto;
+import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.UserService;
-import ua.ms.util.exception.UserDuplicateException;
+import ua.ms.util.exception.EntityDuplicateException;
 
 import java.util.Optional;
 
@@ -68,7 +68,7 @@ class AuthenticationControllerTest {
     @DisplayName("duplicate username should return bad request")
     @WithMockUser(username = "admin", password = "admin", authorities = "ADMIN")
     void duplicateRegistrationTest() throws Exception {
-        when(userService.register(any())).thenThrow(UserDuplicateException.class);
+        when(userService.register(any())).thenThrow(EntityDuplicateException.class);
         mockMvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(USER_CREDENTIALS)))
                 .andExpect(status().isBadRequest());

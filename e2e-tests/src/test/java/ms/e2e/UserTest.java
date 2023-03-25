@@ -12,8 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.MsApiApplication;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
-import ua.ms.entity.dto.UserDto;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.UserDto;
 import java.util.HashMap;
 import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -47,7 +47,7 @@ class UserTest {
         final String token = getToken(response.getResponse().getContentAsString());
 
         var allUsersResponse = mockMvc.perform(get("/users/all")
-                        .header("Authorization", "Bearer " + token))
+                        .header(TOKEN_HEADER_NAME, TOKEN_PREFIX + token))
                 .andExpect(status().isOk()).andReturn();
 
         String responseString = allUsersResponse.getResponse().getContentAsString();

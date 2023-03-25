@@ -1,7 +1,7 @@
 package ua.ms.configuration.security.repository;
 
-import ua.ms.entity.User;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.User;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 
 import java.util.Optional;
 

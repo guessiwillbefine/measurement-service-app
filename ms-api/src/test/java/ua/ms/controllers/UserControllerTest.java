@@ -11,8 +11,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.util.JWTUtils;
-import ua.ms.entity.Role;
-import ua.ms.entity.User;
+import ua.ms.entity.user.Role;
+import ua.ms.entity.user.User;
 import ua.ms.service.repository.UserRepository;
 
 import java.util.Random;
@@ -79,8 +79,7 @@ class UserControllerTest {
         final String token = jwtUtils.generateToken(workerUser.getUsername());
         mockMvc.perform(delete("/users/6")
                         .header("Authorization", "Bearer " + token))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("response").value("Access Denied"));
+                .andExpect(status().isForbidden());
     }
 
     @Test

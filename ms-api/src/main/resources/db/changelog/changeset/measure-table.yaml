@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: adding-simple-measure-table
+      author: moksem
+
+      changes:
+        - createTable:
+            tableName: measure
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: measure_value
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sensor_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: sensor_measure_fk
+                    referencedTableName: sensor
+                    referencedColumnNames: id
+                    nullable: false
+                    deleteCascade: true
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false

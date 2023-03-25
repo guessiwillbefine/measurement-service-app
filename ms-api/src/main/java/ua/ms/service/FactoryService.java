@@ -1,13 +1,15 @@
 package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.Factory;
-import ua.ms.entity.dto.FactoryDto;
+import ua.ms.entity.factory.AbstractFactoryIdentifiable;
+import ua.ms.entity.factory.Factory;
+import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.service.repository.FactoryRepository;
-import ua.ms.util.exception.FactoryDuplicateException;
-import ua.ms.util.exception.FactoryNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,20 +22,17 @@ public class FactoryService {
     private final FactoryRepository factoryRepository;
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findById(long id, Class<T> type) {
+    public <T extends AbstractFactoryIdentifiable> Optional<T> findById(long id, Class<T> type) {
         return factoryRepository.findById(id, type);
     }
 
     @Transactional
-    public Factory save(FactoryDto factoryDto) {
-        Optional<Factory> byName = factoryRepository.findByName(factoryDto.getName(), Factory.class);
-        if (byName.isEmpty()) {
-                Factory factoryToSave = Factory.builder()
-                        .name(factoryDto.getName())
-                        .build();
-                return factoryRepository.save(factoryToSave);
+    public Factory save(Factory factory) {
+        try {
+            return factoryRepository.save(factory);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityDuplicateException(format("Factory[%s] is already exists", factory.getName()));
         }
-        throw new FactoryDuplicateException(format("Factory[%s] is already exists", factoryDto.getName()));
     }
 
     @Transactional
@@ -43,7 +42,7 @@ public class FactoryService {
             factoryRepository.deleteById(id);
             return byId.get();
         }
-        throw new FactoryNotFoundException(format("Factory with id[%d] wasn't found", id));
+        throw new EntityNotFoundException(format("Factory with id[%d] wasn't found", id));
     }
 
     @Transactional
@@ -53,7 +52,7 @@ public class FactoryService {
             Factory toUpdate = updateEntity(byId.get(), factoryDto);
             return factoryRepository.save(toUpdate);
         }
-        throw new FactoryNotFoundException(format("Factory with id[%d] wasn't found", id));
+        throw new EntityNotFoundException(format("Factory with id[%d] wasn't found", id));
     }
 
     private Factory updateEntity(Factory factory, FactoryDto factoryDto) {
@@ -63,12 +62,12 @@ public class FactoryService {
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findByName(String name, Class<T> type) {
+    public <T extends AbstractFactoryIdentifiable> Optional<T> findByName(String name, Class<T> type) {
         return factoryRepository.findByName(name, type);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Class<T> type) {
+    public <T extends AbstractFactoryIdentifiable> List<T> findAll(Class<T> type) {
         return factoryRepository.findBy(type);
     }
 }

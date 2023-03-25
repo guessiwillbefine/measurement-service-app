@@ -2,18 +2,20 @@ package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.repository.RegistrationService;
-import ua.ms.entity.Role;
-import ua.ms.entity.Status;
-import ua.ms.entity.User;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
-import ua.ms.entity.dto.UserDto;
+import ua.ms.entity.user.AbstractUserIdentifiable;
+import ua.ms.entity.user.Role;
+import ua.ms.entity.user.Status;
+import ua.ms.entity.user.User;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.repository.UserRepository;
-import ua.ms.util.exception.UserDuplicateException;
-import ua.ms.util.exception.UserNotFoundException;
+import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,16 +35,15 @@ public class UserService implements RegistrationService {
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> loadByUsername(String username, Class<T> type) {
+    public <T extends AbstractUserIdentifiable> Optional<T> loadByUsername(String username, Class<T> type) {
         return userRepository.findByUsername(username, type);
     }
 
     @Override
     @Transactional
     public User register(AuthenticationCredentialsDto userCredentials) {
-        final Optional<User> byUsername = userRepository.findByUsername(userCredentials.getUsername());
         log.debug(format("Attempt to register user [%s]", userCredentials.getUsername()));
-        if (byUsername.isEmpty()) {
+        try {
             //todo here will be method that sends mail notification some day...
             return userRepository.save(User.builder()
                     .username(userCredentials.getUsername())
@@ -50,26 +51,29 @@ public class UserService implements RegistrationService {
                     .role(Role.ADMIN)
                     .status(Status.ACTIVE)
                     .build());
+        } catch (DataIntegrityViolationException e) {
+            log.debug("UserDuplicationException was thrown");
+            throw new EntityDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
         }
-        log.debug("UserDuplicationException was thrown");
-        throw new UserDuplicateException(format("Username [%s] already exists", userCredentials.getUsername()));
+
+
     }
 
     @Transactional(readOnly = true)
-    public <T> Optional<T> findById(long id, Class<T> userClass) {
+    public <T extends AbstractUserIdentifiable> Optional<T> findById(long id, Class<T> userClass) {
         log.debug(format("Attempt to find user by his id[%d]", id));
         return userRepository.findById(id, userClass);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Pageable pageable, Class<T> type) {
+    public <T extends AbstractUserIdentifiable> List<T> findAll(Pageable pageable, Class<T> type) {
         log.debug(format("Attempt to pageable[size=%d page=%d] list",
                 pageable.getPageNumber(), pageable.getPageSize()));
         return userRepository.findBy(pageable, type);
     }
 
     @Transactional(readOnly = true)
-    public <T> List<T> findAll(Class<T> type) {
+    public <T extends AbstractUserIdentifiable> List<T> findAll(Class<T> type) {
         return userRepository.findBy(type);
     }
     @Transactional
@@ -80,7 +84,7 @@ public class UserService implements RegistrationService {
             return byId.get();
         }
         log.debug("User wasn't found, throwing UserNotFoundException");
-        throw new UserNotFoundException(format("User with id[%d] wasn't found", id));
+        throw new EntityNotFoundException(format("User with id[%d] wasn't found", id));
     }
 
     @Transactional
@@ -92,7 +96,7 @@ public class UserService implements RegistrationService {
             return userRepository.save(updated);
         }
         log.debug("User wasn't found, throwing UserNotFoundException");
-        throw new UserNotFoundException(format("User [%s] wasn't found", userDto.getUsername()));
+        throw new EntityNotFoundException(format("User [%s] wasn't found", userDto.getUsername()));
     }
 
     private User updateEntityFields(User entity, UserDto dto) {

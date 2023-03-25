@@ -10,7 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ua.ms.configuration.security.util.JWTFilter;
-import ua.ms.entity.Role;
+import ua.ms.entity.user.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -26,8 +26,13 @@ public class SecurityConfig {
                 .requestMatchers("/auth/register").hasAuthority(adminAuthority)
                 .requestMatchers(HttpMethod.DELETE, "/factories").hasAuthority(adminAuthority)
                 .requestMatchers(HttpMethod.POST, "/factories").hasAuthority(adminAuthority)
+                .requestMatchers(HttpMethod.DELETE, "/machines").hasAuthority(adminAuthority)
+                .requestMatchers(HttpMethod.POST, "/machines").hasAuthority(adminAuthority)
                 .requestMatchers("/factories/**").authenticated()
+                .requestMatchers("/machines/**").authenticated()
                 .requestMatchers("/users/**").authenticated()
+                .requestMatchers( "/sensors/**").authenticated()
+                .requestMatchers("/measures/**").authenticated()
                 .requestMatchers("/auth/_login").permitAll()
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .and()

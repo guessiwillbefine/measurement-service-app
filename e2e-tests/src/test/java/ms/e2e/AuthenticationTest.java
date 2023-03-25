@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.MsApiApplication;
-import ua.ms.entity.dto.AuthenticationCredentialsDto;
+import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 
 import java.util.Map;
 
@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ua.ms.util.ApplicationConstants.Security.JWT_TOKEN_RESPONSE_KEY;
 
 @ActiveProfiles("test-env")
 @Transactional
@@ -43,7 +44,7 @@ class AuthenticationTest {
 
         String loginResponse = response.getResponse().getContentAsString();
         var responseBody = objectMapper.readValue(loginResponse, Map.class);
-        Object tokenValue = responseBody.get("jwt-token");
+        Object tokenValue = responseBody.get("token");
 
         final AuthenticationCredentialsDto newCredentialsDto = AuthenticationCredentialsDto.builder()
                 .username("newUser").password("newUserPass").build();
@@ -54,13 +55,13 @@ class AuthenticationTest {
                         .content(newCredentialsJson)
                 .header("Authorization", "Bearer " + tokenValue))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("jwt-token").exists())
+                .andExpect(jsonPath(JWT_TOKEN_RESPONSE_KEY).exists())
                 .andReturn();
 
         String responseBody2 = response2.getResponse().getContentAsString();
         var token = objectMapper.readValue(responseBody2, Map.class);
 
-        Object tokenValue2 = token.get("jwt-token");
+        Object tokenValue2 = token.get(JWT_TOKEN_RESPONSE_KEY);
         assertThat(tokenValue).isNotNull();
 
         mockMvc.perform(post("/auth/_login")
