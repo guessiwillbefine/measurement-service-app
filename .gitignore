@@ -4,6 +4,7 @@
 #compiled sources
 /ms-api/target/
 /e2e-tests/target/
+/ms-consumer/target/
 
 #IDEA
 *.iml
