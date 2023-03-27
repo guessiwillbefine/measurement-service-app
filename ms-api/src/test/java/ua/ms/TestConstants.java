@@ -20,6 +20,7 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.entity.user.dto.view.UserView;
+import ua.ms.service.mq.impl.MailAlertDto;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -82,6 +83,8 @@ public final class TestConstants {
             .lastName("sname").status(Status.ACTIVE)
             .factoryId(MACHINE_DTO.getFactoryId())
             .role(Role.ADMIN).build();
+    public static final MailAlertDto MAIL_ALERT_DTO =
+            new MailAlertDto("test1email@gmail.com","TestSensor1", "ZXC993-F", "machine1", 15, 10);
     public static final UserView USER_VIEW = new UserView() {
         @Override
         public long getId() {

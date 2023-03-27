@@ -46,7 +46,7 @@ security:
     secret: vsitsokroovzahtuokv
 
 #RabbitMQ alert queue configuration
-queue:
+alert-queue:
   name: "notification-queue"
   exchange: "alert-exchange"
   routing-key: "mail-notification"

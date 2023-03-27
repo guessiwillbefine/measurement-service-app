@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfiguration {
-    @Value("${queue.name}")
+    @Value("${alert-queue.name}")
     private String queue;
-    @Value("${queue.exchange}")
+    @Value("${alert-queue.exchange}")
     private String exchange;
-    @Value("${queue.routing-key}")
+    @Value("${alert-queue.routing-key}")
     private String routingKey;
     @Bean
     public DirectExchange exchange() {
