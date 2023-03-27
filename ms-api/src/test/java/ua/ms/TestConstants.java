@@ -20,7 +20,7 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.entity.user.dto.view.UserView;
-import ua.ms.service.mq.impl.MailAlertDto;
+import ua.ms.service.mq.impl.mail.MailAlertDto;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

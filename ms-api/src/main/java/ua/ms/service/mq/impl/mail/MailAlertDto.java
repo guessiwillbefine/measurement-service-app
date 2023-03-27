@@ -1,4 +1,4 @@
-package ua.ms.service.mq.impl;
+package ua.ms.service.mq.impl.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
