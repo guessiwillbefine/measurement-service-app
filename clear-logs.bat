@@ -12,14 +12,14 @@ if exist "%LOGS_DIR%" (
 )
 
 if exist "%API_DIR%" (
-    echo Deleting all files and directories in "%LOGS_DIR%"...
+    echo Deleting all files and directories in "%API_DIR%"...
     rd /s /q "%API_DIR%"
 ) else (
     echo Directory "%API_DIR%" not found.
 )
 
 if exist "%CONSUMER_DIR%" (
-    echo Deleting all files and directories in "%LOGS_DIR%"...
+    echo Deleting all files and directories in "%CONSUMER_DIR%"...
     rd /s /q "%CONSUMER_DIR%"
 ) else (
     echo Directory "%CONSUMER_DIR%" not found.
