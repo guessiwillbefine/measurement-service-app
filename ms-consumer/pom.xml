@@ -12,8 +12,7 @@
     <groupId>ua.ms</groupId>
     <artifactId>ms-consumer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
-    <description>demo</description>
+    <name>ms-consumer</name>
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -1,5 +1,9 @@
 package ua.ms.consumer;
 
-public interface MessageQueueConsumer {
-    void consume(Object o);
+/**
+   marks class as message queue consumer
+   @param <T> - type of message that will be read and proceed by consumer
+ **/
+public interface MessageQueueConsumer<T> {
+    void consume(T msg);
 }
