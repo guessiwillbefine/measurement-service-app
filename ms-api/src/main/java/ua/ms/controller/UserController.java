@@ -41,6 +41,12 @@ public class UserController {
         return byId.get();
     }
 
+    /** Endpoint for getting current authenticated {@link ua.ms.entity.user.User} from  Security context */
+    @GetMapping("/account")
+    public User getCurrent(Authentication authentication) {
+        return (User)authentication.getPrincipal();
+    }
+
     @GetMapping("/all")
     public List<UserView> getAll() {
         return userService.findAll(UserView.class);
