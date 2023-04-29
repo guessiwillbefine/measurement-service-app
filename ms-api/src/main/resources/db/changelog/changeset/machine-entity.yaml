@@ -31,6 +31,14 @@ databaseChangeLog:
                   name: machine_id
                   type: bigint
 
+        - addColumn:
+            tableName: machine
+            columns:
+              - column:
+                  name: machine_activity_id
+                  type: varchar(10)
+                  defaultValue: INACTIVE
+
         - addForeignKeyConstraint:
             referencedTableName: machine
             referencedColumnNames: id
@@ -46,3 +54,11 @@ databaseChangeLog:
             baseColumnNames: type_id
             constraintName: machine_type_fk
             deleteCascade: true
+
+        - addForeignKeyConstraint:
+            referencedTableName: machine_activity
+            referencedColumnNames: id
+            baseTableName: machine
+            baseColumnNames: machine_activity_id
+            constraintName: machine_machine_activity_fk
+            onDelete: set null

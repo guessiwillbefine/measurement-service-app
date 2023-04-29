@@ -5,6 +5,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/status-entity.yaml
   - include:
+      file: db/changelog/changeset/machine-activity-entity.yaml
+  - include:
       file: db/changelog/changeset/measure-system-entity.yaml
   - include:
       file: db/changelog/changeset/user-table.yaml
@@ -22,6 +24,8 @@ databaseChangeLog:
       file: db/changelog/changeset/measure-table.yaml
   - include:
       file: db/changelog/changeset/fk-factory-machine.yaml
+  - include:
+      file: db/changelog/changeset/work-shift.yaml
 
 
   ### datasets
@@ -41,3 +45,5 @@ databaseChangeLog:
       file: db/changelog/dataset/sensor-dataset.xml
   - include:
       file: db/changelog/dataset/measure-dataset.xml
+  - include:
+      file: db/changelog/dataset/work-shift-dataset.xml

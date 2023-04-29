@@ -1,6 +1,7 @@
 package ua.ms.entity.machine.dto.view;
 
 import ua.ms.entity.machine.AbstractMachineIdentifiable;
+import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.MachineType;
 import ua.ms.entity.sensor.Sensor;
 
@@ -12,4 +13,5 @@ public interface MachineView extends AbstractMachineIdentifiable {
     String getModel();
     MachineType getType();
     List<Sensor> getSensors();
+    MachineActivity getActivity();
 }

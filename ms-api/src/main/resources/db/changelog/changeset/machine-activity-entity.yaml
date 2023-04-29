@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add activity entity
+      author: moksem
+
+      changes:
+        - createTable:
+            tableName: machine_activity
+            columns:
+              - column:
+                  name: id
+                  type: varchar(10)
+                  constraints:
+                    primaryKey: true

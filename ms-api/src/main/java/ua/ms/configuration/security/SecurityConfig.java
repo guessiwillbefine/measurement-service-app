@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/factories").hasAuthority(adminAuthority)
                 .requestMatchers(HttpMethod.DELETE, "/machines").hasAuthority(adminAuthority)
                 .requestMatchers(HttpMethod.POST, "/machines").hasAuthority(adminAuthority)
+                .requestMatchers("/work_shifts/**").authenticated()
                 .requestMatchers("/factories/**").authenticated()
                 .requestMatchers("/machines/**").authenticated()
                 .requestMatchers("/users/**").authenticated()
