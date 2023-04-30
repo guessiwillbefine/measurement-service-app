@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers( "/sensors/**").authenticated()
                 .requestMatchers("/measures/**").authenticated()
                 .requestMatchers("/auth/_login").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .and()
                 .logout()
