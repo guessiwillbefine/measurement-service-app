@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: adding-simple-work-shift-table
+      author: moksem
+
+      changes:
+        - createTable:
+            tableName: work_shift
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: work_shift_user_fk
+                    referencedTableName: user_account
+                    referencedColumnNames: id
+                    nullable: false
+                    deleteCascade: true
+              - column:
+                  name: machine_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: work_shift_machine_fk
+                    referencedTableName: machine
+                    referencedColumnNames: id
+                    nullable: false
+                    deleteCascade: true
+              - column:
+                  name: started_at
+                  type: timestamp
+              - column:
+                  name: ended_in
+                  type: timestamp

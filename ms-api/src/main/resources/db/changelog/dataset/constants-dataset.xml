@@ -46,4 +46,13 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="machine activity dataset" author="moksem">
+        <insert tableName="machine_activity">
+            <column name="id" value="ACTIVE"/>
+        </insert>
+        <insert tableName="machine_activity">
+            <column name="id" value="INACTIVE"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>

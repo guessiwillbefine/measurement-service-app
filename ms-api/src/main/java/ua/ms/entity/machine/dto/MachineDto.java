@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 import org.hibernate.validator.constraints.Length;
 import ua.ms.entity.machine.AbstractMachineIdentifiable;
+import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.MachineType;
 import ua.ms.util.ApplicationConstants.Validation;
 
@@ -28,5 +29,7 @@ public class MachineDto implements AbstractMachineIdentifiable {
     private String model;
     @Nullable
     private MachineType type;
+    @Nullable
+    private MachineActivity activity;
     private Long factoryId;
 }
