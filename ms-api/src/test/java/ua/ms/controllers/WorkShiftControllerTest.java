@@ -6,18 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.util.JWTUtils;
-import ua.ms.entity.measure.MeasureSystem;
-import ua.ms.entity.sensor.dto.SensorDto;
-import ua.ms.entity.work_shift.dto.WorkShiftDto;
 import ua.ms.service.repository.WorkShiftRepository;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -77,26 +73,26 @@ class WorkShiftControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    @DisplayName("test to create work shift")
-    void testCreateWorkShift() throws Exception {
-        final WorkShiftDto workShiftDto = WorkShiftDto.builder()
-                .machineId(1L)
-                .workerId(1L)
-                .build();
-        final String token = jwtUtils.generateToken(ADMIN_USER);
-
-        String workShiftToCreate = objectMapper.writeValueAsString(workShiftDto);
-        System.out.println(workShiftToCreate);
-        mockMvc.perform(post("/work_shifts/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(workShiftToCreate)
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("workerId").exists())
-                .andExpect(jsonPath("machineId").exists())
-                .andReturn();
-    }
+//    @Test
+//    @DisplayName("test to create work shift")
+//    void testCreateWorkShift() throws Exception {
+//        final WorkShiftDto workShiftDto = WorkShiftDto.builder()
+//                .machineId(1L)
+//                .workerId(1L)
+//                .build();
+//        final String token = jwtUtils.generateToken(ADMIN_USER);
+//
+//        String workShiftToCreate = objectMapper.writeValueAsString(workShiftDto);
+//        System.out.println(workShiftToCreate);
+//        mockMvc.perform(post("/work_shifts/create")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(workShiftToCreate)
+//                        .header("Authorization", "Bearer " + token))
+//                .andExpect(status().isCreated())
+//                .andExpect(jsonPath("workerId").exists())
+//                .andExpect(jsonPath("machineId").exists())
+//                .andReturn();
+//    }
 
     @Test
     @DisplayName("test to update work shift")

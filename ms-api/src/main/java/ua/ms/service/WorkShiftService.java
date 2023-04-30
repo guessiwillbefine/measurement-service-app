@@ -11,6 +11,7 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.work_shift.AbstractWorkShiftIdentifiable;
 import ua.ms.entity.work_shift.WorkShift;
 import ua.ms.service.repository.WorkShiftRepository;
+import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.EntityNotFoundException;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,11 @@ public class WorkShiftService {
 
     @Transactional
     public WorkShift save(WorkShift workShiftToCreate) {
+        Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) ob;
+        if(!workShiftToCreate.getWorker().getId().equals(user.getId()))
+            throw new AccessException("You don't have access to this action");
+
         Optional<Machine> byId = machineService.findById(workShiftToCreate.getMachine().getId(), Machine.class);
         if(byId.isEmpty()) {
             throw new EntityNotFoundException("Machine is not found");
