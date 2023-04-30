@@ -178,7 +178,7 @@ public final class TestConstants {
         }
 
         @Override
-        public List<Sensor> getSensors() {
+        public List<SensorView> getSensors() {
             return new ArrayList<>();
         }
 
