@@ -1,5 +1,11 @@
 debug: false
 
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    
 server:
   port: 8080
   # https-config
