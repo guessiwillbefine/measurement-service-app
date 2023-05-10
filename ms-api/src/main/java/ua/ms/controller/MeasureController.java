@@ -30,7 +30,7 @@ public class MeasureController {
 
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{id}")
+    @PostMapping()
     public MeasureDto create(@RequestBody @Valid MeasureDto measureDto,
                              BindingResult bindingResult) {
 
