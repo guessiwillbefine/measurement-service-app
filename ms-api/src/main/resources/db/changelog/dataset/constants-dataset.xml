@@ -53,6 +53,9 @@
         <insert tableName="machine_activity">
             <column name="id" value="INACTIVE"/>
         </insert>
+        <rollback>
+            DELETE FROM machine_activity;
+        </rollback>
     </changeSet>
 
 </databaseChangeLog>
