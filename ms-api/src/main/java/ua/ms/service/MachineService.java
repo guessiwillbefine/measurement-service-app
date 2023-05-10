@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.machine.AbstractMachineIdentifiable;
 import ua.ms.entity.machine.Machine;
+import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.service.repository.MachineRepository;
 import ua.ms.util.exception.EntityNotFoundException;
@@ -32,6 +33,7 @@ public class MachineService {
 
     @Transactional
     public Machine save(final Machine machine) {
+        machine.setActivity(MachineActivity.INACTIVE);
         return machineRepository.save(machine);
     }
 
