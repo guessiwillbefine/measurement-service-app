@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import ua.ms.configuration.security.repository.RegistrationService;
+import ua.ms.configuration.security.service.RegistrationService;
 import ua.ms.entity.user.User;
 
 import java.util.Collections;

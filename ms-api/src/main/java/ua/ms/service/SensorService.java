@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ms.entity.machine.Machine;
 import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
@@ -56,6 +57,11 @@ public class SensorService {
 
         sensorRepository.delete(byId.get());
         return byId.get();
+    }
+
+    @Transactional(readOnly = true)
+    public <T extends AbstractSensorIdentifiable> List<T> findAll(Machine machine, Class<T> type) {
+        return sensorRepository.findByMachine(machine, type);
     }
 
     @Transactional
