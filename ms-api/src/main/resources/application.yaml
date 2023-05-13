@@ -21,13 +21,14 @@ socket:
 
 server:
   port: 8080
+  
   # https-config
-#  ssl:
-#    key-alias: ms-api
-#    key-store-password: ms-api
-#    key-store: classpath:https/key/keystore.p12
-#    key-store-type: PKCS12
-#    enabled: true
+  ssl:
+    key-alias: ms-api
+    key-store-password: ms-api
+    key-store: classpath:https/key/keystore.p12
+    key-store-type: PKCS12
+    enabled: true
 
 
 #development environment
