@@ -23,6 +23,11 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class MeasureSocketServiceImpl implements MeasureSocketService {
+
+    /**
+     * Key - user, value - list of machines he is viewing.
+     * New items are added when connecting via websockets
+     */
     protected static final Map<User, List<Machine>> SESSION_CONTEXT = new HashMap<>();
 
     private final SimpMessagingTemplate messagingTemplate;
@@ -54,12 +59,16 @@ public class MeasureSocketServiceImpl implements MeasureSocketService {
                 () -> log.error(format("Error saving %d session to context", userId)));
     }
 
+    /**
+     * Will iterate through all the connections build dto and send them the desired measurement results
+     */
     @Override
     public void sendMeasureResults() {
         SESSION_CONTEXT.forEach((key, value) -> {
-            String id = String.valueOf(key.getId());
-            List<MeasuresSocketDto> measuresSocketDtos = value.stream().map(this::buildPayload).toList();
-            messagingTemplate.convertAndSendToUser(id, "/queue/messages", measuresSocketDtos);
+            String userId = String.valueOf(key.getId());
+            value.stream()
+                    .map(this::buildPayload)
+                    .forEach(dto -> messagingTemplate.convertAndSendToUser(userId, "/queue/messages", dto));
         });
     }
 
