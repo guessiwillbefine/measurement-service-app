@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: critical value to sensor
+      author: vadym
+      runOnChange: true
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - columnExists:
+                tableName: sensor
+                columnName: critical_value
+      changes:
+        - addColumn:
+            tableName: sensor
+            columns:
+              - column:
+                  name: critical_value
+                  type: double
+                  constraints:
+                    nullable: true

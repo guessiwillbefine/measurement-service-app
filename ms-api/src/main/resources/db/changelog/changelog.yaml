@@ -26,6 +26,8 @@ databaseChangeLog:
       file: db/changelog/changeset/fk-factory-machine.yaml
   - include:
       file: db/changelog/changeset/work-shift.yaml
+  - include:
+      file: db/changelog/changeset/critical-value-column.yaml
 
 
   ### datasets

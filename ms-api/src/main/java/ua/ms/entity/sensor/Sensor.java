@@ -43,6 +43,9 @@ public class Sensor implements AbstractSensorIdentifiable {
     @OneToMany(mappedBy = "sensor")
     private List<Measure> measures;
 
+    @Column(name = "critical_value")
+    private Double criticalValue;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
