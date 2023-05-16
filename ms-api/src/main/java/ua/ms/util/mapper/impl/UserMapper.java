@@ -30,6 +30,7 @@ public class UserMapper implements Mapper<User, UserDto> {
     public UserDto toDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
+                .factoryId(user.getFactory() == null ? null : user.getFactory().getId())
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())

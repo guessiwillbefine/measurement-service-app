@@ -1,5 +1,6 @@
 package ua.ms.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import lombok.extern.jackson.Jacksonized;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.ms.entity.factory.Factory;
+import ua.ms.entity.work_shift.WorkShift;
 
 import java.util.Collection;
 import java.util.List;
@@ -50,6 +52,10 @@ public class User implements UserDetails, AbstractUserIdentifiable {
     @ManyToOne
     @JoinColumn(name = "factory_id", referencedColumnName = "id")
     private Factory factory;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "worker")
+    private List<WorkShift> workShifts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

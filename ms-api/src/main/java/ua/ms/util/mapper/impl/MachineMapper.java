@@ -25,9 +25,13 @@ public class MachineMapper implements Mapper<Machine, MachineDto> {
 
     @Override
     public MachineDto toDto(Machine entity) {
-        return MachineDto.builder().name(entity.getName())
+        return MachineDto.builder()
+                .name(entity.getName())
                 .model(entity.getModel())
                 .id(entity.getId())
-                .type(entity.getType()).build();
+                .type(entity.getType())
+                .activity(entity.getActivity())
+                .factoryId(entity.getFactory().getId())
+                .build();
     }
 }

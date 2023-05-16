@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="work_shift dataset" author="moksem">
+
+        <insert tableName="work_shift">
+            <column name="user_id" value="1"/>
+            <column name="machine_id" value="1"/>
+            <column name="started_at" value="2023-04-26 19:57:34"/>
+            <column name="ended_in" value="2023-04-26 19:58:03"/>
+        </insert>
+        <insert tableName="work_shift">
+            <column name="user_id" value="1"/>
+            <column name="machine_id" value="1"/>
+            <column name="started_at" value="2023-04-26 19:58:20"/>
+            <column name="ended_in" value="2023-04-26 19:59:07"/>
+        </insert>
+        <insert tableName="work_shift">
+            <column name="user_id" value="1"/>
+            <column name="machine_id" value="2"/>
+            <column name="started_at" value="2023-04-26 19:58:34"/>
+            <column name="ended_in" value="2023-04-26 19:59:10"/>
+        </insert>
+        <insert tableName="work_shift">
+            <column name="user_id" value="1"/>
+            <column name="machine_id" value="3"/>
+            <column name="started_at" value="2023-04-26 19:58:38"/>
+            <column name="ended_in" value="2023-04-26 19:59:12"/>
+        </insert>
+        <insert tableName="work_shift">
+            <column name="user_id" value="1"/>
+            <column name="machine_id" value="1"/>
+            <column name="started_at" value="2023-04-26 20:02:01"/>
+            <column name="ended_in" value="2023-04-26 20:11:16"/>
+        </insert>
+        <rollback>
+            DELETE FROM work_shift;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

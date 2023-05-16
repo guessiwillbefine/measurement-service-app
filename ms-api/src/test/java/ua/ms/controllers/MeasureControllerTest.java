@@ -50,7 +50,7 @@ class MeasureControllerTest {
         System.out.println(measureDto);
         String measureDtoJson = objectMapper.writeValueAsString(measureDto);
 
-        mockMvc.perform(post("/measures/1")
+        mockMvc.perform(post("/measures")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(measureDtoJson))

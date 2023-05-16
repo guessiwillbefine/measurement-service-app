@@ -31,4 +31,9 @@ public class MeasureService {
     public List<Measure> delete(long id) {
         return measureRepository.deleteBySensorId(id);
     }
+
+    @Transactional(readOnly = true)
+    public <T extends AbstractMeasureIdentifiable> T getLastMeasure(long sensorId, Class<T> type) {
+        return measureRepository.getLastMeasure(sensorId, type);
+    }
 }

@@ -4,6 +4,7 @@ import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.entity.factory.dto.view.FactoryView;
 import ua.ms.entity.machine.Machine;
+import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.MachineType;
 import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.entity.machine.dto.view.MachineView;
@@ -21,8 +22,12 @@ import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.entity.user.dto.view.UserView;
 import ua.ms.service.mq.impl.mail.MailAlertDto;
+import ua.ms.entity.work_shift.WorkShift;
+import ua.ms.entity.work_shift.dto.WorkShiftDto;
+import ua.ms.entity.work_shift.dto.view.WorkShiftView;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +51,11 @@ public final class TestConstants {
             .id(1L).name("name").model("ZXC993-EZ").type(MachineType.MANIPULATOR)
             .factoryId(FACTORY_DTO.getId()).build();
     public static final Machine MACHINE_ENTITY = Machine.builder().id(1L)
-            .model("ZXC993-EZ").type(MachineType.MANIPULATOR).factory(FACTORY_ENTITY).build();
+            .model("ZXC993-EZ").type(MachineType.MANIPULATOR)
+            .factory(FACTORY_ENTITY).activity(MachineActivity.INACTIVE).build();
+    public static final Machine ACTIVE_MACHINE_ENTITY = Machine.builder().id(1L)
+            .model("ZXC993-EZ").type(MachineType.MANIPULATOR)
+            .factory(FACTORY_ENTITY).activity(MachineActivity.ACTIVE).build();
     public static final Sensor SENSOR_ENTITY = Sensor.builder()
             .id(1L).name("someSensorName")
             .machine(MACHINE_ENTITY).build();
@@ -83,8 +92,18 @@ public final class TestConstants {
             .lastName("sname").status(Status.ACTIVE)
             .factoryId(MACHINE_DTO.getFactoryId())
             .role(Role.ADMIN).build();
+
     public static final MailAlertDto MAIL_ALERT_DTO =
             new MailAlertDto("test1email@gmail.com","TestSensor1", "ZXC993-F", "machine1", 15, 10);
+
+    public static final WorkShift WORK_SHIFT_ENTITY = WorkShift.builder()
+            .id(1L).worker(USER_ENTITY)
+            .machine(MACHINE_ENTITY)
+            .build();
+  
+    public static final WorkShiftDto WORK_SHIFT_DTO = WorkShiftDto.builder()
+            .workerId(USER_ENTITY.getId()).machineId(MACHINE_ENTITY.getId()).build();
+
     public static final UserView USER_VIEW = new UserView() {
         @Override
         public long getId() {
@@ -144,6 +163,43 @@ public final class TestConstants {
         }
     };
 
+    public static final MachineView MACHINE_VIEW = new MachineView() {
+        @Override
+        public Long getId() {
+            return MACHINE_ENTITY.getId();
+        }
+
+        @Override
+        public String getName() {
+            return MACHINE_ENTITY.getName();
+        }
+
+        @Override
+        public String getModel() {
+            return MACHINE_ENTITY.getModel();
+        }
+
+        @Override
+        public MachineType getType() {
+            return MACHINE_ENTITY.getType();
+        }
+
+        @Override
+        public List<SensorView> getSensors() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public MachineActivity getActivity() {
+            return MachineActivity.INACTIVE;
+        }
+
+        @Override
+        public Factory getFactory() {
+            return MACHINE_ENTITY.getFactory();
+        }
+    };
+
     public static final MeasureView MEASURE_VIEW = new MeasureView() {
         @Override
         public Long getId() {
@@ -185,6 +241,33 @@ public final class TestConstants {
         @Override
         public MeasureSystem getMeasureSystem() {
             return SENSOR_ENTITY.getMeasureSystem();
+        }
+    };
+
+    public static final WorkShiftView WORK_SHIFT_VIEW = new WorkShiftView() {
+        @Override
+        public Long getId() {
+            return WORK_SHIFT_ENTITY.getId();
+        }
+
+        @Override
+        public MachineView getMachine() {
+            return MACHINE_VIEW;
+        }
+
+        @Override
+        public UserView getWorker() {
+            return USER_VIEW;
+        }
+
+        @Override
+        public LocalDateTime getStartedAt() {
+            return null;
+        }
+
+        @Override
+        public LocalDateTime getEndedIn() {
+            return null;
         }
     };
 

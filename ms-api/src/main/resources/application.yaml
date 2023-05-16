@@ -1,7 +1,27 @@
-debug: false
+debug: true
+logging:
+  level:
+    root: debug
+
+#logging:
+#  level:
+#    root: DEBUG
+#    org.springframework.web: DEBUG
+#    org.hibernate: DEBUG
+
+socket:
+  connection:
+    url: /ws
+  measures:
+    url: /measures
+  allowed: https://localhost:4200
+  broker:
+    destination: /app
+    prefixes: /topic, /user
 
 server:
   port: 8080
+  
   # https-config
   ssl:
     key-alias: ms-api

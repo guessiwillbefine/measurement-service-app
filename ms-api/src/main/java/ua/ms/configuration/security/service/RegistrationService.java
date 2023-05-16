@@ -1,4 +1,4 @@
-package ua.ms.configuration.security.repository;
+package ua.ms.configuration.security.service;
 
 import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;

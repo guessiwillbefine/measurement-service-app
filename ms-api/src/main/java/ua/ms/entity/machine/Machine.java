@@ -1,11 +1,13 @@
 package ua.ms.entity.machine;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 import ua.ms.entity.factory.Factory;
 import ua.ms.entity.sensor.Sensor;
+import ua.ms.entity.work_shift.WorkShift;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +39,14 @@ public class Machine implements AbstractMachineIdentifiable{
     @ManyToOne
     @JoinColumn(name = "factory_id", referencedColumnName = "id")
     private Factory factory;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "machine")
+    private List<WorkShift> workShifts;
+
+    @Column(name = "machine_activity_id")
+    @Enumerated(EnumType.STRING)
+    private MachineActivity activity;
 
     @Override
     public boolean equals(Object o) {
