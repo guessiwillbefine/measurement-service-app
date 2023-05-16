@@ -11,6 +11,7 @@ import ua.ms.configuration.security.service.RegistrationService;
 import ua.ms.entity.user.User;
 import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.EntityDuplicateException;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

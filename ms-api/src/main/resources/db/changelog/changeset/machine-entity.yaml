@@ -62,3 +62,4 @@ databaseChangeLog:
             baseColumnNames: machine_activity_id
             constraintName: machine_machine_activity_fk
             onDelete: set null
+            deleteCascade: true

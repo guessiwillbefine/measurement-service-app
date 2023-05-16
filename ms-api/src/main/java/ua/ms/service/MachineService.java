@@ -69,6 +69,7 @@ public class MachineService {
             return byId.get();
         }
         throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
+
     }
 
     @Transactional
