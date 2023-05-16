@@ -21,6 +21,7 @@ import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.entity.user.dto.view.UserView;
+import ua.ms.service.mq.impl.mail.MailAlertDto;
 import ua.ms.entity.work_shift.WorkShift;
 import ua.ms.entity.work_shift.dto.WorkShiftDto;
 import ua.ms.entity.work_shift.dto.view.WorkShiftView;
@@ -91,12 +92,18 @@ public final class TestConstants {
             .lastName("sname").status(Status.ACTIVE)
             .factoryId(MACHINE_DTO.getFactoryId())
             .role(Role.ADMIN).build();
+
+    public static final MailAlertDto MAIL_ALERT_DTO =
+            new MailAlertDto("test1email@gmail.com","TestSensor1", "ZXC993-F", "machine1", 15, 10);
+
     public static final WorkShift WORK_SHIFT_ENTITY = WorkShift.builder()
             .id(1L).worker(USER_ENTITY)
             .machine(MACHINE_ENTITY)
             .build();
+  
     public static final WorkShiftDto WORK_SHIFT_DTO = WorkShiftDto.builder()
             .workerId(USER_ENTITY.getId()).machineId(MACHINE_ENTITY.getId()).build();
+
     public static final UserView USER_VIEW = new UserView() {
         @Override
         public long getId() {
