@@ -186,6 +186,11 @@ public final class TestConstants {
         public MachineActivity getActivity() {
             return MachineActivity.INACTIVE;
         }
+
+        @Override
+        public Factory getFactory() {
+            return MACHINE_ENTITY.getFactory();
+        }
     };
 
     public static final MeasureView MEASURE_VIEW = new MeasureView() {

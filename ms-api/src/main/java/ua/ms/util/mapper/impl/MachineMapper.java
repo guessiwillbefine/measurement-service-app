@@ -31,6 +31,7 @@ public class MachineMapper implements Mapper<Machine, MachineDto> {
                 .id(entity.getId())
                 .type(entity.getType())
                 .activity(entity.getActivity())
+                .factoryId(entity.getFactory().getId())
                 .build();
     }
 }

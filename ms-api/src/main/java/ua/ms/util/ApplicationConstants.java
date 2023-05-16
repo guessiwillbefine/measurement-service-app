@@ -32,6 +32,8 @@ public class ApplicationConstants {
         public static final int MAX_MACHINE_NAME_LENGTH = 20;
         public static final String MACHINE_NAME_MSG = "Machine name must be between 0 and " + MAX_MACHINE_NAME_LENGTH;
         public static final String MACHINE_MODEL_MSG = "Machine model must be between 0 and " + MAX_MACHINE_MODEL_LENGTH;
+        public static final String MACHINE_FACTORY_MSG = "Choose machine factory";
+
     }
 
     @UtilityClass
