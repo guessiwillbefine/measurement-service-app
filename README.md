@@ -1,3 +1,18 @@
-# measurement-service-app
-## ¯\\_(ツ)_/¯ 
-in progress....
+# Measurement-service-app (backend)
+# see also [frontend](https://github.com/guessiwillbefine/measurement-service-frontend) and [hardware](https://github.com/DeepPurpleTest/measurement-service-esp) part of this project
+## authors
+Vadym : [github](https://github.com/guessiwillbefine) | [linkedin](https://www.linkedin.com/in/vadym-storozhuk-407492248/) <br/>
+Maksym : [github](https://github.com/DeepPurpleTest) | [linkedin](https://www.linkedin.com/in/maksim-viskovatov-93636b254/)
+
+### about
+This project is an example of a sensor monitoring system using web technologies and interface. Current stack of technologies we used:
+- Java 17
+- Spring boot 3.0.1
+  - Hibernate
+  - Spring Data JPA
+  - Security (JWT)
+  - WebSockets
+- RabbitMQ
+- MySQL, H2 (with liquibase as migration tool)
+- Docker
+- Swagger for docs
