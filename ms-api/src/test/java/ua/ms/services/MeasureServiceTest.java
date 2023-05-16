@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static ua.ms.TestConstants.*;
 
@@ -58,5 +60,16 @@ class MeasureServiceTest {
         when(measureRepository.save(MEASURE_ENTITY)).thenReturn(MEASURE_ENTITY);
 
         assertThat(measureService.create(MEASURE_ENTITY)).isEqualTo(MEASURE_ENTITY);
+    }
+
+    @Test
+    void shouldReturnLastMeasure() {
+        when(measureRepository.getLastMeasure(anyLong(), any(Class.class))).thenReturn(MEASURE_ENTITY);
+        assertThat(measureService.getLastMeasure(1L, Measure.class)).isNotNull();
+    }
+    @Test
+    void shouldReturnLastWithCorrectType() {
+        when(measureRepository.getLastMeasure(1L, MeasureDto.class)).thenReturn(MEASURE_DTO);
+        assertThat(measureService.getLastMeasure(1L, MeasureDto.class)).isInstanceOf(MeasureDto.class);
     }
 }

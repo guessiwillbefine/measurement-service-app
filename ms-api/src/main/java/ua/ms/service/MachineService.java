@@ -1,5 +1,7 @@
 package ua.ms.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,15 +12,16 @@ import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.dto.MachineDto;
 import ua.ms.service.repository.MachineRepository;
 import ua.ms.util.exception.EntityNotFoundException;
-
 import java.util.List;
 import java.util.Optional;
-
 import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
 public class MachineService {
+
+    private final EntityManager entityManager;
+
     private final MachineRepository machineRepository;
 
     @Transactional(readOnly = true)
@@ -62,5 +65,16 @@ public class MachineService {
             return byId.get();
         }
         throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
+    }
+
+    @Transactional
+    public <T extends AbstractMachineIdentifiable> List<T> getMachinesByIds(Class<T> type, List<Long> ids) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> cr = cb.createQuery(type);
+        Root<T> root = cr.from(type);
+        Expression<Long> idExpression = root.get("id");
+        Predicate idPredicate = idExpression.in(ids);
+        cr.where(idPredicate);
+        return entityManager.createQuery(cr).getResultList();
     }
 }
