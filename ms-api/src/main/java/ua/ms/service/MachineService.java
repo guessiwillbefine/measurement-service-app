@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ms.entity.factory.Factory;
 import ua.ms.entity.machine.AbstractMachineIdentifiable;
 import ua.ms.entity.machine.Machine;
 import ua.ms.entity.machine.MachineActivity;
@@ -20,6 +21,7 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class MachineService {
     private final MachineRepository machineRepository;
+    private final FactoryService factoryService;
 
     @Transactional(readOnly = true)
     public <T extends AbstractMachineIdentifiable> Optional<T> findById(final Long id, final Class<T> type) {
@@ -40,17 +42,19 @@ public class MachineService {
     @Transactional
     public MachineDto update(final Long id, final MachineDto machineDto) {
         Optional<Machine> byId = machineRepository.findById(id);
-        if (byId.isPresent()) {
-            Machine updated = updateEntity(byId.get(), machineDto);
+        Optional<Factory> factoryById = factoryService.findById(machineDto.getFactoryId(), Factory.class);
+        if (byId.isPresent() && factoryById.isPresent()) {
+            Machine updated = updateEntity(byId.get(), machineDto, factoryById.get());
             machineRepository.save(updated);
             return machineDto;
         }
         throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
     }
-    private Machine updateEntity(final Machine machine, final MachineDto machineDto) {
+    private Machine updateEntity(final Machine machine, final MachineDto machineDto, final Factory factory) {
         machine.setType(machineDto.getType());
         machine.setName(machineDto.getName());
         machine.setModel(machineDto.getModel());
+        machine.setFactory(factory);
         return machine;
     }
 

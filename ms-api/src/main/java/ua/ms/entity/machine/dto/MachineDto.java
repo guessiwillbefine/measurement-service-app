@@ -1,7 +1,9 @@
 package ua.ms.entity.machine.dto;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +21,11 @@ import ua.ms.util.ApplicationConstants.Validation;
 public class MachineDto implements AbstractMachineIdentifiable {
     @Nullable
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = Validation.MACHINE_NAME_MSG)
     @Length(max = Validation.MAX_MACHINE_NAME_LENGTH,
             message = Validation.MACHINE_NAME_MSG)
     private String name;
-    @NotEmpty
+    @NotEmpty(message = Validation.MACHINE_NAME_MSG)
     @Length(max = Validation.MAX_MACHINE_MODEL_LENGTH,
             message = Validation.MACHINE_MODEL_MSG)
     private String model;
@@ -31,5 +33,6 @@ public class MachineDto implements AbstractMachineIdentifiable {
     private MachineType type;
     @Nullable
     private MachineActivity activity;
+    @Min(value = 1, message = Validation.MACHINE_FACTORY_MSG)
     private Long factoryId;
 }

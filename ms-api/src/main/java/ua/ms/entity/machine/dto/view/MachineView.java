@@ -1,5 +1,7 @@
 package ua.ms.entity.machine.dto.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ua.ms.entity.factory.Factory;
 import ua.ms.entity.machine.AbstractMachineIdentifiable;
 import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.MachineType;
@@ -14,4 +16,6 @@ public interface MachineView extends AbstractMachineIdentifiable {
     MachineType getType();
     List<SensorView> getSensors();
     MachineActivity getActivity();
+    @JsonIgnoreProperties(value = {"machines", "employees"})
+    Factory getFactory();
 }

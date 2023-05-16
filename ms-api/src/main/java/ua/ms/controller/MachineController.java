@@ -60,6 +60,7 @@ public class MachineController {
     public MachineDto update(@PathVariable Long id,
                              @RequestBody @Valid MachineDto machineDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new EntityValidationException(bindingResult);
+        System.out.println("FACTORY!!!!!!!!!" + machineDto.getFactoryId());
         return machineService.update(id, machineDto);
     }
 
