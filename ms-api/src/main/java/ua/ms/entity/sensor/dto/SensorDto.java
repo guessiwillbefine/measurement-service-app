@@ -29,4 +29,7 @@ public class SensorDto implements AbstractSensorIdentifiable {
     private MeasureSystem measureSystem;
 
     private Long machineId;
+
+    @Nullable
+    private Double criticalValue;
 }

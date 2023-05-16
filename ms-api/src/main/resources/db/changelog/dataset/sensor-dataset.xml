@@ -9,16 +9,19 @@
             <column name="name" value="TestSensor1"/>
             <column name="measure_id" value="CELSIUS"/>
             <column name="machine_id" value="1"/>
+            <column name="critical_value" value="100"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor2"/>
             <column name="measure_id" value="CELSIUS"/>
             <column name="machine_id" value="1"/>
+            <column name="critical_value" value="70"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor3"/>
             <column name="measure_id" value="CELSIUS"/>
             <column name="machine_id" value="1"/>
+            <column name="critical_value" value="45"/>
         </insert>
         <insert tableName="sensor">
             <column name="name" value="TestSensor4"/>

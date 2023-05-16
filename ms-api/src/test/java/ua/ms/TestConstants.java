@@ -57,7 +57,7 @@ public final class TestConstants {
             .model("ZXC993-EZ").type(MachineType.MANIPULATOR)
             .factory(FACTORY_ENTITY).activity(MachineActivity.ACTIVE).build();
     public static final Sensor SENSOR_ENTITY = Sensor.builder()
-            .id(1L).name("someSensorName")
+            .id(1L).name("someSensorName").criticalValue(20.0)
             .machine(MACHINE_ENTITY).build();
 
     public static final SensorDto SENSOR_DTO = SensorDto.builder()
@@ -220,6 +220,11 @@ public final class TestConstants {
         public LocalDateTime getCreatedAt() {
             return MEASURE_ENTITY.getCreatedAt();
         }
+
+        @Override
+        public boolean isCritical() {
+            return  MEASURE_ENTITY.getValue() > SENSOR_ENTITY.getCriticalValue();
+        }
     };
 
     public static final SensorView SENSOR_VIEW = new SensorView() {
@@ -234,8 +239,8 @@ public final class TestConstants {
         }
 
         @Override
-        public List<MeasureView> getMeasures() {
-            return Collections.emptyList();
+        public Double getCriticalValue() {
+            return SENSOR_ENTITY.getCriticalValue();
         }
 
         @Override
