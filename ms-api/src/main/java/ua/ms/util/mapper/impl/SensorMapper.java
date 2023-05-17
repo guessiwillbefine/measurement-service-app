@@ -27,6 +27,7 @@ public class SensorMapper implements Mapper<Sensor, SensorDto> {
                 .id(entity.getId())
                 .name(entity.getName())
                 .measureSystem(entity.getMeasureSystem())
+                .machineId(entity.getMachine().getId())
                 .build();
     }
 }

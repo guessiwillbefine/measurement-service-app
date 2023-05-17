@@ -36,8 +36,8 @@ public class SensorController {
     }
 
     @GetMapping("/{id}")
-    public SensorView find(@PathVariable("id") long id) {
-        Optional<SensorView> byId = sensorService.findOne(id, SensorView.class);
+    public SensorDto find(@PathVariable("id") long id) {
+        Optional<SensorDto> byId = sensorService.findOne(id, SensorDto.class);
         if (byId.isEmpty()) throw new EntityNotFoundException("Sensor with this id is not found");
         return byId.get();
     }
