@@ -24,9 +24,9 @@ public class MeasuresSocketDto {
         }
     }
 
-    public record MeasureMessage(Double value){
+    public record MeasureMessage(Double value, Boolean isCritical){
         public static MeasureMessage fromEntity(Measure measure) {
-            return new MeasureMessage(measure.getValue());
+            return new MeasureMessage(measure.getValue(), measure.isCriticalSafe());
         }
     }
 }
