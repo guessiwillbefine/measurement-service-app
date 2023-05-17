@@ -46,13 +46,14 @@ public class SensorService {
 
     private Sensor updateSensorFields(Sensor sensor, SensorDto sensorDto) {
         sensor.setName(sensorDto.getName() != null ? sensorDto.getName() : sensor.getName());
+        sensor.setMeasureSystem(sensorDto.getMeasureSystem() != null ? sensorDto.getMeasureSystem() : sensor.getMeasureSystem());
         return sensor;
     }
 
     @Transactional
-    public Sensor delete(long id){
+    public Sensor delete(long id) {
         Optional<Sensor> byId = sensorRepository.findById(id);
-        if(byId.isEmpty())
+        if (byId.isEmpty())
             throw new EntityNotFoundException("Sensor is not found");
 
         sensorRepository.delete(byId.get());
@@ -65,7 +66,7 @@ public class SensorService {
     }
 
     @Transactional
-    public Sensor create(Sensor sensorToCreate){
+    public Sensor create(Sensor sensorToCreate) {
         return sensorRepository.save(sensorToCreate);
     }
 }
