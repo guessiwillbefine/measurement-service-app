@@ -60,10 +60,10 @@ public class Measure implements AbstractMeasureIdentifiable{
 
     /** checks if measure value greater than critical with prefetch of the second one */
     public boolean isCriticalSafe() {
+        Hibernate.initialize(this.sensor);
         if (this.sensor.getCriticalValue() == null) {
             return false;
         }
-        Hibernate.initialize(this.sensor);
         return this.value > this.sensor.getCriticalValue();
     }
 
