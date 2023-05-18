@@ -52,12 +52,18 @@ public class Measure implements AbstractMeasureIdentifiable{
 
     /** checks if measure value greater than critical  */
     public boolean isCriticalUnsafe() {
+        if (this.sensor.getCriticalValue() == null) {
+            return false;
+        }
         return this.value > this.sensor.getCriticalValue();
     }
 
     /** checks if measure value greater than critical with prefetch of the second one */
     public boolean isCriticalSafe() {
         Hibernate.initialize(this.sensor);
+        if (this.sensor.getCriticalValue() == null) {
+            return false;
+        }
         return this.value > this.sensor.getCriticalValue();
     }
 
