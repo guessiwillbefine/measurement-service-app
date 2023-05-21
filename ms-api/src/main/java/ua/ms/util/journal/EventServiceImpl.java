@@ -10,7 +10,6 @@ import ua.ms.journal.service.repo.EventRepository;
 public class EventServiceImpl extends EventJournalService {
     public EventServiceImpl(EventRepository eventRepository) {
         super(eventRepository);
-
     }
     public void saveAuthorizationEvent(){
         Event authorizationEvent = new Event();
