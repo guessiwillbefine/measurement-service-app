@@ -1,17 +1,17 @@
 package ua.ms.journal.service;
 
-import ua.ms.journal.entity.Event;
 import ua.ms.journal.entity.EventType;
+import ua.ms.journal.entity.MongoEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 /** Journal service. Get access to MongoDB for saving events */
-interface JournalService {
+interface JournalService<E extends MongoEntity> {
 
-    void saveEvent(Event event);
+    void saveEvent(E event);
 
-    List<Event> getAllEventsByType(EventType eventType);
+    List<E> getAllEventsByType(EventType eventType);
 
-    List<Event> getEventsFromTo(LocalDateTime from, LocalDateTime to);
+    List<E> getEventsFromTo(LocalDateTime from, LocalDateTime to);
 }
