@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import ua.ms.configuration.security.service.RegistrationService;
 import ua.ms.entity.user.User;
+import ua.ms.util.journal.EventServiceWrapper;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class AuthManager implements AuthenticationManager {
 
     private final RegistrationService registrationService;
+    private final EventServiceWrapper eventJournalService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -31,6 +33,7 @@ public class AuthManager implements AuthenticationManager {
             User userCredentials = personDetails.get();
             if (password.equals(userCredentials.getPassword())) {
                 log.debug("Authentication successful");
+                eventJournalService.saveAuthorizationEvent();
                 return new UsernamePasswordAuthenticationToken(username, password,
                         Collections.emptyList());
             }
