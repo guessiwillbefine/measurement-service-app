@@ -3,18 +3,20 @@ package ua.ms.authentication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.AuthManager;
 import ua.ms.service.repository.UserRepository;
+import ua.ms.util.journal.EventServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static ua.ms.TestConstants.USER_ENTITY;
 
@@ -26,11 +28,16 @@ class AuthManagerTest {
     private AuthManager authManager;
     @Autowired
     private UserRepository userRepository;
-    @Mock
+
+    @MockBean
     private Authentication authentication;
+
+    @MockBean
+    private EventServiceImpl eventServiceWrapper;
 
     @BeforeEach
     public void mockAuthentication() {
+        doNothing().when(eventServiceWrapper).saveAuthorizationEvent();
         when(authentication.getName()).thenReturn(USER_ENTITY.getUsername());
         when(authentication.getCredentials()).thenReturn(USER_ENTITY.getPassword());
     }

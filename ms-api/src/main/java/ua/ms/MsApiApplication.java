@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import ua.ms.journalservice.JournalServiceConfiguration;
+import ua.ms.journal.configuration.JournalServiceConfiguration;
 
 @EnableScheduling
 @SpringBootApplication
