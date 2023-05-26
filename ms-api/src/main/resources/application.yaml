@@ -5,7 +5,6 @@ debug: false
 #    root: DEBUG
 #    org.springframework.web: DEBUG
 #    org.hibernate: DEBUG
-
 socket:
   connection:
     url: /ws

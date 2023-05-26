@@ -10,9 +10,11 @@ This project is an example of a sensor monitoring system using web technologies 
 - Spring boot 3.0.1
   - Hibernate
   - Spring Data JPA
+  - Spring Data MongoDB
   - Security (JWT)
   - WebSockets
 - RabbitMQ
-- MySQL, H2 (with liquibase as migration tool)
+- SQL : MySQL, H2 (with liquibase as migration tool)
+- NoSQL : MongoDB
 - Docker
 - Swagger for docs

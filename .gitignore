@@ -5,7 +5,8 @@
 /ms-api/target/
 /e2e-tests/target/
 /ms-consumer/target/
-
+/journal-service/target/
+/journal-service/src/main/resources/application.properties
 #IDEA
 *.iml
 /.idea/

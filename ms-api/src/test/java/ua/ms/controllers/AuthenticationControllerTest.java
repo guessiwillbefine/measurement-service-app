@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.service.UserService;
 import ua.ms.util.exception.EntityDuplicateException;
+import ua.ms.util.journal.EventServiceImpl;
 
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,6 +39,8 @@ class AuthenticationControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private UserService userService;
+    @MockBean
+    private EventServiceImpl eventService;
 
     @Test
     @DisplayName("invalid credentials should have not to be registered")
@@ -85,6 +89,7 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("valid credentials and token should return 200")
     void validLoginShouldReturn200() throws Exception {
+        doNothing().when(eventService).saveAuthorizationEvent();
         when(userService.loadByUsername(anyString())).thenReturn(Optional.of(USER_ENTITY));
         when(userService.loadByUsername(USER_ENTITY.getUsername(), UserDto.class)).thenReturn(Optional.of(USER_DTO));
         mockMvc.perform(post("/auth/_login")

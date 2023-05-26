@@ -23,7 +23,7 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 @Log4j2
-@Service
+@Service("registrationService")
 @RequiredArgsConstructor
 public class UserService implements RegistrationService {
     private final UserRepository userRepository;
