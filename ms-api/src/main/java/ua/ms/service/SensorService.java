@@ -45,6 +45,7 @@ public class SensorService {
     }
 
     private Sensor updateSensorFields(Sensor sensor, SensorDto sensorDto) {
+        sensor.setCriticalValue(sensorDto.getCriticalValue()); //nullable
         sensor.setName(sensorDto.getName() != null ? sensorDto.getName() : sensor.getName());
         sensor.setMeasureSystem(sensorDto.getMeasureSystem() != null ? sensorDto.getMeasureSystem() : sensor.getMeasureSystem());
         return sensor;
