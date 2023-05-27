@@ -28,7 +28,7 @@ class MailAlertMessageQueueTest {
         doNothing()
                 .when(rabbitTemplate)
                 .convertAndSend(anyString(), anyString(), any(Serializable.class));
-        mailAlertService.produce(MAIL_ALERT_DTO);
+        mailAlertService.push(MAIL_ALERT_DTO);
         verify(rabbitTemplate, times(1))
                 .convertAndSend(anyString(), anyString(), any(Serializable.class));
     }
@@ -37,7 +37,7 @@ class MailAlertMessageQueueTest {
         doNothing()
                 .when(rabbitTemplate)
                 .convertAndSend(anyString(), anyString(), any(Serializable.class));
-        mailAlertService.produce(null);
+        mailAlertService.push(null);
         verify(rabbitTemplate, times(0))
                 .convertAndSend(anyString(), anyString(), any(Serializable.class));
     }

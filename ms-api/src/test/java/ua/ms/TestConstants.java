@@ -94,7 +94,7 @@ public final class TestConstants {
             .role(Role.ADMIN).build();
 
     public static final MailAlertDto MAIL_ALERT_DTO =
-            new MailAlertDto("test1email@gmail.com","TestSensor1", "ZXC993-F", "machine1", 15, 10);
+            new MailAlertDto(1L,"TestSensor1", "ZXC993-F", "machine1", "sd", 10.0, 24.0);
 
     public static final WorkShift WORK_SHIFT_ENTITY = WorkShift.builder()
             .id(1L).worker(USER_ENTITY)

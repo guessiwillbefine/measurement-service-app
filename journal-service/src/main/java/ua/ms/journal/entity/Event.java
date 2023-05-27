@@ -21,6 +21,9 @@ public class Event extends MongoEntity {
     public static final String COLLECTION_NAME = "events";
 
     private EventType eventType;
+
+    private long sensorId;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

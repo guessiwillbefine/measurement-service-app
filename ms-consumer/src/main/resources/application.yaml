@@ -1,2 +1,18 @@
 server:
   port: 9090
+
+configuration:
+  rabbit:
+    queue-name: notification-queue
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    #timout in minutes before sending new alert
+    timeout: 5
+
+    #to fill
+    # mail from where messages will be sent
+    username:
+    # password
+    password:

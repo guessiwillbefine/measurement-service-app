@@ -42,4 +42,22 @@ public class ApplicationConstants {
         public static final String TOKEN_HEADER_NAME = "Authorization";
         public static final String JWT_TOKEN_RESPONSE_KEY = "token";
     }
+
+    @UtilityClass
+    public static final class Mail {
+        public static final String MESSAGE_TEMPLATE = """
+                [Warning] Current state of sensor[%s] is not stable, please check if everything is alright
+                
+                Machine model : %s
+                Machine name : %s
+                Sensor model : %s
+                last measured value: %.2f
+                critical value (configuration) : %.2f
+                
+                You can stop machine manually from our web-service
+                
+                ________________________________________________________________________________________________
+                measurement-service-app
+        """;
+    }
 }
