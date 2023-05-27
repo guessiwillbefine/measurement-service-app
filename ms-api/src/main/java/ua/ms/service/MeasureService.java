@@ -38,21 +38,26 @@ public class MeasureService {
     @Transactional
     public Measure create(Measure measure) {
         measure.setCreatedAt(LocalDateTime.now());
-        long id = measure.getSensor().getId();
-        Optional<Sensor> sensor = sensorService.findOne(id, Sensor.class);
-        if (sensor.isEmpty()) {
-            log.error(format("Error while attempting to find sensor with id[%d]", id));
-            throw new EntityNotFoundException(format("Entity[%s] with id[%d] wasn't found", Sensor.class.getSimpleName(), id));
+        Measure saved = measureRepository.save(measure);
+        if (saved.isCriticalSafe()) {
+            /* если не удалось собрать дто, значит workshift не найден и отправлять нам некуда */
+            MailAlertDto mailAlertDto = buildDto(measure, measure.getSensor());
+            if (mailAlertDto != null) {
+                mailAlertService.push(mailAlertDto);
+            }
         }
-        MailAlertDto mailAlertDto = buildDto(measure, sensor.get());
-        mailAlertService.push(mailAlertDto);
-        return measureRepository.save(measure);
+        return saved;
     }
 
     private MailAlertDto buildDto(Measure measure, Sensor sensor) {
         Machine machine = sensor.getMachine();
-        WorkShift workerByMachine = workShiftService.getWorkerByMachine(sensor.getMachine());
-        return new MailAlertDto(sensor.getId(), workerByMachine.getWorker().getEmail(),
+        Optional<WorkShift> workerByMachine = workShiftService.getWorkerByMachine(sensor.getMachine());
+        if (workerByMachine.isEmpty()) {
+            log.warn(format("Workshift for machine[%s] was not found, there is no user to receive alert",
+                    sensor.getMachine().getId()));
+            return null;
+        }
+        return new MailAlertDto(sensor.getId(), workerByMachine.get().getWorker().getEmail(),
                 sensor.getName(), machine.getModel(), machine.getName(),
                 measure.getValue(), sensor.getCriticalValue());
     }

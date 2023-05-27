@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import ua.ms.service.mq.impl.mail.MailAlertService;
+import ua.ms.util.journal.EventServiceImpl;
 
 import java.io.Serializable;
 
@@ -22,6 +23,8 @@ class MailAlertMessageQueueTest {
     private RabbitTemplate rabbitTemplate;
     @Autowired
     private MailAlertService mailAlertService;
+    @MockBean
+    private EventServiceImpl eventService;
 
     @Test
     void shouldPushMsgIfItIsNotNull() {
@@ -33,7 +36,7 @@ class MailAlertMessageQueueTest {
                 .convertAndSend(anyString(), anyString(), any(Serializable.class));
     }
     @Test
-    void shouldNotPushMsgIfItIsNotNull() {
+    void shouldNotPushMsgIfItIsNull() {
         doNothing()
                 .when(rabbitTemplate)
                 .convertAndSend(anyString(), anyString(), any(Serializable.class));

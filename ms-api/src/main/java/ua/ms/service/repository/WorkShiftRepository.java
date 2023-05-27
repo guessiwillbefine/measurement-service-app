@@ -22,5 +22,5 @@ public interface WorkShiftRepository extends JpaRepository<WorkShift, Long> {
                 and w.machine.activity = 'ACTIVE'
                 and w.endedIn = null
             """)
-    <T extends AbstractWorkShiftIdentifiable> T findByMachine(@Param("machineId") long machineId, Class<T> type);
+    <T extends AbstractWorkShiftIdentifiable> Optional<T> findByMachine(@Param("machineId") long machineId, Class<T> type);
 }

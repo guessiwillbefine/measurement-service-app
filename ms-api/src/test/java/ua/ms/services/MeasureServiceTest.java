@@ -11,6 +11,7 @@ import ua.ms.entity.measure.dto.MeasureDto;
 import ua.ms.entity.measure.dto.view.MeasureView;
 import ua.ms.service.MeasureService;
 import ua.ms.service.repository.MeasureRepository;
+import ua.ms.util.journal.EventServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ class MeasureServiceTest {
 
     @MockBean
     private MeasureRepository measureRepository;
+
+    @MockBean
+    private EventServiceImpl eventService;
 
     @Test
     void findBySensorIdShouldReturnList(){

@@ -94,7 +94,7 @@ public class WorkShiftService {
     }
 
     @Transactional
-    public WorkShift getWorkerByMachine(Machine machine) {
+    public Optional<WorkShift> getWorkerByMachine(Machine machine) {
         return workShiftRepository.findByMachine(machine.getId(), WorkShift.class);
     }
 }
