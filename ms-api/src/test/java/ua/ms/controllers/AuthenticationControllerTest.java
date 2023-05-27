@@ -89,7 +89,7 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("valid credentials and token should return 200")
     void validLoginShouldReturn200() throws Exception {
-        doNothing().when(eventService).saveAuthorizationEvent();
+        doNothing().when(eventService).saveAuthorizationEvent(anyString());
         when(userService.loadByUsername(anyString())).thenReturn(Optional.of(USER_ENTITY));
         when(userService.loadByUsername(USER_ENTITY.getUsername(), UserDto.class)).thenReturn(Optional.of(USER_DTO));
         mockMvc.perform(post("/auth/_login")

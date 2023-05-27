@@ -10,7 +10,7 @@ import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import ua.ms.consumer.MessageQueueConsumer;
 import ua.ms.journal.ConsumerEventService;
-import ua.ms.journal.entity.Event;
+import ua.ms.journal.entity.AlertEvent;
 import ua.ms.journal.entity.EventType;
 import ua.ms.sender.sender.AbstractMailSender;
 
@@ -60,10 +60,10 @@ public class MailQueueConsumer implements MessageQueueConsumer<Message<String>> 
         }
     }
     private boolean canBeSent(long sensorId) {
-        Event lastSendEventBySensorId =
+        AlertEvent lastSendAlertEventBySensorId =
                 eventJournalService.getLastSendEventBySensorId(sensorId, EventType.ALERT_SENT);
-        return lastSendEventBySensorId == null ||
-                lastSendEventBySensorId
+        return lastSendAlertEventBySensorId == null ||
+                lastSendAlertEventBySensorId
                         .getDateTimeFromId()
                         .plusMinutes(parseInt(resendTimeout))
                         .isBefore(LocalDateTime.now());

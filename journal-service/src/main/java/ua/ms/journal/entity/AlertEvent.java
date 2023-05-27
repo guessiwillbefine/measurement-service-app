@@ -12,10 +12,10 @@ import java.util.Objects;
 /** Event entity */
 @Setter
 @Getter
-@Document(collection = Event.COLLECTION_NAME)
+@Document(collection = AlertEvent.COLLECTION_NAME)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Event extends MongoEntity {
+public class AlertEvent extends MongoEntity {
 
     @Transient
     public static final String COLLECTION_NAME = "events";
@@ -28,8 +28,8 @@ public class Event extends MongoEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return Objects.equals(getId(), event.getId()) &&
-                eventType == event.eventType;
+        AlertEvent alertEvent = (AlertEvent) o;
+        return Objects.equals(getId(), alertEvent.getId()) &&
+                eventType == alertEvent.eventType;
     }
 }

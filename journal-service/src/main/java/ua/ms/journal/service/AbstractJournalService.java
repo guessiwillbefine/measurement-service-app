@@ -11,8 +11,11 @@ public abstract class AbstractJournalService<D extends MongoRepository<E, ?>, E 
         this.dao = dao;
     }
 
+    public void saveEvent(E entity) {
+        dao.save(entity);
+    }
+
     public D getDao() {
-        this.getClass();
         return dao;
     }
 
