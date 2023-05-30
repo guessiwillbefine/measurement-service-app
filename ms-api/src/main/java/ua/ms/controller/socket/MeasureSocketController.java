@@ -19,7 +19,7 @@ import static java.lang.String.format;
 @Controller
 @RequiredArgsConstructor
 public class MeasureSocketController {
-    private static final int MESSAGE_RATE = 5000;
+    private static final int MESSAGE_RATE = 3000;
 
     private final SimpMessagingTemplate messagingTemplate;
 
