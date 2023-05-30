@@ -92,4 +92,9 @@ public class WorkShiftService {
         workShiftRepository.delete(workShiftToDelete);
         return workShiftToDelete;
     }
+
+    @Transactional
+    public Optional<WorkShift> getWorkerByMachine(Machine machine) {
+        return workShiftRepository.findByMachine(machine.getId(), WorkShift.class);
+    }
 }

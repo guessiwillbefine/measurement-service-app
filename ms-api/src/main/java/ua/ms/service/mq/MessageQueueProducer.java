@@ -8,5 +8,5 @@ import java.io.Serializable;
  * @see java.io.Serializable
  **/
 public interface MessageQueueProducer<T extends Serializable> {
-    void produce(T msg);
+    void push(T msg);
 }

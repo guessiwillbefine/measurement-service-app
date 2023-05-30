@@ -16,6 +16,7 @@ import ua.ms.util.journal.EventServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static ua.ms.TestConstants.USER_ENTITY;
@@ -37,7 +38,7 @@ class AuthManagerTest {
 
     @BeforeEach
     public void mockAuthentication() {
-        doNothing().when(eventServiceWrapper).saveAuthorizationEvent();
+        doNothing().when(eventServiceWrapper).saveAuthorizationEvent(anyString());
         when(authentication.getName()).thenReturn(USER_ENTITY.getUsername());
         when(authentication.getCredentials()).thenReturn(USER_ENTITY.getPassword());
     }

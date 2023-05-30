@@ -29,7 +29,7 @@ public class Measure implements AbstractMeasureIdentifiable{
     private double value;
 
     @JsonManagedReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
     private Sensor sensor;
 
