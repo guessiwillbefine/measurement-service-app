@@ -41,6 +41,12 @@
         <insert tableName="measure_system">
             <column name="id" value="AMPERE" />
         </insert>
+        <insert tableName="measure_system">
+            <column name="id" value="DECIBEL" />
+        </insert>
+        <insert tableName="measure_system">
+            <column name="id" value="PERCENT" />
+        </insert>
         <rollback>
             DELETE FROM measure_system;
         </rollback>
