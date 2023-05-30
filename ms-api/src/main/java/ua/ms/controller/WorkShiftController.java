@@ -27,7 +27,7 @@ public class WorkShiftController {
 
     @GetMapping()
     public List<WorkShiftView> findAll(@RequestParam("page") int page,
-                                       @RequestParam("size") int size){
+                                       @RequestParam("size") int size) {
         Pageable paginationParams = PageRequest.of(page, size);
         return workShiftService.getAll(paginationParams, WorkShiftView.class);
     }
@@ -35,14 +35,14 @@ public class WorkShiftController {
     @GetMapping("/worker/{id}")
     public List<WorkShiftView> findByWorker(@RequestParam("page") int page,
                                             @RequestParam("size") int size,
-                                            @PathVariable("id") Long id){
+                                            @PathVariable("id") Long id) {
         Pageable paginationParams = PageRequest.of(page, size);
         return workShiftService.getAllByWorker(id, paginationParams, WorkShiftView.class);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    public WorkShiftDto create(@RequestBody @Valid WorkShiftDto dto, BindingResult bindingResult){
+    public WorkShiftDto create(@RequestBody @Valid WorkShiftDto dto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
             throw new EntityValidationException(bindingResult);
@@ -52,14 +52,19 @@ public class WorkShiftController {
         return mapper.toDto(createdWorkShift);
     }
 
-    @PatchMapping("/{id}")
-    public WorkShiftDto update(@PathVariable("id") Long id){
-        WorkShift updatedWorkShift = workShiftService.update(id);
+    @PatchMapping()
+    public WorkShiftDto update(@RequestBody @Valid WorkShiftDto dto, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors())
+            throw new EntityValidationException(bindingResult);
+
+        WorkShift workShift = mapper.toEntity(dto);
+        WorkShift updatedWorkShift = workShiftService.update(workShift);
         return mapper.toDto(updatedWorkShift);
     }
 
     @DeleteMapping("/{id}")
-    public WorkShiftDto delete(@PathVariable("id") Long id){
+    public WorkShiftDto delete(@PathVariable("id") Long id) {
         WorkShift deletedWorkShift = workShiftService.delete(id);
         return mapper.toDto(deletedWorkShift);
     }

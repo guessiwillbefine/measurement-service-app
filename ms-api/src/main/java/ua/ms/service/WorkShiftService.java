@@ -38,16 +38,16 @@ public class WorkShiftService {
     public WorkShift save(WorkShift workShiftToCreate) {
         Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = (User) ob;
-        if(!workShiftToCreate.getWorker().getId().equals(user.getId()))
+        if (!workShiftToCreate.getWorker().getId().equals(user.getId()))
             throw new AccessException("You don't have access to this action");
 
         Optional<Machine> byId = machineService.findById(workShiftToCreate.getMachine().getId(), Machine.class);
-        if(byId.isEmpty()) {
+        if (byId.isEmpty()) {
             throw new EntityNotFoundException("Machine is not found");
         }
 
         Machine machine = byId.get();
-        if(!machine.getActivity().equals(MachineActivity.INACTIVE)) {
+        if (!machine.getActivity().equals(MachineActivity.INACTIVE)) {
             throw new IllegalStateException("Machine is already taken");
         }
 
@@ -58,18 +58,20 @@ public class WorkShiftService {
     }
 
     @Transactional
-    public WorkShift update(Long id) {
-        Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = (User) ob;
+    public WorkShift update(WorkShift workShift) {
+//        Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User) ob;
 
-        Optional<WorkShift> workShiftByIdAndUserId = workShiftRepository.findByIdAndWorkerId(id, user.getId(), WorkShift.class);
+        Optional<WorkShift> workShiftByIdAndUserId = workShiftRepository
+                .findByWorkerIdAndMachineIdAndEndedInIsNull(workShift.getWorker().getId(), workShift.getMachine().getId(),
+                        WorkShift.class);
         if (workShiftByIdAndUserId.isEmpty()) {
             throw new EntityNotFoundException("Work shift is not found");
         }
 
         WorkShift workShiftToUpdate = workShiftByIdAndUserId.get();
         Optional<Machine> machineById = machineService.findById(workShiftToUpdate.getMachine().getId(), Machine.class);
-        if(machineById.isEmpty()) {
+        if (machineById.isEmpty()) {
             throw new EntityNotFoundException("Machine is not found");
         }
 
@@ -80,12 +82,12 @@ public class WorkShiftService {
     }
 
     @Transactional
-    public WorkShift delete(Long id){
+    public WorkShift delete(Long id) {
         Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = (User) ob;
 
         Optional<WorkShift> workShiftByIdAndUserId = workShiftRepository.findByIdAndWorkerId(id, user.getId(), WorkShift.class);
-        if(workShiftByIdAndUserId.isEmpty())
+        if (workShiftByIdAndUserId.isEmpty())
             throw new EntityNotFoundException("This work shift is not found");
 
         WorkShift workShiftToDelete = workShiftByIdAndUserId.get();

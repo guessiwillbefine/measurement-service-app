@@ -16,6 +16,8 @@ public interface WorkShiftRepository extends JpaRepository<WorkShift, Long> {
     <T extends AbstractWorkShiftIdentifiable> List<T> findBy(Pageable pageable, Class<T> type);
     <T extends AbstractWorkShiftIdentifiable> List<T> findByWorkerId(Long id, Pageable pageable, Class<T> type);
     <T extends AbstractWorkShiftIdentifiable> Optional<T> findByIdAndWorkerId(Long workShiftId, Long workerId, Class<T> type);
+    <T extends AbstractWorkShiftIdentifiable> Optional<T> findByWorkerIdAndMachineIdAndEndedInIsNull(Long workerId, Long machineId, Class<T> type);
+
     @Query("""
                 FROM WorkShift w
                 where w.machine.id = :machineId
