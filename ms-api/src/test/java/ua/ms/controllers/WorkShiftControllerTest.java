@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.util.JWTUtils;
+import ua.ms.entity.work_shift.dto.WorkShiftDto;
 import ua.ms.service.repository.WorkShiftRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -98,7 +100,15 @@ class WorkShiftControllerTest {
     @DisplayName("test to update work shift")
     void testUpdateWorkShiftThatDoesntExist() throws Exception {
         final String token = jwtUtils.generateToken(ADMIN_USER);
-        mockMvc.perform(patch("/work_shifts/-1")
+        final WorkShiftDto workShiftDto = WorkShiftDto.builder()
+                .machineId(0L)
+                .workerId(0L)
+                .build();
+        String workShiftToCreate = objectMapper.writeValueAsString(workShiftDto);
+
+        mockMvc.perform(patch("/work_shifts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(workShiftToCreate)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound())
                 .andReturn();
