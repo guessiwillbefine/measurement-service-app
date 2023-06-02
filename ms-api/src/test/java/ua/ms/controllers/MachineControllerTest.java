@@ -109,4 +109,17 @@ class MachineControllerTest {
         mockMvc.perform(delete("/machines/1"))
                 .andExpect(status().isOk());
     }
+    @Test
+    @WithMockUser(username = "admin", password = "admin")
+    void testGettingMachineBySensor() throws Exception {
+        mockMvc.perform(get("/machines?sensor=1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin")
+    void testReturning404WhenSearchingMachineBySensor() throws Exception {
+        mockMvc.perform(get("/machines?sensor=-2131"))
+                .andExpect(status().isNotFound());
+    }
 }
