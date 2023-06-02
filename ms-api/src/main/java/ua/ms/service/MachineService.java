@@ -72,7 +72,7 @@ public class MachineService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public <T extends AbstractMachineIdentifiable> List<T> getMachinesByIds(Class<T> type, List<Long> ids) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cr = cb.createQuery(type);
@@ -81,5 +81,11 @@ public class MachineService {
         Predicate idPredicate = idExpression.in(ids);
         cr.where(idPredicate);
         return entityManager.createQuery(cr).getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    public <T extends AbstractMachineIdentifiable> Optional<T> findBySensorId(long sensorId, Class<T> type) {
+        System.out.println(sensorId);
+        return machineRepository.findBySensor(sensorId, type);
     }
 }
