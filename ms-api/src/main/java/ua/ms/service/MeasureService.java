@@ -12,7 +12,6 @@ import ua.ms.entity.work_shift.WorkShift;
 import ua.ms.service.mq.impl.mail.MailAlertDto;
 import ua.ms.service.mq.impl.mail.MailAlertService;
 import ua.ms.service.repository.MeasureRepository;
-import ua.ms.util.exception.EntityNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,14 +38,20 @@ public class MeasureService {
     public Measure create(Measure measure) {
         measure.setCreatedAt(LocalDateTime.now());
         Measure saved = measureRepository.save(measure);
-        if (saved.isCriticalSafe()) {
-            /* если не удалось собрать дто, значит workshift не найден и отправлять нам некуда */
-            MailAlertDto mailAlertDto = buildDto(measure, measure.getSensor());
-            if (mailAlertDto != null) {
-                mailAlertService.push(mailAlertDto);
+        Optional<Sensor> sensor = sensorService.findOne(saved.getSensor().getId(), Sensor.class);
+        if (sensor.isPresent()) {
+            saved.setSensor(sensor.get());
+            if (saved.isCriticalSafe()) {
+                /* если не удалось собрать дто, значит workshift не найден и отправлять нам некуда */
+                MailAlertDto mailAlertDto = buildDto(measure, measure.getSensor());
+                if (mailAlertDto != null) {
+                    mailAlertService.push(mailAlertDto);
+                }
             }
+            return saved;
         }
-        return saved;
+        log.error("Measure value was saved successfully, but sensor wasn't found by same id");
+        throw new IllegalStateException("");
     }
 
     private MailAlertDto buildDto(Measure measure, Sensor sensor) {

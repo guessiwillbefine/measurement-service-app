@@ -36,7 +36,7 @@ public class MeasureController {
 
         if (bindingResult.hasErrors())
             throw new EntityValidationException(bindingResult);
-
+        System.out.println(measureDto);
         Measure createdMeasure = measureService.create(mapper.toEntity(measureDto));
         return mapper.toDto(createdMeasure);
     }

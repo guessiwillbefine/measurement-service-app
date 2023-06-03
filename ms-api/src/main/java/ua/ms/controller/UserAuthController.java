@@ -18,6 +18,7 @@ import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.service.UserService;
 import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.EntityValidationException;
+import ua.ms.util.journal.EventServiceImpl;
 
 import java.util.Map;
 
@@ -33,6 +34,7 @@ public class UserAuthController {
     private final JWTUtils jwtUtils;
     private final UserService userService;
     private final AuthManager authenticationManager;
+    private final EventServiceImpl eventService;
 
     @SecurityRequirements
     @PostMapping("/_login")
@@ -47,6 +49,8 @@ public class UserAuthController {
         try {
             Authentication authenticatedUser = authenticationManager.authenticate(authenticationToken);
             String token = jwtUtils.generateToken(authenticatedUser.getName());
+            eventService.saveAuthorizationEvent(authenticatedUser.getName());
+
             return Map.of(JWT_TOKEN_RESPONSE_KEY, token);
 
         } catch (BadCredentialsException exception) {

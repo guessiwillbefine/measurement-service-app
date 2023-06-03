@@ -1,9 +1,17 @@
 server:
   port: 9090
 
+spring:
+
+  rabbitmq:
+    port: 5672
+    host: rabbit #localhost if rabbit goes locally
+    username: guest
+    password: guest
+
 configuration:
   rabbit:
-    queue-name: notification-queue
+    queue-name: "notification-queue"
 
   mail:
     host: smtp.gmail.com

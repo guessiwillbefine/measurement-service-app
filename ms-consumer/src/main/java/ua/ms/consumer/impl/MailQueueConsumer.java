@@ -42,6 +42,11 @@ public class MailQueueConsumer implements MessageQueueConsumer<Message<String>> 
         } catch (JsonProcessingException e) {
             throw new IllegalStateException(e);
         }
+        if (mailSender.isMailSenderInitialized()) {
+            log.warn("Email was skipped - email sender properties are not correct");
+            //TODO надо как-то обрабатывать случаи, когда почта недоступна, что бы сообщение не потерялось
+            return;
+        }
         eventJournalService.saveConsumedEvent(alertDto.getSensorId());
         sendAlert(alertDto);
     }
