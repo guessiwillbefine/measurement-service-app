@@ -8,6 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.machine.Machine;
 import ua.ms.entity.machine.dto.MachineDto;
+import ua.ms.entity.machine.dto.view.MachineView;
 import ua.ms.service.repository.MachineRepository;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,5 +41,17 @@ class MachineRepositoryTest {
         assertThat(machineRepository.findBy(PageRequest.of(0, 2), Machine.class))
                 .isInstanceOf(List.class)
                 .isNotEmpty().hasSize(2);
+    }
+    @Test
+    void shouldReturnMachineBySensor() {
+        assertThat(machineRepository.findBySensor(1L, Machine.class))
+                .isPresent().get().isNotNull();
+    }
+    @Test
+    void shouldReturnValidType() {
+        assertThat(machineRepository.findBySensor(1L, Machine.class))
+                .isPresent().get().isInstanceOf(Machine.class);
+        assertThat(machineRepository.findBySensor(1L, MachineView.class))
+                .isPresent().get().isInstanceOf(MachineView.class);
     }
 }

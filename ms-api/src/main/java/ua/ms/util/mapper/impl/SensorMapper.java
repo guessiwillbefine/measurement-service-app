@@ -17,6 +17,7 @@ public class SensorMapper implements Mapper<Sensor, SensorDto> {
                 .id(dto.getId())
                 .name(dto.getName())
                 .measureSystem(dto.getMeasureSystem())
+                .criticalValue(dto.getCriticalValue())
                 .machine(Machine.builder().id(dto.getMachineId()).build())
                 .build();
     }
@@ -26,6 +27,7 @@ public class SensorMapper implements Mapper<Sensor, SensorDto> {
         return SensorDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .criticalValue(entity.getCriticalValue())
                 .measureSystem(entity.getMeasureSystem())
                 .machineId(entity.getMachine().getId())
                 .build();

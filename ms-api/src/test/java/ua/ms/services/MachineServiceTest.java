@@ -98,4 +98,19 @@ class MachineServiceTest {
         assertThatThrownBy(()-> machineService.update(1L, MACHINE_DTO))
                 .isInstanceOf(EntityNotFoundException.class);
     }
+
+    @Test
+    @DisplayName("should if Optional#empty if not present when searching by sensor id")
+    void shouldReturnEmptyOptionalIfNotPresent() {
+        when(machineRepository.findBySensor(1L, Machine.class))
+                .thenReturn(Optional.empty());
+        assertThat(machineService.findBySensorId(1L, Machine.class)).isEmpty();
+    }
+    @Test
+    @DisplayName("should if entity if present when searching by sensor id")
+    void shouldReturnEntityWhenSearching() {
+        when(machineRepository.findBySensor(1L, Machine.class))
+                .thenReturn(Optional.empty());
+        assertThat(machineService.findBySensorId(1L, Machine.class)).isEmpty();
+    }
 }

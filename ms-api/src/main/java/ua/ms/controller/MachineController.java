@@ -32,8 +32,20 @@ public class MachineController {
     @GetMapping("/{id}")
     public MachineView findById(@PathVariable Long id) {
         Optional<MachineView> byId = machineService.findById(id, MachineView.class);
-        if (byId.isPresent()) return byId.get();
+        if (byId.isPresent()) {
+            return byId.get();
+        }
         throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
+    }
+
+    @GetMapping
+    public MachineView findByIdSensor(@RequestParam Long sensor) {
+        Optional<MachineView> byId = machineService.findBySensorId(sensor, MachineView.class);
+        System.out.println(byId);
+        if (byId.isPresent()) {
+            return byId.get();
+        }
+        throw new EntityNotFoundException(format("Machine with sensor that has id[%d] was not found", sensor));
     }
 
     @GetMapping("/types")
