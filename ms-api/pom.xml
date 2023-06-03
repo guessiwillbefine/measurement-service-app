@@ -149,21 +149,24 @@
     </dependencies>
 
     <build>
-
+        <finalName>ms-api</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>ua.ms.MsApiApplication</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>test-jar</goal>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+
 
     </build>
 

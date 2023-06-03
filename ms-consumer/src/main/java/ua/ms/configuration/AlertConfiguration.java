@@ -36,8 +36,13 @@ public class AlertConfiguration {
         mailSender.getJavaMailProperties().setProperty("mail.smtp.auth", "true");
         mailSender.getJavaMailProperties().setProperty("mail.smtp.starttls.enable", "true");
 
-        log.info(format("JavaMailSender was initialized with class [%s]",
-                JavaMailSender.class.getPackageName() + JavaMailSender.class.getSimpleName()));
+        if (username.isEmpty() || password.isEmpty() || host.isEmpty() || port.isEmpty()) {
+            log.error("JavaMailSender will be not initialized correctly because of null properties, pls check your configurations");
+        }
+        else {
+            log.info(format("JavaMailSender was initialized with class [%s]",
+                    JavaMailSender.class.getPackageName() + JavaMailSender.class.getSimpleName()));
+        }
         return mailSender;
     }
 }
