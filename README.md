@@ -18,3 +18,9 @@ This project is an example of a sensor monitoring system using web technologies 
 - NoSQL : MongoDB
 - Docker
 - Swagger for docs
+
+### Run
+to run the project from docker :
+```cmd
+docker-compose up
+```
