@@ -85,6 +85,9 @@ springdoc:
   swagger-ui:
     path: /api-docs
 
+redis:
+  port: 6379
+  host: redis
 
 #test environment
 ---
