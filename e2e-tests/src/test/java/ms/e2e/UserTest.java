@@ -12,6 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 import ua.ms.MsApiApplication;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
@@ -25,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ua.ms.util.ApplicationConstants.Security.*;
 
 /** user scenario tests - modifying, deleting entities. **/
-@ActiveProfiles("test-env")
+@Testcontainers
 @Transactional
 @SpringBootTest(classes = MsApiApplication.class)
 @AutoConfigureMockMvc
@@ -34,6 +38,10 @@ class UserTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Container
+    static MySQLContainer mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:5-debian"));
+
     @MockBean
     private EventServiceImpl eventJournalService;
     private final AuthenticationCredentialsDto adminCredentials = AuthenticationCredentialsDto.builder()
