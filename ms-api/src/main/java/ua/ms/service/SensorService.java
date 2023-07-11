@@ -1,22 +1,17 @@
 package ua.ms.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.machine.Machine;
 import ua.ms.entity.sensor.AbstractSensorIdentifiable;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.service.repository.SensorRepository;
-import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
-
-import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -62,8 +57,8 @@ public class SensorService {
     }
 
     @Transactional(readOnly = true)
-    public <T extends AbstractSensorIdentifiable> List<T> findAll(Machine machine, Class<T> type) {
-        return sensorRepository.findByMachine(machine, type);
+    public <T extends AbstractSensorIdentifiable> List<T> findAll(Long machineId, Class<T> type) {
+        return sensorRepository.findByMachineId(machineId, type);
     }
 
     @Transactional
