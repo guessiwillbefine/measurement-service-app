@@ -21,7 +21,7 @@ Current stack of technologies we used:
   - WebSockets
 - RabbitMQ
 - SQL : MySQL, H2 (with liquibase as migration tool)
-- NoSQL : MongoDB
+- NoSQL : MongoDB, Redis
 - Docker
 - Swagger for documentation
 
