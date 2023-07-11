@@ -25,6 +25,11 @@ services:
     ports:
       - "27018:27017"
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
   ms-api:
     container_name: ms-api
     build:
@@ -36,6 +41,7 @@ services:
       - mongodb
       - rabbit
       - mysqldb
+      - redis
     environment:
       - SPRING_RABBITMQ_HOST=rabbit
 
