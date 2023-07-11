@@ -10,7 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
@@ -40,8 +42,12 @@ class AuthenticationTest {
     @Container
     static MySQLContainer mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:5-debian"));
 
-    @MockBean
-    private EventServiceImpl eventJournalService;
+    @Container
+    static GenericContainer redisContainer = new GenericContainer("redis:latest");
+
+    @Container
+    static GenericContainer mongoContainer = new GenericContainer("mongo:6-jammy");
+
 
     @Test
     @DisplayName("authentication process test")

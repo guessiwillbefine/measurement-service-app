@@ -27,13 +27,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-
-    - name: Docker setup
-      uses: docker/setup-docker@v1
-
-    - name: Start Docker service
-      run: sudo service docker start
-
     - name: test with Maven
       run: mvn -B test --file pom.xml
 
