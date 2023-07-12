@@ -1,24 +1,19 @@
 package ms.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ms.TestContainersIntegrationTest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 import ua.ms.MsApiApplication;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
-import ua.ms.util.journal.EventServiceImpl;
 
 import java.util.Map;
 
@@ -28,26 +23,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.ms.util.ApplicationConstants.Security.JWT_TOKEN_RESPONSE_KEY;
 
-//@ActiveProfiles("test-env")
 @Transactional
-@Testcontainers
-@SpringBootTest(classes = MsApiApplication.class)
 @AutoConfigureMockMvc
-class AuthenticationTest {
+@SpringBootTest(classes = MsApiApplication.class)
+class AuthenticationTest extends TestContainersIntegrationTest {
+
     @Autowired
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
+
     @Autowired
-    private ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
-    @Container
-    static MySQLContainer mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:5-debian"));
-
-    @Container
-    static GenericContainer redisContainer = new GenericContainer("redis:latest");
-
-    @Container
-    static GenericContainer mongoContainer = new GenericContainer("mongo:6-jammy");
-
+    @BeforeAll
+    public static void startContainer() {
+       startContainers();
+    }
 
     @Test
     @DisplayName("authentication process test")
