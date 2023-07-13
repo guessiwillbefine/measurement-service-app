@@ -9,6 +9,11 @@ spring:
     username: guest
     password: guest
 
+alert-queue:
+  name: "notification-queue"
+  exchange: "alert-exchange"
+  routing-key: "mail-notification"
+
 configuration:
   rabbit:
     queue-name: "notification-queue"

@@ -8,34 +8,41 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - "3307:3306"
+      - "3306:3306"
 
   rabbit:
-    image: rabbitmq:3.10.7-management
+    image: rabbitmq:3.12.2-beta.1-management
     container_name: rabbit
     restart: unless-stopped
     ports:
       - "5672:5672"
-      - "15673:15672"
+      - "15672:15672"
 
   mongodb:
     image: mongo:6-jammy
     container_name: mongodb
     restart: unless-stopped
     ports:
-      - "27018:27017"
+      - "27017:27017"
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
   ms-api:
     container_name: ms-api
     build:
       context: .
       dockerfile: ms-api/Dockerfile
+    restart: unless-stopped
     ports:
       - "8080:8080"
     depends_on:
       - mongodb
       - rabbit
       - mysqldb
+      - redis
     environment:
       - SPRING_RABBITMQ_HOST=rabbit
 
@@ -44,6 +51,7 @@ services:
     build:
       context: .
       dockerfile: ms-consumer/Dockerfile
+    restart: unless-stopped
     ports:
       - "9090:9090"
     depends_on:

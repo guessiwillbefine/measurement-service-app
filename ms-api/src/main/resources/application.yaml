@@ -1,10 +1,11 @@
 debug: false
 
-#logging:
-#  level:
-#    root: DEBUG
-#    org.springframework.web: DEBUG
-#    org.hibernate: DEBUG
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+
 socket:
   connection:
     url: /ws
@@ -14,12 +15,6 @@ socket:
   broker:
     destination: /app
     prefixes: /topic, /user
-
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.hibernate: INFO
     
 server:
   port: 8080
@@ -43,12 +38,16 @@ spring:
     username: guest
     password: guest
 
+  redis:
+    port: 6379
+    host: redis
+
   liquibase:
     clear-checksums: true #disable cashing
     change-log: db/changelog/changelog.yaml
 
   jpa:
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.MySQLDialect
     database: mysql
     hibernate:

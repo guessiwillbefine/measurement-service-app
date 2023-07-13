@@ -1,20 +1,25 @@
 package ms.e2e;
 
+import ms.TestContainersIntegrationTest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.ActiveProfiles;
 import ua.ms.MsApiApplication;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = MsApiApplication.class)
-@ActiveProfiles("test-env")
-class E2eTestsApplicationTests {
+
+@SpringBootTest(classes = MsApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class E2eTestsApplicationTests extends TestContainersIntegrationTest {
 
     @LocalServerPort
     private Integer port;
+
+    @BeforeAll
+    public static void startContainer() {
+        startContainers();
+    }
 
     @Test
     void contextLoads() {
