@@ -19,6 +19,7 @@ Current stack of technologies we used:
   - Spring Data MongoDB
   - Security (JWT authentication)
   - WebSockets
+- Testcontainers
 - RabbitMQ
 - SQL : MySQL, H2 (with liquibase as migration tool)
 - NoSQL : MongoDB, Redis
