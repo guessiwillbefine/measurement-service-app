@@ -38,6 +38,10 @@ spring:
     username: guest
     password: guest
 
+  redis:
+    port: 6379
+    host: redis
+
   liquibase:
     clear-checksums: true #disable cashing
     change-log: db/changelog/changelog.yaml
@@ -81,9 +85,6 @@ springdoc:
   swagger-ui:
     path: /api-docs
 
-redis:
-  port: 6379
-  host: redis
 
 #test environment
 ---

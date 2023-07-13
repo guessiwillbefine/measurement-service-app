@@ -2,42 +2,49 @@ package ms.e2e;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ms.TestContainersIntegrationTest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.ms.MsApiApplication;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
-import ua.ms.util.journal.EventServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.ms.util.ApplicationConstants.Security.*;
 
 /** user scenario tests - modifying, deleting entities. **/
-@ActiveProfiles("test-env")
+
 @Transactional
-@SpringBootTest(classes = MsApiApplication.class)
 @AutoConfigureMockMvc
-class UserTest {
+@SpringBootTest(classes = MsApiApplication.class)
+class UserTest extends TestContainersIntegrationTest {
+
     @Autowired
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
+
     @Autowired
-    private ObjectMapper objectMapper;
-    @MockBean
-    private EventServiceImpl eventJournalService;
+    protected ObjectMapper objectMapper;
+
     private final AuthenticationCredentialsDto adminCredentials = AuthenticationCredentialsDto.builder()
             .username("admin").password("admin").build();
+
+    @BeforeAll
+    public static void startContainer() {
+        startContainers();
+    }
 
     @Test
     @DisplayName("test deleting users")
