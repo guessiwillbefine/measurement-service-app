@@ -1,14 +1,12 @@
 package ms;
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
-import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.RabbitMQContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
@@ -20,17 +18,17 @@ public abstract class TestContainersIntegrationTest {
     protected static final RedisProperties REDIS_PROPERTIES = new RedisProperties();
 
     protected static final MySQLContainer<?> mySQLContainer = new MySQLContainer<>(DockerImageName.parse("mysql:5-debian"))
-            .withReuse(true);;
+            .withReuse(true);
 
     protected static final GenericContainer<?> redisContainer = new GenericContainer<>(DockerImageName.parse("redis:latest"))
             .withExposedPorts(REDIS_PROPERTIES.getPort())
             .withReuse(true);
 
     protected static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.0.10")
-            .withReuse(true);;
+            .withReuse(true);
 
     protected static final RabbitMQContainer rabbitContainer = new RabbitMQContainer(DockerImageName.parse("rabbitmq:3.10.7-management"))
-            .withReuse(true);;
+            .withReuse(true);
 
     protected static final List<GenericContainer<?>> containers = List.of(mySQLContainer, redisContainer, mongoDBContainer, rabbitContainer);
 
@@ -60,9 +58,7 @@ public abstract class TestContainersIntegrationTest {
     }
 
     protected static void startContainers() {
-        for (GenericContainer<?> container : containers) {
-            container.start();
-        }
+        containers.forEach(GenericContainer::start);
     }
 
 }

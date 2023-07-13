@@ -29,7 +29,6 @@ jobs:
         cache: maven
     - name: test with Maven
       run: mvn -B test --file pom.xml
-
     - name: Generate test report
       run: mvn surefire-report:report
 
