@@ -31,3 +31,9 @@ to run the project from docker :
 ```cmd
 docker-compose up
 ```
+To access the Swagger-generated API documentation, go to the following URL after starting the application: 
+
+```
+http://localhost:8080/api-docs
+```
+
