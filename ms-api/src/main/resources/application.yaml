@@ -34,9 +34,13 @@ spring:
 
   rabbitmq:
     port: 5672
-    host: localhost #localhost if rabbit goes locally
+    host: rabbit #localhost if rabbit goes locally
     username: guest
     password: guest
+
+  redis:
+    port: 6379
+    host: redis
 
   liquibase:
     clear-checksums: true #disable cashing
@@ -55,7 +59,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/ms_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://mysqldb:3306/ms_db?createDatabaseIfNotExist=true
     #if run locally:
     #url: jdbc:mysql://localhost:3306/ms_db?createDatabaseIfNotExist=true
 
@@ -81,9 +85,6 @@ springdoc:
   swagger-ui:
     path: /api-docs
 
-redis:
-  port: 6379
-  host: localhost
 
 #test environment
 ---
