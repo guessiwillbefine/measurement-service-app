@@ -7,31 +7,27 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import ua.ms.entity.machine.Machine;
 import ua.ms.entity.work_shift.WorkShift;
-import ua.ms.service.MachineService;
-import ua.ms.service.WorkShiftService;
+import ua.ms.service.entity.impl.MachineServiceImpl;
+import ua.ms.service.entity.impl.WorkShiftServiceImpl;
 import ua.ms.service.repository.WorkShiftRepository;
-import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
-import static ua.ms.TestConstants.*;
 
 @SpringBootTest
 @ActiveProfiles("test-env")
 @Transactional
 class WorkShiftServiceTest {
     @Autowired
-    private WorkShiftService workShiftService;
+    private WorkShiftServiceImpl workShiftService;
     @MockBean
     private WorkShiftRepository workShiftRepository;
     @MockBean
-    private MachineService machineService;
+    private MachineServiceImpl machineService;
 
     @Test
     void getAllShouldReturnList() {

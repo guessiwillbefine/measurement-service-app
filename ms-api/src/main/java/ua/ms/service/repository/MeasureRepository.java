@@ -8,9 +8,12 @@ import ua.ms.entity.measure.AbstractMeasureIdentifiable;
 import ua.ms.entity.measure.Measure;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MeasureRepository extends JpaRepository<Measure, Long> {
+
+    <T extends AbstractMeasureIdentifiable> Optional<T> findById(long id, Class<T> type);
     <T extends AbstractMeasureIdentifiable> List<T> findBySensorIdOrderByCreatedAtDesc(long id, Class<T> type);
     List<Measure> deleteBySensorId(long id);
 

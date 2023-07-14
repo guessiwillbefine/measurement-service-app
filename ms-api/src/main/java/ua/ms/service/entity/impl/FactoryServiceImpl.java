@@ -1,4 +1,4 @@
-package ua.ms.service;
+package ua.ms.service.entity.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.factory.AbstractFactoryIdentifiable;
 import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
+import ua.ms.service.entity.FactoryService;
 import ua.ms.service.repository.FactoryRepository;
 import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.exception.EntityNotFoundException;
@@ -18,14 +19,17 @@ import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
-public class FactoryService {
+public class FactoryServiceImpl implements FactoryService {
+
     private final FactoryRepository factoryRepository;
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractFactoryIdentifiable> Optional<T> findById(long id, Class<T> type) {
         return factoryRepository.findById(id, type);
     }
 
+    @Override
     @Transactional
     public Factory save(Factory factory) {
         try {
@@ -35,6 +39,7 @@ public class FactoryService {
         }
     }
 
+    @Override
     @Transactional
     public Factory deleteById(long id) {
         Optional<Factory> byId = factoryRepository.findById(id, Factory.class);
@@ -45,6 +50,7 @@ public class FactoryService {
         throw new EntityNotFoundException(format("Factory with id[%d] wasn't found", id));
     }
 
+    @Override
     @Transactional
     public Factory update(long id, FactoryDto factoryDto) {
         Optional<Factory> byId = factoryRepository.findById(id, Factory.class);
@@ -61,11 +67,13 @@ public class FactoryService {
                 .build();
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractFactoryIdentifiable> Optional<T> findByName(String name, Class<T> type) {
         return factoryRepository.findByName(name, type);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractFactoryIdentifiable> List<T> findAll(Class<T> type) {
         return factoryRepository.findBy(type);

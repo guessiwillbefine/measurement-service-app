@@ -13,9 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.configuration.security.AuthManager;
+import ua.ms.configuration.security.service.RegistrationService;
 import ua.ms.configuration.security.util.JWTUtils;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
-import ua.ms.service.UserService;
 import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.journal.EventServiceImpl;
@@ -32,7 +32,7 @@ import static ua.ms.util.ApplicationConstants.Security.JWT_TOKEN_RESPONSE_KEY;
 @Tag(name = "Authentication")
 public class UserAuthController {
     private final JWTUtils jwtUtils;
-    private final UserService userService;
+    private final RegistrationService userService;
     private final AuthManager authenticationManager;
     private final EventServiceImpl eventService;
 

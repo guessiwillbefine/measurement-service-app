@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.user.dto.UserDto;
-import ua.ms.service.UserService;
+import ua.ms.service.entity.impl.UserServiceImpl;
 import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.journal.EventServiceImpl;
 
@@ -38,7 +38,7 @@ class AuthenticationControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private UserService userService;
+    private UserServiceImpl userService;
     @MockBean
     private EventServiceImpl eventService;
 

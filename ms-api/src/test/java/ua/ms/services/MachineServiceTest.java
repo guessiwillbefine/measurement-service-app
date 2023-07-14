@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.machine.Machine;
 import ua.ms.entity.machine.dto.MachineDto;
-import ua.ms.service.MachineService;
+import ua.ms.service.entity.impl.MachineServiceImpl;
 import ua.ms.service.repository.MachineRepository;
 import ua.ms.util.exception.EntityNotFoundException;
 
@@ -33,7 +33,7 @@ class MachineServiceTest {
     @MockBean
     private MachineRepository machineRepository;
     @Autowired
-    private MachineService machineService;
+    private MachineServiceImpl machineService;
 
     @Test
     @DisplayName("should return entity when searching by id")

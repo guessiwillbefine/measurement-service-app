@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.work_shift.WorkShift;
 import ua.ms.entity.work_shift.dto.WorkShiftDto;
 import ua.ms.entity.work_shift.dto.view.WorkShiftView;
-import ua.ms.service.WorkShiftService;
+import ua.ms.service.entity.impl.WorkShiftServiceImpl;
 import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.impl.WorkShiftMapper;
 
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/work_shifts")
 @Tag(name = "work-shift entity controller")
 public class WorkShiftController {
-    private final WorkShiftService workShiftService;
+    private final WorkShiftServiceImpl workShiftService;
     private final WorkShiftMapper mapper;
 
     @GetMapping()

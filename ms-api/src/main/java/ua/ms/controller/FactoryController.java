@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.entity.factory.dto.view.FactoryView;
-import ua.ms.service.FactoryService;
+import ua.ms.service.entity.FactoryService;
 import ua.ms.util.exception.EntityNotFoundException;
 import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;

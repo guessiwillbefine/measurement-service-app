@@ -1,4 +1,4 @@
-package ua.ms.service;
+package ua.ms.service.entity.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +10,8 @@ import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.user.User;
 import ua.ms.entity.work_shift.AbstractWorkShiftIdentifiable;
 import ua.ms.entity.work_shift.WorkShift;
+import ua.ms.service.entity.MachineService;
+import ua.ms.service.entity.WorkShiftService;
 import ua.ms.service.repository.WorkShiftRepository;
 import ua.ms.util.exception.AccessException;
 import ua.ms.util.exception.EntityNotFoundException;
@@ -20,20 +22,30 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class WorkShiftService {
+public class WorkShiftServiceImpl implements WorkShiftService {
     private final WorkShiftRepository workShiftRepository;
     private final MachineService machineService;
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public <T extends AbstractWorkShiftIdentifiable> Optional<T> findById(long id, Class<T> type) {
+        return workShiftRepository.findById(id, type);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractWorkShiftIdentifiable> List<T> getAll(Pageable pageable, Class<T> type) {
         return workShiftRepository.findBy(pageable, type);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractWorkShiftIdentifiable> List<T> getAllByWorker(Long id, Pageable pageable, Class<T> type) {
         return workShiftRepository.findByWorkerId(id, pageable, type);
     }
 
+    @Override
     @Transactional
     public WorkShift save(WorkShift workShiftToCreate) {
         Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -57,6 +69,7 @@ public class WorkShiftService {
         return createdWorkShift;
     }
 
+    @Override
     @Transactional
     public WorkShift update(WorkShift workShift) {
 //        Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -80,7 +93,7 @@ public class WorkShiftService {
         workShiftToUpdate.setEndedIn(LocalDateTime.now());
         return workShiftRepository.save(workShiftToUpdate);
     }
-
+    @Override
     @Transactional
     public WorkShift delete(Long id) {
         Object ob = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -95,6 +108,7 @@ public class WorkShiftService {
         return workShiftToDelete;
     }
 
+    @Override
     @Transactional
     public Optional<WorkShift> getWorkerByMachine(Machine machine) {
         return workShiftRepository.findByMachine(machine.getId(), WorkShift.class);
