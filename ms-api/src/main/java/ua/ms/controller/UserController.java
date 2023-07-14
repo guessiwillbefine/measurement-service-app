@@ -12,8 +12,10 @@ import ua.ms.entity.user.Role;
 import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.UserDto;
 import ua.ms.entity.user.dto.view.UserView;
-import ua.ms.service.UserService;
-import ua.ms.util.exception.*;
+import ua.ms.service.entity.UserService;
+import ua.ms.util.exception.AccessException;
+import ua.ms.util.exception.EntityNotFoundException;
+import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;
 
 import java.util.List;

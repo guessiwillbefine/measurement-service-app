@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.measure.Measure;
 import ua.ms.entity.measure.dto.MeasureDto;
 import ua.ms.entity.measure.dto.view.MeasureView;
-import ua.ms.service.MeasureService;
+import ua.ms.service.entity.impl.MeasureServiceImpl;
 import ua.ms.service.repository.MeasureRepository;
 import ua.ms.util.journal.EventServiceImpl;
 
@@ -27,7 +27,7 @@ import static ua.ms.TestConstants.*;
 @ActiveProfiles("test-env")
 class MeasureServiceTest {
     @Autowired
-    private MeasureService measureService;
+    private MeasureServiceImpl measureService;
 
     @MockBean
     private MeasureRepository measureRepository;

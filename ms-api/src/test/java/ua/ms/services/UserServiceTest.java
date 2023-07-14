@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.UserDto;
-import ua.ms.service.UserService;
+import ua.ms.service.entity.impl.UserServiceImpl;
 import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.exception.EntityNotFoundException;
@@ -34,7 +33,7 @@ import static ua.ms.TestConstants.*;
 @Transactional
 class UserServiceTest {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     @MockBean
     private UserRepository userRepository;
 

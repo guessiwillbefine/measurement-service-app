@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ms.configuration.security.util.JWTUtils;
-import ua.ms.service.UserService;
+import ua.ms.service.entity.impl.UserServiceImpl;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,7 +35,7 @@ class JWTFilterTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private UserService registrationService;
+    private UserServiceImpl registrationService;
 
     @Test
     @DisplayName("empty Bearer should throw exception")

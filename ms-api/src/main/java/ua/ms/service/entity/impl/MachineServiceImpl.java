@@ -1,4 +1,4 @@
-package ua.ms.service;
+package ua.ms.service.entity.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
@@ -11,6 +11,8 @@ import ua.ms.entity.machine.AbstractMachineIdentifiable;
 import ua.ms.entity.machine.Machine;
 import ua.ms.entity.machine.MachineActivity;
 import ua.ms.entity.machine.dto.MachineDto;
+import ua.ms.service.entity.FactoryService;
+import ua.ms.service.entity.MachineService;
 import ua.ms.service.repository.MachineRepository;
 import ua.ms.util.exception.EntityNotFoundException;
 import java.util.List;
@@ -19,29 +21,34 @@ import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
-public class MachineService {
+public class MachineServiceImpl implements MachineService {
 
     private final EntityManager entityManager;
 
     private final MachineRepository machineRepository;
+
     private final FactoryService factoryService;
 
+    @Override
     @Transactional(readOnly = true)
-    public <T extends AbstractMachineIdentifiable> Optional<T> findById(final Long id, final Class<T> type) {
+    public <T extends AbstractMachineIdentifiable> Optional<T> findById(final long id, final Class<T> type) {
        return machineRepository.findById(id, type);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractMachineIdentifiable> List<T> findAll(final Pageable pageable, final Class<T> type) {
         return machineRepository.findBy(pageable, type);
     }
 
+    @Override
     @Transactional
     public Machine save(final Machine machine) {
         machine.setActivity(MachineActivity.INACTIVE);
         return machineRepository.save(machine);
     }
 
+    @Override
     @Transactional
     public MachineDto update(final Long id, final MachineDto machineDto) {
         Optional<Machine> byId = machineRepository.findById(id);
@@ -53,6 +60,7 @@ public class MachineService {
         }
         throw new EntityNotFoundException(format("Machine with id[%d] not found", id));
     }
+
     private Machine updateEntity(final Machine machine, final MachineDto machineDto, final Factory factory) {
         machine.setType(machineDto.getType());
         machine.setName(machineDto.getName());
@@ -61,6 +69,7 @@ public class MachineService {
         return machine;
     }
 
+    @Override
     @Transactional
     public MachineDto delete(final Long id) {
         Optional<MachineDto> byId = machineRepository.findById(id, MachineDto.class);
@@ -72,6 +81,7 @@ public class MachineService {
 
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractMachineIdentifiable> List<T> getMachinesByIds(Class<T> type, List<Long> ids) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -83,6 +93,7 @@ public class MachineService {
         return entityManager.createQuery(cr).getResultList();
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractMachineIdentifiable> Optional<T> findBySensorId(long sensorId, Class<T> type) {
         System.out.println(sensorId);

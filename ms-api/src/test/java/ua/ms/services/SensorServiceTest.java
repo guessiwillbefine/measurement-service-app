@@ -1,6 +1,5 @@
 package ua.ms.services;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,9 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
 import ua.ms.entity.sensor.dto.view.SensorView;
-import ua.ms.service.SensorService;
+import ua.ms.service.entity.impl.SensorServiceImpl;
 import ua.ms.service.repository.SensorRepository;
-import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.exception.EntityNotFoundException;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ import static ua.ms.TestConstants.*;
 @ActiveProfiles("test-env")
 class SensorServiceTest {
     @Autowired
-    private SensorService sensorService;
+    private SensorServiceImpl sensorService;
     @MockBean
     private SensorRepository sensorRepository;
 
@@ -48,7 +46,7 @@ class SensorServiceTest {
         when(sensorRepository.findById(1L, Sensor.class))
                 .thenReturn(Optional.of(SENSOR_ENTITY));
 
-        assertThat(sensorService.findOne(1L, Sensor.class))
+        assertThat(sensorService.findById(1L, Sensor.class))
                 .isEqualTo(Optional.of(SENSOR_ENTITY));
     }
 
@@ -57,7 +55,7 @@ class SensorServiceTest {
         when(sensorRepository.findById(1L, Sensor.class))
                 .thenReturn(Optional.empty());
 
-        assertThat(sensorService.findOne(1L, Sensor.class))
+        assertThat(sensorService.findById(1L, Sensor.class))
                 .isEmpty();
     }
 
@@ -70,11 +68,11 @@ class SensorServiceTest {
         when(sensorRepository.findById(1L, SensorView.class))
                 .thenReturn(Optional.of(SENSOR_VIEW));
 
-        assertThat(sensorService.findOne(1L, Sensor.class))
+        assertThat(sensorService.findById(1L, Sensor.class))
                 .isEqualTo(Optional.of(SENSOR_ENTITY));
-        assertThat(sensorService.findOne(1L, SensorDto.class))
+        assertThat(sensorService.findById(1L, SensorDto.class))
                 .isEqualTo(Optional.of(SENSOR_DTO));
-        assertThat(sensorService.findOne(1L, SensorView.class))
+        assertThat(sensorService.findById(1L, SensorView.class))
                 .isEqualTo(Optional.of(SENSOR_VIEW));
     }
 

@@ -10,8 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.sensor.dto.SensorDto;
-import ua.ms.entity.sensor.dto.view.SensorView;
-import ua.ms.service.SensorService;
+import ua.ms.service.entity.SensorService;
 import ua.ms.util.exception.EntityNotFoundException;
 import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;
@@ -37,7 +36,7 @@ public class SensorController {
 
     @GetMapping("/{id}")
     public SensorDto find(@PathVariable("id") long id) {
-        Optional<SensorDto> byId = sensorService.findOne(id, SensorDto.class);
+        Optional<SensorDto> byId = sensorService.findById(id, SensorDto.class);
         if (byId.isEmpty()) throw new EntityNotFoundException("Sensor with this id is not found");
         return byId.get();
     }

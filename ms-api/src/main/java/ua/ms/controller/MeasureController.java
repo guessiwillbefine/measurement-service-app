@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.ms.entity.measure.Measure;
 import ua.ms.entity.measure.dto.MeasureDto;
 import ua.ms.entity.measure.dto.view.MeasureView;
-import ua.ms.service.MeasureService;
+import ua.ms.service.entity.MeasureService;
 import ua.ms.util.exception.EntityValidationException;
 import ua.ms.util.mapper.Mapper;
 

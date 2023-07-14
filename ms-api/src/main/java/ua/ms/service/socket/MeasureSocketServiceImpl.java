@@ -8,10 +8,10 @@ import ua.ms.entity.measure.Measure;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.socket.MeasuresSocketDto;
 import ua.ms.entity.user.User;
-import ua.ms.service.MachineService;
-import ua.ms.service.MeasureService;
-import ua.ms.service.SensorService;
-import ua.ms.service.UserService;
+import ua.ms.service.entity.impl.MachineServiceImpl;
+import ua.ms.service.entity.impl.MeasureServiceImpl;
+import ua.ms.service.entity.impl.SensorServiceImpl;
+import ua.ms.service.entity.impl.UserServiceImpl;
 import ua.ms.service.cash.RedisService;
 
 import java.util.List;
@@ -26,13 +26,13 @@ public class MeasureSocketServiceImpl implements MeasureSocketService {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    private final MachineService machineService;
+    private final MachineServiceImpl machineService;
 
-    private final SensorService sensorService;
+    private final SensorServiceImpl sensorService;
 
-    private final MeasureService measureService;
+    private final MeasureServiceImpl measureService;
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     /**
      * User connection cash
