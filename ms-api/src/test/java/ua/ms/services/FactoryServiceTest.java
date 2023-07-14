@@ -12,8 +12,8 @@ import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.entity.factory.dto.view.FactoryView;
 import ua.ms.entity.user.User;
-import ua.ms.service.FactoryService;
-import ua.ms.service.UserService;
+import ua.ms.service.entity.impl.FactoryServiceImpl;
+import ua.ms.service.entity.impl.UserServiceImpl;
 import ua.ms.service.repository.FactoryRepository;
 import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.exception.EntityNotFoundException;
@@ -32,11 +32,11 @@ import static ua.ms.TestConstants.*;
 @ActiveProfiles("test-env")
 class FactoryServiceTest {
     @Autowired
-    private FactoryService factoryService;
+    private FactoryServiceImpl factoryService;
     @MockBean
     private FactoryRepository factoryRepository;
     @MockBean
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Test
     @DisplayName("search by id test")

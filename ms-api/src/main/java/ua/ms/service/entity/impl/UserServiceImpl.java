@@ -1,4 +1,4 @@
-package ua.ms.service;
+package ua.ms.service.entity.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +13,7 @@ import ua.ms.entity.user.Status;
 import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.AuthenticationCredentialsDto;
 import ua.ms.entity.user.dto.UserDto;
+import ua.ms.service.entity.UserService;
 import ua.ms.service.repository.UserRepository;
 import ua.ms.util.exception.EntityDuplicateException;
 import ua.ms.util.exception.EntityNotFoundException;
@@ -25,7 +26,7 @@ import static java.lang.String.format;
 @Log4j2
 @Service("registrationService")
 @RequiredArgsConstructor
-public class UserService implements RegistrationService {
+public class UserServiceImpl implements RegistrationService, UserService {
     private final UserRepository userRepository;
 
     @Override
@@ -59,12 +60,14 @@ public class UserService implements RegistrationService {
 
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractUserIdentifiable> Optional<T> findById(long id, Class<T> userClass) {
         log.debug(format("Attempt to find user by his id[%d]", id));
         return userRepository.findById(id, userClass);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractUserIdentifiable> List<T> findAll(Pageable pageable, Class<T> type) {
         log.debug(format("Attempt to pageable[size=%d page=%d] list",
@@ -72,6 +75,7 @@ public class UserService implements RegistrationService {
         return userRepository.findBy(pageable, type);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractUserIdentifiable> List<T> findAll(Class<T> type) {
         return userRepository.findBy(type);
@@ -87,6 +91,7 @@ public class UserService implements RegistrationService {
         throw new EntityNotFoundException(format("User with id[%d] wasn't found", id));
     }
 
+    @Override
     @Transactional
     public User update(long id, UserDto userDto) {
         final Optional<User> byUsername = userRepository.findById(id);

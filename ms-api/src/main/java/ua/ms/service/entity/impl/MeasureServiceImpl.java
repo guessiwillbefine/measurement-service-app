@@ -1,4 +1,4 @@
-package ua.ms.service;
+package ua.ms.service.entity.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -9,6 +9,9 @@ import ua.ms.entity.measure.AbstractMeasureIdentifiable;
 import ua.ms.entity.measure.Measure;
 import ua.ms.entity.sensor.Sensor;
 import ua.ms.entity.work_shift.WorkShift;
+import ua.ms.service.entity.MeasureService;
+import ua.ms.service.entity.SensorService;
+import ua.ms.service.entity.WorkShiftService;
 import ua.ms.service.mq.impl.mail.MailAlertDto;
 import ua.ms.service.mq.impl.mail.MailAlertService;
 import ua.ms.service.repository.MeasureRepository;
@@ -22,23 +25,25 @@ import static java.lang.String.format;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class MeasureService {
+public class MeasureServiceImpl implements MeasureService {
 
     private final MeasureRepository measureRepository;
     private final MailAlertService mailAlertService;
     private final SensorService sensorService;
     private final WorkShiftService workShiftService;
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractMeasureIdentifiable> List<T> findBySensorId(long id, Class<T> type) {
         return measureRepository.findBySensorIdOrderByCreatedAtDesc(id, type);
     }
 
+    @Override
     @Transactional
     public Measure create(Measure measure) {
         measure.setCreatedAt(LocalDateTime.now());
         Measure saved = measureRepository.save(measure);
-        Optional<Sensor> sensor = sensorService.findOne(saved.getSensor().getId(), Sensor.class);
+        Optional<Sensor> sensor = sensorService.findById(saved.getSensor().getId(), Sensor.class);
         if (sensor.isPresent()) {
             saved.setSensor(sensor.get());
             if (saved.isCriticalSafe()) {
@@ -67,13 +72,20 @@ public class MeasureService {
                 measure.getValue(), sensor.getCriticalValue());
     }
 
+    @Override
     @Transactional
     public List<Measure> delete(long id) {
         return measureRepository.deleteBySensorId(id);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public <T extends AbstractMeasureIdentifiable> T getLastMeasure(long sensorId, Class<T> type) {
         return measureRepository.getLastMeasure(sensorId, type);
+    }
+
+    @Override
+    public <T extends AbstractMeasureIdentifiable> Optional<T> findById(long id, Class<T> type) {
+        return measureRepository.findById(id, type);
     }
 }

@@ -10,8 +10,8 @@ import ua.ms.entity.factory.Factory;
 import ua.ms.entity.factory.dto.FactoryDto;
 import ua.ms.entity.user.User;
 import ua.ms.entity.user.dto.UserDto;
-import ua.ms.service.FactoryService;
-import ua.ms.service.UserService;
+import ua.ms.service.entity.impl.FactoryServiceImpl;
+import ua.ms.service.entity.impl.UserServiceImpl;
 import ua.ms.util.mapper.Mapper;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,9 +27,9 @@ class MapperTest {
     @Autowired
     private Mapper<Factory, FactoryDto> factoryMapper;
     @MockBean
-    private UserService userService;
+    private UserServiceImpl userService;
     @MockBean
-    private FactoryService factoryService;
+    private FactoryServiceImpl factoryService;
     @Test
     @DisplayName("test mapping User entity")
     void testMapToEntityUser() {
